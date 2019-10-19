@@ -7,7 +7,8 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Bulma Admin | Free Admin Template By @nafplann</title>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <title>Central App - Vicente Azuero</title>
 
         <meta charset="UTF-8">
         <meta name="description" content="Free Admin Dashboard Template Build with Bulma.io By nafplann">
@@ -129,7 +130,7 @@
                 </a>
             </li>
             <li>
-                <a class="" href="datatables.html">
+            <a class="" href="{{ route('mandatory-areas.index') }}">
                     <span class="icon">
                         <i class="fa fa-table"></i>
                     </span>Áreas
@@ -168,76 +169,21 @@
 </div>
 
 <div class="column is-10" id="page-content">
-        <div class="content-header">
-        <h4 class="title is-4">Tablero principal</h4>
+    <div class="content-header">
+        <h4 class="title is-4">@yield('header-title')</h4>
         <span class="separator"></span>
         <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
             <ul>
                 <li><a href="#">General</a></li>
-                <li class="is-active"><a href="#" aria-current="page">18/10/2019</a></li>
+                <li class="is-active"><a href="#" aria-current="page">@yield('subheader-title')</a></li>
             </ul>
         </nav>
     </div>
 
     <div class="content-body">
-        <div class="columns">
-            <div class="column">
-                <div class="box quick-stats has-background-primary has-text-white">
-                    <div class="quick-stats-icon">
-                        <span class="icon is-large">
-                            <i class="fa fa-3x fa-users"></i>
-                        </span>
-                    </div>
-                    <div class="quick-stats-content">
-                        <h3 class="title is-4">Ovas</h3>
-                        <div class="inlinesparkline-bar"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="column">
-                <div class="box quick-stats has-background-info has-text-white">
-                    <div class="quick-stats-icon">
-                        <span class="icon is-large">
-                            <i class="fa fa-3x fa-server"></i>
-                        </span>
-                    </div>
-                    <div class="quick-stats-content">
-                        <h3 class="title is-4">Áreas</h3>
-                        <div class="inlinesparkline-bar"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="column">
-                <div class="box quick-stats has-background-danger has-text-white">
-                    <div class="quick-stats-icon">
-                        <span class="icon is-large">
-                            <i class="fa fa-3x fa-bar-chart"></i>
-                        </span>
-                    </div>
-                    <div class="quick-stats-content">
-                        <h3 class="title is-4">Docentes</h3>
-                        <div class="inlinesparkline-line"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="column">
-                <div class="box quick-stats has-background-warning has-text-white">
-                    <div class="quick-stats-icon">
-                        <span class="icon is-large">
-                            <i class="fa fa-3x fa-bell"></i>
-                        </span>
-                    </div>
-                    <div class="quick-stats-content">
-                        <h3 class="title is-4">Alertas</h3>
-                        <div class="inlinesparkline-line"></div>
-                    </div>
-                </div>
-            </div>
+        @yield('content')
     </div>
-    
-    @yield('content')
 
-    </div>
     </div>
     </div>
 </body>

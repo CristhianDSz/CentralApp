@@ -35,8 +35,8 @@ textarea {
 .pagination-next,
 .pagination-link,
 .pagination-ellipsis {
-    height: 3em;
-    min-width: 3em; 
+    /* height: 3em;
+    min-width: 3em;
 } */
 
 .control.has-icons-right .input,
@@ -3743,3 +3743,4 @@ print {
   overflow: visible;
   clip: auto;
 }
+

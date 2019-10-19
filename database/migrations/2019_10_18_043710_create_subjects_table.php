@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMandatoryAreasTable extends Migration
+class CreateSubjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateMandatoryAreasTable extends Migration
      */
     public function up()
     {
-        Schema::create('mandatory_areas', function (Blueprint $table) {
+        Schema::create('subjects', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->unsignedBigInteger('mandatory_area_id');
+            $table->foreign('mandatory_area_id')->references('id')->on('mandatory_areas')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateMandatoryAreasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mandatory_areas');
+        Schema::dropIfExists('subjects');
     }
 }
