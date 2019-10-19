@@ -11,5 +11,10 @@
 |
 */
 
+//Home
 Route::get('/', 'HomeController@index');
+//Mandatory areas
+Route::get('app/mandatory-areas','MandatoryAreasController@render')->name('mandatory-areas.render');
 Route::apiResource('mandatory-areas', 'MandatoryAreasController');
+//Subjects
+Route::apiResource('subjects','SubjectsController');

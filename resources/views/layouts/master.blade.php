@@ -130,7 +130,7 @@
                 </a>
             </li>
             <li>
-            <a class="" href="{{ route('mandatory-areas.index') }}">
+            <a class="" href="{{ route('mandatory-areas.render') }}">
                     <span class="icon">
                         <i class="fa fa-table"></i>
                     </span>Áreas
@@ -180,11 +180,12 @@
         </nav>
     </div>
 
-    <div class="content-body">
+    <div class="content-body" id="app">
         @yield('content')
     </div>
 
     </div>
     </div>
+<script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
