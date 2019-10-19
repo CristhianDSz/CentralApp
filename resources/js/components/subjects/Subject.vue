@@ -67,19 +67,17 @@ export default {
     return {
       showEditButton: true,
       showSubjectInput: false,
-      subjectEditable: "",
       initial: ""
     };
   },
   created() {
-    //Abort warning mutating prop vue
-    this.subjectEditable = this.subject
     this.initial = Object.assign({}, this.subject);
   },
   methods: {
     changeStates(itWasEdited = true) {
       if (!itWasEdited) {
-        this.subjectEditable = this.initial;
+        this.subject.name = this.initial.name;
+        this.subject.mandatory_area_id = this.initial.mandatory_area_id;
       }
       this.showEditButton = !this.showEditButton;
       this.showSubjectInput = !this.showSubjectInput;

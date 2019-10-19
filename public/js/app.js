@@ -2202,13 +2202,10 @@ __webpack_require__.r(__webpack_exports__);
     return {
       showEditButton: true,
       showSubjectInput: false,
-      subjectEditable: "",
       initial: ""
     };
   },
   created: function created() {
-    //Abort warning mutating prop vue
-    this.subjectEditable = this.subject;
     this.initial = Object.assign({}, this.subject);
   },
   methods: {
@@ -2216,7 +2213,8 @@ __webpack_require__.r(__webpack_exports__);
       var itWasEdited = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
 
       if (!itWasEdited) {
-        this.subjectEditable = this.initial;
+        this.subject.name = this.initial.name;
+        this.subject.mandatory_area_id = this.initial.mandatory_area_id;
       }
 
       this.showEditButton = !this.showEditButton;
