@@ -137,7 +137,7 @@
                 </a>
             </li>
             <li>
-                <a class="" href="datatables.html">
+            <a class="" href="{{ route('grades.render') }}">
                     <span class="icon">
                         <i class="fa fa-table"></i>
                     </span>Grados

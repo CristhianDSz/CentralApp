@@ -18,3 +18,8 @@ Route::get('app/mandatory-areas','MandatoryAreasController@render')->name('manda
 Route::apiResource('mandatory-areas', 'MandatoryAreasController');
 //Subjects
 Route::apiResource('subjects','SubjectsController');
+//grades
+Route::get('app/grades','GradesController@render')->name('grades.render');
+Route::apiResource('grades','GradesController');
+//Classes
+Route::apiResource('classes','ClassesController');
