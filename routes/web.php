@@ -23,3 +23,5 @@ Route::get('app/grades','GradesController@render')->name('grades.render');
 Route::apiResource('grades','GradesController');
 //Classes
 Route::apiResource('classes','ClassesController');
+//Schools
+Route::resource('schools','SchoolsController')->except(['create','show']);

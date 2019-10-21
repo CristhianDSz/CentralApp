@@ -158,7 +158,7 @@
                 </a>
             </li>
             <li>
-                <a class="" href="datatables.html">
+            <a class="" href="{{route('schools.index') }}">
                     <span class="icon">
                         <i class="fa fa-table"></i>
                     </span>Institución
@@ -186,6 +186,7 @@
 
     </div>
     </div>
-<script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+    @yield('scripts')
 </body>
 </html>
