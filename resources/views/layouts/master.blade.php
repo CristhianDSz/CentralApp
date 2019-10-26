@@ -11,8 +11,8 @@
         <title>Central App - Vicente Azuero</title>
 
         <meta charset="UTF-8">
-        <meta name="description" content="Free Admin Dashboard Template Build with Bulma.io By nafplann">
-        <meta name="keywords" content="Bulma,CSS,Admin,Template,Free,Download">
+        <meta name="description" content="Plataforma para apoyar los procesos de enseñanza aprendizaje en Colombia">
+        <meta name="keywords" content="Ova, Docente, Aprendizaje, Plataforma web">
         <meta name="language" content="en-EN">
         <meta name="author" content="Abdul Manaaf">
 
@@ -20,6 +20,7 @@
         <link href="https://fonts.googleapis.com/icon?family=Poppins" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css">
         <link rel="stylesheet" href="{{ asset('css/app.css')}}">
+        <link rel="stylesheet" href="{{ asset('css/multiselect.min.css')}}">
     </head>
     <body>
         <!-- START NAV -->
@@ -123,7 +124,7 @@
                 </a>
             </li>
             <li>
-                <a class="" href="elements.html">
+            <a class="" href="{{ route('components.render') }}">
                     <span class="icon">
                         <i class="fa fa-desktop"></i>
                     </span> Componentes

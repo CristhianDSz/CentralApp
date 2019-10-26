@@ -13,4 +13,9 @@ class MandatoryArea extends Model
     {
         return $this->hasMany(Subject::class);
     }
+
+    public function components()
+    {
+        return $this->hasMany(Component::class);
+    }
 }

@@ -13,4 +13,9 @@ class Grade extends Model
     {
         return $this->hasMany(SchoolClass::class,'grade_id');
     }
+
+    public function components()
+    {
+        return $this->belongsToMany(Component::class)->withTimestamps();
+    }
 }

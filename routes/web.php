@@ -25,3 +25,10 @@ Route::apiResource('grades','GradesController');
 Route::apiResource('classes','ClassesController');
 //Schools
 Route::resource('schools','SchoolsController')->except(['create','show']);
+//Components
+Route::get('app/components','ComponentsController@render')->name('components.render');
+Route::apiResource('components','ComponentsController');
+//Competences
+Route::apiResource('competences', 'CompetencesController');
+//Indicators
+Route::apiResource('indicators','IndicatorsController');
