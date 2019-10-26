@@ -13,12 +13,9 @@
         <meta charset="UTF-8">
         <meta name="description" content="Plataforma para apoyar los procesos de enseñanza aprendizaje en Colombia">
         <meta name="keywords" content="Ova, Docente, Aprendizaje, Plataforma web">
-        <meta name="language" content="en-EN">
-        <meta name="author" content="Abdul Manaaf">
-
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
+        <meta name="language" content="es-ES">
+        <meta name="author" content="Cristhian Sánchez">
         <link href="https://fonts.googleapis.com/icon?family=Poppins" rel="stylesheet">
-        <link rel="stylesheet" href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css">
         <link rel="stylesheet" href="{{ asset('css/app.css')}}">
         <link rel="stylesheet" href="{{ asset('css/multiselect.min.css')}}">
     </head>

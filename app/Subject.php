@@ -13,4 +13,9 @@ class Subject extends Model
     {
         return $this->belongsTo(MandatoryArea::class);
     }
+
+    public function ovas()
+    {
+        return $this->hasMany(Ova::class);
+    }
 }

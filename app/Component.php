@@ -23,4 +23,9 @@ class Component extends Model
     {
         return $this->hasMany(Competence::class);
     }
+
+    public function learningSections()
+    {
+        return $this->belongsToMany(LearningSection::class);
+    }
 }

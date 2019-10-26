@@ -18,4 +18,9 @@ class Competence extends Model
     {
         return $this->hasMany(Indicator::class);
     }
+
+    public function learningSections()
+    {
+        return $this->belongsToMany(LearningSection::class);
+    }
 }

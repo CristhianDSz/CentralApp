@@ -13,4 +13,9 @@ class Indicator extends Model
     {
         return $this->belongsTo(Competence::class);
     }
+
+    public function learningSections()
+    {
+        return $this->belongsToMany(LearningSection::class);
+    }
 }

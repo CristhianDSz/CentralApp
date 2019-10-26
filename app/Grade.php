@@ -18,4 +18,9 @@ class Grade extends Model
     {
         return $this->belongsToMany(Component::class)->withTimestamps();
     }
+
+    public function ovas()
+    {
+        return $this->hasMany(Ova::class);
+    }
 }

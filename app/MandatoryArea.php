@@ -18,4 +18,9 @@ class MandatoryArea extends Model
     {
         return $this->hasMany(Component::class);
     }
+
+    public function ovas()
+    {
+        return $this->hasMany(Ova::class);
+    }
 }
