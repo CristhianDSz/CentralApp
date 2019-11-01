@@ -31,7 +31,7 @@ class SchoolsController extends Controller
             'address' => 'nullable',
             'phone' => 'required|max:10|min:6',
             'website' => 'nullable|string',
-            'logo' => 'nullable|image'
+            'logo' => 'nullable||file|image'
         ]);
 
         $school = School::create($attributes);
@@ -60,7 +60,7 @@ class SchoolsController extends Controller
             'address' => 'nullable',
             'phone' => 'required|max:10|min:6',
             'website' => 'nullable|string',
-            'logo' => 'nullable|image'
+            'logo' => 'nullable|file|image'
         ]);
 
         $school->update($attributes);

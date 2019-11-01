@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ova;
 
 class OvasController extends Controller
 {
@@ -26,9 +27,15 @@ class OvasController extends Controller
         return Ova::orderBy('created_at')
             ->with('grade')
             ->with('class')
-            ->with('mandatory_area')
+            ->with('mandatoryArea')
             ->with('subject')
             ->with('user')
+            ->with(['learningSections' => function ($query) {
+                $query
+                    ->with('components')
+                    ->with('competences')
+                    ->with('indicators');
+            }])
             ->get();
     }
 
@@ -50,10 +57,11 @@ class OvasController extends Controller
         ]);
 
         //Assign ova code
+        $code = 'TEST';
         //$code = Ova::buildCodeWith($attributes['grade_id], $attributes['mandatory_area_id]);
 
-        $attributes['user_id'] = auth()->id();
-        //$attributes['code'] = $code;
+        $attributes['user_id'] = 1;
+        $attributes['code'] = $code;
 
         Ova::create($attributes);
 
@@ -110,5 +118,16 @@ class OvasController extends Controller
         $ova->delete();
 
         return response()->json(['message' => 'Ova eliminada correctamente']);
+    }
+
+    /**
+     * Display the specified resource components
+     *
+     * @param Ova $ova
+     * @return \Illuminate\Http\Response
+     */
+    public function components(Ova $ova)
+    {
+        return $ova->components()->with('competences.indicators')->get();
     }
 }

@@ -13,7 +13,7 @@ class ComponentsController extends Controller
 
     public function index()
     {
-        return Component::orderBy('name')->with('mandatoryArea')->with('grades')->with('competences')->get();
+        return Component::orderBy('name')->with('mandatoryArea')->with('grades')->with('competences.indicators')->get();
     }
 
     public function store()

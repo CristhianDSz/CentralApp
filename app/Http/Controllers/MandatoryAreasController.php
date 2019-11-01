@@ -11,9 +11,10 @@ class MandatoryAreasController extends Controller
         return view('areas.index');
     }
 
+    // REST methods
     public function index()
     {
-        return MandatoryArea::orderBy('name')->get();
+        return MandatoryArea::orderBy('name')->with('subjects')->get();
     }
 
     public function store()
@@ -39,4 +40,5 @@ class MandatoryAreasController extends Controller
         $mandatoryArea->delete();
         return response()->json(['message' => 'Área eliminada correctamente']);
     }
+
 }

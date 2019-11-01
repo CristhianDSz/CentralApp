@@ -18,7 +18,7 @@ class CreateCompetenceLearningSectionTable extends Migration
             $table->unsignedBigInteger('competence_id');
             $table->unsignedBigInteger('learning_section_id');
             $table->foreign('competence_id')->references('id')->on('competences')->onDelete('cascade');
-            $table->foreign('learning_section_id')->references('id')->on('competences')->onDelete('cascade');
+            $table->foreign('learning_section_id')->references('id')->on('learning_sections')->onDelete('cascade');
             $table->timestamps();
         });
     }

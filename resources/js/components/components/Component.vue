@@ -39,7 +39,7 @@
      </div>
       <div class="level-right">
         <div class="level-item">
-            <a class="is-size-6" href="#" @click.prevent="$emit('competence')">Agregar competencia</a>
+            <a class="is-size-6" href="#" @click.prevent="$emit('competence')">agregar competencia</a>
         </div>
       </div>
     </div>

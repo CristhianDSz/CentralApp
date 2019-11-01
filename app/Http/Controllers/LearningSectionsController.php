@@ -37,9 +37,12 @@ class LearningSectionsController extends Controller
         ]);
 
         $extraAttributes = request()->validate([
-            'components' => 'nullable',
-            'competences' => 'nullable',
-            'indicators' => 'nullable'
+            'components' => 'required|array',
+            'competences' => 'required|array',
+            'indicators' => 'required|array',
+            'resources' => 'present|array',
+            'bibliographies' => 'present|array',
+            'homeworks' => 'present|array'
         ]);
 
         $learningSection = LearningSection::create($attributes);
@@ -47,9 +50,9 @@ class LearningSectionsController extends Controller
         $learningSection->competences()->attach($extraAttributes['competences']);
         $learningSection->indicators()->attach($extraAttributes['indicators']);
 
-        //$learningSection->addResources($extraAttributes['resources']);
-        //$learningSection->addBibliographies($extraAttributes['bibliographies']);
-        //$learningSection->addTasks($extraAttributes['tasks']);
+        $learningSection->addManyResources($extraAttributes['resources']);
+        $learningSection->addManyBibliographies($extraAttributes['bibliographies']);
+        $learningSection->addManyHomeworks($extraAttributes['homeworks']);
 
         return response()->json(['message' => 'Unidad de aprendizaje creada correctamente'],201);
     }
@@ -72,12 +75,12 @@ class LearningSectionsController extends Controller
         ]);
 
         $extraAttributes = request()->validate([
-            'components' => 'nullable',
-            'competences' => 'nullable',
-            'indicators' => 'nullable',
-            'resources' => 'nullable',
-            'bibliographies' => 'nullable',
-            'tasks' => 'nullable',
+            'components' => 'required|array',
+            'competences' => 'required|array',
+            'indicators' => 'required|array',
+            'resources' => 'present|array',
+            'bibliographies' => 'present|array',
+            'homeworks' => 'present|array',
         ]);
 
         $learningSection = LearningSection::create($attributes);
@@ -85,9 +88,9 @@ class LearningSectionsController extends Controller
         $learningSection->competences()->sync($extraAttributes['competences']);
         $learningSection->indicators()->sync($extraAttributes['indicators']);
 
-        //$learningSection->addResources($extraAttributes['resources']);
-        //$learningSection->addBibliographies($extraAttributes['bibliographies']);
-        //$learningSection->addTasks($extraAttributes['tasks']);
+        $learningSection->updateManyResources($extraAttributes['resources']);
+        $learningSection->updateManyBibliographies($extraAttributes['bibliographies']);
+        $learningSection->updateManyHomeworks($extraAttributes['homeworks']);
 
         return response()->json(['message' => 'Unidad de aprendizaje actualizada correctamente']);   
     }

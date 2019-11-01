@@ -15,7 +15,7 @@
         <meta name="keywords" content="Ova, Docente, Aprendizaje, Plataforma web">
         <meta name="language" content="es-ES">
         <meta name="author" content="Cristhian Sánchez">
-        <link href="https://fonts.googleapis.com/icon?family=Poppins" rel="stylesheet">
+        {{-- <link href="https://fonts.googleapis.com/icon?family=Poppins" rel="stylesheet"> --}}
         <link rel="stylesheet" href="{{ asset('css/app.css')}}">
     </head>
     <body>
@@ -33,7 +33,7 @@
     </div>
     
     <div id="touchMenu">
-        <a class="navbar-item is-active" href="https://nafplann.com/bulma-admin">
+    <a class="navbar-item is-active" href="{{ route('ovas.render') }}">
             <span class="icon">
                 <i class="fa fa-home"></i>
             </span> Ovas
@@ -106,14 +106,14 @@
         </p>
         <ul class="menu-list">
             <li>
-                <a class="is-active" href="index.html">
+                <a class="is-active" href="/">
                     <span class="icon">
                         <i class="fa fa-home"></i>
                     </span> Tablero
                 </a>
             </li>
             <li>
-                <a class="" href="forms.html">
+            <a class="" href="{{ route('ovas.render') }}">
                     <span class="icon">
                         <i class="fa fa-edit"></i>
                     </span> Ovas
@@ -122,42 +122,42 @@
             <li>
             <a class="" href="{{ route('components.render') }}">
                     <span class="icon">
-                        <i class="fa fa-desktop"></i>
+                        <i class="fa fa-codepen"></i>
                     </span> Componentes
                 </a>
             </li>
             <li>
             <a class="" href="{{ route('mandatory-areas.render') }}">
                     <span class="icon">
-                        <i class="fa fa-table"></i>
+                        <i class="fa fa-leanpub"></i>
                     </span>Áreas
                 </a>
             </li>
             <li>
             <a class="" href="{{ route('grades.render') }}">
                     <span class="icon">
-                        <i class="fa fa-table"></i>
+                        <i class="fa fa-users"></i>
                     </span>Grados
                 </a>
             </li>
             <li>
                 <a class="" href="datatables.html">
                     <span class="icon">
-                        <i class="fa fa-table"></i>
+                        <i class="fa fa-user"></i>
                     </span>Usuarios
                 </a>
             </li>
             <li>
                 <a class="" href="datatables.html">
                     <span class="icon">
-                        <i class="fa fa-table"></i>
+                        <i class="fa fa-smile-o"></i>
                     </span>Usuario grado
                 </a>
             </li>
             <li>
             <a class="" href="{{route('schools.index') }}">
                     <span class="icon">
-                        <i class="fa fa-table"></i>
+                        <i class="fa fa-building"></i>
                     </span>Institución
                 </a>
             </li>

@@ -18,7 +18,7 @@ class CreateIndicatorLearningSectionTable extends Migration
             $table->unsignedBigInteger('indicator_id');
             $table->unsignedBigInteger('learning_section_id');
             $table->foreign('indicator_id')->references('id')->on('indicators')->onDelete('cascade');
-            $table->foreign('learning_section_id')->references('id')->on('indicators')->onDelete('cascade');
+            $table->foreign('learning_section_id')->references('id')->on('learning_sections')->onDelete('cascade');
             $table->timestamps();
         });
     }

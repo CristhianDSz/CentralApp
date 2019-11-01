@@ -35,5 +35,6 @@ Route::apiResource('indicators','IndicatorsController');
 //Ovas
 Route::get('app/ovas','OvasController@render')->name('ovas.render');
 Route::apiResource('ovas', 'OvasController');
+Route::get('ovas/{ova}/components', 'OvasController@components');
 //Learning sections
 Route::apiResource('learning-sections','LearningSectionsController');

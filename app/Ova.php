@@ -48,4 +48,9 @@ class Ova extends Model
     {
         return $this->hasMany(LearningSection::class);
     }
+
+    public function components()
+    {
+        return $this->mandatoryArea->components();
+    }
 }

@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "Poppins";
+  src: url("../fonts/poppins/Poppins-Regular.eot");
+  src: url("../fonts/poppins/Poppins-Regular.eot?#iefix") format('embedded-opentype'),
+       url("../fonts/poppins/Poppins-Regular.woff2") format('woff2'),
+       url("../fonts/poppins/Poppins-Regular.woff") format('woff'),
+       url("../fonts/poppins/Poppins-Regular.ttf") format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
 body,
 button,
 input,

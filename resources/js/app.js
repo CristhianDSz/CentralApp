@@ -11,6 +11,7 @@ import SubjectsMain from './components/subjects/SubjectsMain.vue'
 import GradesMain from './components/grades/GradesMain.vue'
 import ClassesMain from './components/classes/ClassesMain.vue'
 import ComponentsMain from './components/components/ComponentsMain.vue'
+import OvasMain from './components/ovas/OvasMain.vue'
 
 //Buses
 window.SubjectAreaEmitter = new Vue()
@@ -19,6 +20,6 @@ window.CompetenceComponentEmitter = new Vue()
 
 const app = new Vue({
     el:"#app",
-    components: {AreasMain,SubjectsMain,GradesMain,ClassesMain, ComponentsMain}
+    components: {AreasMain,SubjectsMain,GradesMain,ClassesMain, ComponentsMain,OvasMain}
 
 })

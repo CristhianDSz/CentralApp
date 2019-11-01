@@ -13,7 +13,7 @@
         </p>
         <br />
         <competence-form 
-          @success="showMessage" 
+          @success="showCompetenceMessage" 
           @cancel="competenceModal=false"
           :component="currentComponent"
           >
@@ -26,11 +26,12 @@
     >
       <template slot="title">Agregar indicador</template>
       <div class="content" slot="body">
-        <competence-form 
-          @success="showMessage" 
+        <indicator-form 
+          @success="showIndicatorMessage" 
           @cancel="indicatorModal=false"
+          :competence="currentCompetence"
           >
-        </competence-form>
+        </indicator-form>
       </div>
     </modal>
   </div>
@@ -40,9 +41,10 @@
 import Modal from "../utils/Modal.vue";
 import Component from "./Component.vue";
 import CompetenceForm from '../competences/CompetenceForm.vue'
+import IndicatorForm from '../indicators/IndicatorForm.vue'
 
 export default {
-  components: { "my-component": Component, Modal, CompetenceForm },
+  components: { "my-component": Component, Modal, CompetenceForm, IndicatorForm },
   data() {
     return {
       components: [],
@@ -64,8 +66,12 @@ export default {
         this.components = response.data;
       });
     },
-    showMessage() {
+    showCompetenceMessage() {
       this.competenceModal = false;
+      this.getComponents();
+    },
+    showIndicatorMessage() {
+      this.indicatorModal = false;
       this.getComponents();
     },
     passToCompetenceForm(component) {

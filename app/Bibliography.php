@@ -4,15 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Resource extends Model
+class Bibliography extends Model
 {
-    protected $table = 'resources';
+    protected $table = 'bibliographies';
     protected $fillable = ['url','learning_section_id'];
-    
+
     public function learningSection()
     {
-        return $this->belongsTo(LearningSection::class);
+        return $this->belongsTo(LearningSection::class);        
     }
-
-
 }
