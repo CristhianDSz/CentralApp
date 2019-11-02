@@ -8,7 +8,10 @@
      </div>
       <div class="level-right">
         <div class="level-item">
-            <a title="Editar" class="is-size-4" href="#"><i class="fa fa-edit has-text-primary"></i></a>
+            <a title="Editar" class="is-size-4" href="#" @click.prevent="editComponent(component)"><i class="fa fa-edit has-text-primary"></i></a>
+        </div>
+        <div class="level-item">
+            <a title="Eliminar" class="is-size-4" href="#" @click.prevent="deleteComponent(component)"><i class="fa fa-trash has-text-danger"></i></a>
         </div>
       </div>
     </div>
@@ -43,7 +46,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -56,6 +58,17 @@ export default {
     return {};
   },
   created() {},
-  methods: {}
+  methods: {
+    /** Emit event to root parent with the component we want edit */
+    editComponent(component) {
+      ComponentEmitter.$emit('edit', component)
+    },
+    deleteComponent(component) {
+      axios.delete(`/components/${component.id}`).then(response => {
+        this.$emit('deleted')
+        console.log(response.data.message)
+      })
+    }
+  }
 };
 </script>

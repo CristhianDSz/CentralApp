@@ -42,5 +42,11 @@ class ComponentsController extends Controller
         return response()->json(['message' => 'Componente actualizado correctamente']);
     }
 
+    public function destroy(Component $component)
+    {
+        $component->delete();
+        return response()->json(['message' => 'Component eliminado correctamente']);
+    }
+
 
 }

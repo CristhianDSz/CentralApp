@@ -15,7 +15,7 @@
       </div>
       <div class="level-right">
         <p class="level-item">
-          <a class="button is-primary" @click="componentModalActive=true">
+          <a class="button is-primary" @click="showModal">
             <span class="icon">
               <i class="fa fa-plus"></i>
             </span>
@@ -32,7 +32,7 @@
           <h2>Qué es un componente?</h2>
           <p>Las competencias para la educación están organizadas en componentes básicos interconectados. Esta forma de organización facilita una aproximación progresiva al conocimiento por parte de los estudiantes y orienta el trabajo de los docentes en el aula</p>
           <br />
-          <component-form @success="showMessage" @cancel="componentModalActive=false"></component-form>
+          <component-form ref="componentForm" @success="showMessage" @cancel="componentModalActive=false"></component-form>
         </div>
       </modal>
     </div>
@@ -57,11 +57,24 @@ export default {
       componentModalActive: false,
     };
   },
+  created() {
+    /** Listening for edit event from component child  */
+    ComponentEmitter.$on('edit', (component) => {
+      this.$refs.componentForm.component = component
+      this.$refs.componentForm.selectedArea = component.mandatory_area
+      this.$refs.componentForm.selectedGrade = component.grades
+      this.componentModalActive = true
+    })
+  },
   methods: {
     showMessage() {
       this.componentModalActive = false;
       this.$refs.components.getComponents();
     },
+    showModal() {
+      this.$refs.componentForm.resetForm()
+      this.componentModalActive = true
+    }
     
   }
 };

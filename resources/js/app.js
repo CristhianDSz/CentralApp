@@ -16,6 +16,7 @@ import OvasMain from './components/ovas/OvasMain.vue'
 //Buses
 window.SubjectAreaEmitter = new Vue()
 window.GradeClassEmitter = new Vue()
+window.ComponentEmitter = new Vue()
 window.CompetenceComponentEmitter = new Vue()
 
 const app = new Vue({

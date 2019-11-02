@@ -1,6 +1,9 @@
 <template>
-  <div class="">
-    <p>{{competence.name}}</p>
+  <div>
+    <p><span>{{competence.name}}</span> 
+    <a href="#" @click.prevent="editCompetence(competence)"><i class="fa fa-edit has-text-primary is-size-5" ></i></a>
+    <a href="#" @click.prevent="deleteCompetence(competence)"><i class="fa fa-trash has-text-danger is-size-5"></i></a>
+    </p>
     <span class="has-text-weight-semibold">Indicador (es):</span>
     <indicators v-if="competence.indicators.length" :indicators="competence.indicators"></indicators>
 
@@ -15,6 +18,18 @@
 import Indicators from "../indicators/Indicators.vue";
 export default {
   props: ["competence"],
-  components: { Indicators }
+  components: { Indicators },
+  methods: {
+    /** Emit event to parent with the competence to edition */
+    editCompetence(competence) {
+      CompetenceComponentEmitter.$emit('edit', competence)
+    },
+    deleteCompetence(competence) {
+      axios.delete(`/competences/${competence.id}`).then(response => {
+        console.log(response.data.message)
+        CompetenceComponentEmitter.$emit('deleted')
+      })
+    }
+  }
 };
 </script>

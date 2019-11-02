@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="postIndicator">
+  <form @submit.prevent="makeRequest">
     <div class="field is-horizontal">
       <div class="field-label is-normal">
         <label class="label is-size-6">Indicador</label>
@@ -32,9 +32,23 @@ export default {
     };
   },
   methods: {
+    makeRequest() {
+      if (this.indicator.id) {
+        this.putIndicator()
+      } else {
+        this.postIndicator()
+      }
+    },
     postIndicator() {
       this.indicator.competence_id = this.competence.id
       axios.post('/indicators',this.$data.indicator).then(response => {
+        this.$emit('success')
+        this.resetForm()
+      })
+    },
+    putIndicator() {
+      axios.put(`/indicators/${this.indicator.id}`, this.indicator).then(response => {
+        console.log(response.data.messagae)
         this.$emit('success')
         this.resetForm()
       })

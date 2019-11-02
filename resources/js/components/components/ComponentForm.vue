@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="postComponent">
+  <form @submit.prevent="makeRequest">
     <div class="field is-horizontal">
       <div class="field-label is-normal">
         <label class="label">Área</label>
@@ -7,7 +7,7 @@
       <div class="field-body">
         <div class="field">
           <div class="control">
-            <multiselect v-model="selectedArea" :options="areas" label="name" placeholder="Seleccione área"></multiselect>
+            <multiselect v-model="selectedArea" :options="areas" track-by="name" label="name" placeholder="Seleccione área"></multiselect>
           </div>
         </div>
       </div>
@@ -80,16 +80,35 @@ export default {
     getGrades() {
       return axios.get("/grades");
     },
+    makeRequest() {
+      if (this.component.id) {
+        this.putComponent()
+      } else {
+        this.postComponent()
+      } 
+    },
     postComponent() {
-        this.selectedGrade.forEach(grade => {
-            this.component.grades.push(grade.id)
-        })
-        this.component.mandatory_area_id = this.selectedArea.id
-        axios.post('/components', this.$data.component).then(response => {
-            console.log(response.data.message)
-            this.resetForm()
-            this.$emit('success')
-        })
+      this.assignBeforeSend()
+      axios.post('/components', this.component).then(response => {
+        console.log(response.data.message)
+        this.resetForm()
+        this.$emit('success')
+      })
+    },
+    putComponent() {
+      this.assignBeforeSend()
+      axios.put(`/components/${this.component.id}`,this.component).then(response => {
+        console.log(response.data.message)
+        this.resetForm()
+        this.$emit('success')
+      })
+    },
+    assignBeforeSend() {
+      if (this.component.grades.length) this.component.grades = [] 
+      this.selectedGrade.forEach(grade => {
+        this.component.grades.push(grade.id)
+      })
+      this.component.mandatory_area_id = this.selectedArea.id
     },
     resetForm() {
         this.component= {
@@ -98,6 +117,8 @@ export default {
           mandatory_area_id: '',
           grades:[]
       }
+      this.selectedArea = ""
+      this.selectedGrade = []
     }
   }
 };

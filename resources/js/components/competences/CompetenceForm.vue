@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="postCompetence">
+  <form @submit.prevent="makeRequest">
     <div class="field is-horizontal">
       <div class="field-label is-normal">
         <label class="label is-size-6">Competencia</label>
@@ -32,9 +32,23 @@ export default {
     };
   },
   methods: {
+    makeRequest() {
+      if (this.competence.id) {
+        this.putCompetence()
+      } else {
+        this.postCompetence()
+      }
+    },
     postCompetence() {
       this.competence.component_id = this.component.id
       axios.post('/competences',this.$data.competence).then(response => {
+        this.$emit('success')
+        this.resetForm()
+      })
+    },
+    putCompetence() {
+      axios.put(`/competences/${this.competence.id}`, this.competence).then(response => {
+        console.log(response.data.message)
         this.$emit('success')
         this.resetForm()
       })

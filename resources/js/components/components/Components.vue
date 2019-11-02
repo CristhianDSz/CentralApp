@@ -1,37 +1,38 @@
 <template>
   <div>
-    <my-component v-for="component in components" :key="component.id" :component="component" @competence="passToCompetenceForm(component)"></my-component>
-    <modal
-      :modalActive="competenceModal"
-      @close="competenceModal=!competenceModal"
-    >
+    <my-component
+      v-for="component in components"
+      :key="component.id"
+      :component="component"
+      @competence="passToCompetenceForm(component)"
+      @deleted="getComponents"
+    ></my-component>
+
+    <modal :modalActive="competenceModal" @close="competenceModal=!competenceModal">
       <template slot="title">Agregar competencia</template>
       <div class="content" slot="body">
         <h4>Qué es una competencia?</h4>
-        <p class="is-size-6">
-          Es un conjunto de conocimientos o habilidades que están apropiadamente relacionadas entre sí para facilitar el desempeño flexible, eficaz y con sentido, de una actividad.
-        </p>
+        <p
+          class="is-size-6"
+        >Es un conjunto de conocimientos o habilidades que están apropiadamente relacionadas entre sí para facilitar el desempeño flexible, eficaz y con sentido, de una actividad.</p>
         <br />
-        <competence-form 
-          @success="showCompetenceMessage" 
+        <competence-form
+          @success="showCompetenceMessage"
           @cancel="competenceModal=false"
           :component="currentComponent"
-          >
-        </competence-form>
+          ref="competenceForm"
+        ></competence-form>
       </div>
     </modal>
-    <modal
-      :modalActive="indicatorModal"
-      @close="indicatorModal=!indicatorModal"
-    >
+    <modal :modalActive="indicatorModal" @close="indicatorModal=!indicatorModal">
       <template slot="title">Agregar indicador</template>
       <div class="content" slot="body">
-        <indicator-form 
-          @success="showIndicatorMessage" 
+        <indicator-form
+          @success="showIndicatorMessage"
           @cancel="indicatorModal=false"
           :competence="currentCompetence"
-          >
-        </indicator-form>
+          ref="indicatorForm"
+        ></indicator-form>
       </div>
     </modal>
   </div>
@@ -40,23 +41,45 @@
 <script>
 import Modal from "../utils/Modal.vue";
 import Component from "./Component.vue";
-import CompetenceForm from '../competences/CompetenceForm.vue'
-import IndicatorForm from '../indicators/IndicatorForm.vue'
+import CompetenceForm from "../competences/CompetenceForm.vue";
+import IndicatorForm from "../indicators/IndicatorForm.vue";
 
 export default {
-  components: { "my-component": Component, Modal, CompetenceForm, IndicatorForm },
+  components: {
+    "my-component": Component,
+    Modal,
+    CompetenceForm,
+    IndicatorForm
+  },
   data() {
     return {
       components: [],
-      competenceModal:false,
-      indicatorModal:false,
-      currentComponent:'',
-      currentCompetence: '',
+      competenceModal: false,
+      indicatorModal: false,
+      currentComponent: "",
+      currentCompetence: ""
     };
   },
   created() {
-    CompetenceComponentEmitter.$on('indicator', (competence) => {
-      this.passToIndicatorForm(competence)
+    /** Listening child for edit the incoming competence */
+    CompetenceComponentEmitter.$on('edit', competence => {
+      this.passToEditCompetenceForm(competence)
+    })
+    /** Listening child for deleted a competence */
+    CompetenceComponentEmitter.$on('deleted', () => {
+      this.getComponents()
+    })
+     /** Listening child for creating a indicator */
+    CompetenceComponentEmitter.$on("indicator", competence => {
+      this.passToIndicatorForm(competence);
+    });
+    /** Listening child for edit the incoming indicator */
+    CompetenceComponentEmitter.$on('edit-indicator', indicator => {
+      this.passToEditInidicatorForm(indicator)
+    })
+     /** Listening child for deleted an indicator */
+    CompetenceComponentEmitter.$on('indicator-deleted', () => {
+      this.getComponents()
     })
     this.getComponents();
   },
@@ -74,12 +97,24 @@ export default {
       this.indicatorModal = false;
       this.getComponents();
     },
+    /** Trigger method when child emit to creating a competence */
     passToCompetenceForm(component) {
-      this.currentComponent = component
+      this.currentComponent = component;
+      this.$refs.competenceForm.resetForm()
+      this.competenceModal = true;
+    },
+    passToEditCompetenceForm(competence) {
+      const {indicators, ...currentCompetence} = competence
+      this.$refs.competenceForm.competence = currentCompetence
       this.competenceModal = true
     },
     passToIndicatorForm(competence) {
-      this.currentCompetence = competence
+      this.currentCompetence = competence;
+      this.$refs.indicatorForm.resetForm()
+      this.indicatorModal = true;
+    },
+    passToEditInidicatorForm(indicator) {
+      this.$refs.indicatorForm.indicator = {...indicator}
       this.indicatorModal = true
     }
   }

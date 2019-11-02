@@ -2494,11 +2494,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["competence"],
   components: {
     Indicators: _indicators_Indicators_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  methods: {
+    /** Emit event to parent with the competence to edition */
+    editCompetence: function editCompetence(competence) {
+      CompetenceComponentEmitter.$emit('edit', competence);
+    },
+    deleteCompetence: function deleteCompetence(competence) {
+      axios["delete"]("/competences/".concat(competence.id)).then(function (response) {
+        console.log(response.data.message);
+        CompetenceComponentEmitter.$emit('deleted');
+      });
+    }
   }
 });
 
@@ -2546,6 +2561,13 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    makeRequest: function makeRequest() {
+      if (this.competence.id) {
+        this.putCompetence();
+      } else {
+        this.postCompetence();
+      }
+    },
     postCompetence: function postCompetence() {
       var _this = this;
 
@@ -2554,6 +2576,17 @@ __webpack_require__.r(__webpack_exports__);
         _this.$emit('success');
 
         _this.resetForm();
+      });
+    },
+    putCompetence: function putCompetence() {
+      var _this2 = this;
+
+      axios.put("/competences/".concat(this.competence.id), this.competence).then(function (response) {
+        console.log(response.data.message);
+
+        _this2.$emit('success');
+
+        _this2.resetForm();
       });
     },
     resetForm: function resetForm() {
@@ -2659,6 +2692,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['component'],
@@ -2669,7 +2704,21 @@ __webpack_require__.r(__webpack_exports__);
     return {};
   },
   created: function created() {},
-  methods: {}
+  methods: {
+    /** Emit event to root parent with the component we want edit */
+    editComponent: function editComponent(component) {
+      ComponentEmitter.$emit('edit', component);
+    },
+    deleteComponent: function deleteComponent(component) {
+      var _this = this;
+
+      axios["delete"]("/components/".concat(component.id)).then(function (response) {
+        _this.$emit('deleted');
+
+        console.log(response.data.message);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -2764,20 +2813,45 @@ __webpack_require__.r(__webpack_exports__);
     getGrades: function getGrades() {
       return axios.get("/grades");
     },
+    makeRequest: function makeRequest() {
+      if (this.component.id) {
+        this.putComponent();
+      } else {
+        this.postComponent();
+      }
+    },
     postComponent: function postComponent() {
       var _this2 = this;
 
-      this.selectedGrade.forEach(function (grade) {
-        _this2.component.grades.push(grade.id);
-      });
-      this.component.mandatory_area_id = this.selectedArea.id;
-      axios.post('/components', this.$data.component).then(function (response) {
+      this.assignBeforeSend();
+      axios.post('/components', this.component).then(function (response) {
         console.log(response.data.message);
 
         _this2.resetForm();
 
         _this2.$emit('success');
       });
+    },
+    putComponent: function putComponent() {
+      var _this3 = this;
+
+      this.assignBeforeSend();
+      axios.put("/components/".concat(this.component.id), this.component).then(function (response) {
+        console.log(response.data.message);
+
+        _this3.resetForm();
+
+        _this3.$emit('success');
+      });
+    },
+    assignBeforeSend: function assignBeforeSend() {
+      var _this4 = this;
+
+      if (this.component.grades.length) this.component.grades = [];
+      this.selectedGrade.forEach(function (grade) {
+        _this4.component.grades.push(grade.id);
+      });
+      this.component.mandatory_area_id = this.selectedArea.id;
     },
     resetForm: function resetForm() {
       this.component = {
@@ -2786,6 +2860,8 @@ __webpack_require__.r(__webpack_exports__);
         mandatory_area_id: '',
         grades: []
       };
+      this.selectedArea = "";
+      this.selectedGrade = [];
     }
   }
 });
@@ -2805,6 +2881,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Component_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Component.vue */ "./resources/js/components/components/Component.vue");
 /* harmony import */ var _competences_CompetenceForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../competences/CompetenceForm.vue */ "./resources/js/components/competences/CompetenceForm.vue");
 /* harmony import */ var _indicators_IndicatorForm_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../indicators/IndicatorForm.vue */ "./resources/js/components/indicators/IndicatorForm.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+//
 //
 //
 //
@@ -2860,15 +2947,36 @@ __webpack_require__.r(__webpack_exports__);
       components: [],
       competenceModal: false,
       indicatorModal: false,
-      currentComponent: '',
-      currentCompetence: ''
+      currentComponent: "",
+      currentCompetence: ""
     };
   },
   created: function created() {
     var _this = this;
 
-    CompetenceComponentEmitter.$on('indicator', function (competence) {
+    /** Listening child for edit the incoming competence */
+    CompetenceComponentEmitter.$on('edit', function (competence) {
+      _this.passToEditCompetenceForm(competence);
+    });
+    /** Listening child for deleted a competence */
+
+    CompetenceComponentEmitter.$on('deleted', function () {
+      _this.getComponents();
+    });
+    /** Listening child for creating a indicator */
+
+    CompetenceComponentEmitter.$on("indicator", function (competence) {
       _this.passToIndicatorForm(competence);
+    });
+    /** Listening child for edit the incoming indicator */
+
+    CompetenceComponentEmitter.$on('edit-indicator', function (indicator) {
+      _this.passToEditInidicatorForm(indicator);
+    });
+    /** Listening child for deleted an indicator */
+
+    CompetenceComponentEmitter.$on('indicator-deleted', function () {
+      _this.getComponents();
     });
     this.getComponents();
   },
@@ -2888,12 +2996,27 @@ __webpack_require__.r(__webpack_exports__);
       this.indicatorModal = false;
       this.getComponents();
     },
+
+    /** Trigger method when child emit to creating a competence */
     passToCompetenceForm: function passToCompetenceForm(component) {
       this.currentComponent = component;
+      this.$refs.competenceForm.resetForm();
+      this.competenceModal = true;
+    },
+    passToEditCompetenceForm: function passToEditCompetenceForm(competence) {
+      var indicators = competence.indicators,
+          currentCompetence = _objectWithoutProperties(competence, ["indicators"]);
+
+      this.$refs.competenceForm.competence = currentCompetence;
       this.competenceModal = true;
     },
     passToIndicatorForm: function passToIndicatorForm(competence) {
       this.currentCompetence = competence;
+      this.$refs.indicatorForm.resetForm();
+      this.indicatorModal = true;
+    },
+    passToEditInidicatorForm: function passToEditInidicatorForm(indicator) {
+      this.$refs.indicatorForm.indicator = _objectSpread({}, indicator);
       this.indicatorModal = true;
     }
   }
@@ -2975,10 +3098,25 @@ __webpack_require__.r(__webpack_exports__);
       componentModalActive: false
     };
   },
+  created: function created() {
+    var _this = this;
+
+    /** Listening for edit event from component child  */
+    ComponentEmitter.$on('edit', function (component) {
+      _this.$refs.componentForm.component = component;
+      _this.$refs.componentForm.selectedArea = component.mandatory_area;
+      _this.$refs.componentForm.selectedGrade = component.grades;
+      _this.componentModalActive = true;
+    });
+  },
   methods: {
     showMessage: function showMessage() {
       this.componentModalActive = false;
       this.$refs.components.getComponents();
+    },
+    showModal: function showModal() {
+      this.$refs.componentForm.resetForm();
+      this.componentModalActive = true;
     }
   }
 });
@@ -3428,8 +3566,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['indicator']
+  props: ['indicator'],
+  methods: {
+    editIndicator: function editIndicator(indicator) {
+      CompetenceComponentEmitter.$emit('edit-indicator', indicator);
+    },
+    deleteIndicator: function deleteIndicator(indicator) {
+      axios["delete"]("/indicators/".concat(indicator.id)).then(function (response) {
+        console.log(response.data.message);
+        CompetenceComponentEmitter.$emit('indicator-deleted');
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -3476,6 +3629,13 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    makeRequest: function makeRequest() {
+      if (this.indicator.id) {
+        this.putIndicator();
+      } else {
+        this.postIndicator();
+      }
+    },
     postIndicator: function postIndicator() {
       var _this = this;
 
@@ -3484,6 +3644,17 @@ __webpack_require__.r(__webpack_exports__);
         _this.$emit('success');
 
         _this.resetForm();
+      });
+    },
+    putIndicator: function putIndicator() {
+      var _this2 = this;
+
+      axios.put("/indicators/".concat(this.indicator.id), this.indicator).then(function (response) {
+        console.log(response.data.messagae);
+
+        _this2.$emit('success');
+
+        _this2.resetForm();
       });
     },
     resetForm: function resetForm() {
@@ -41642,9 +41813,38 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {},
     [
-      _c("p", [_vm._v(_vm._s(_vm.competence.name))]),
+      _c("p", [
+        _c("span", [_vm._v(_vm._s(_vm.competence.name))]),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            attrs: { href: "#" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.editCompetence(_vm.competence)
+              }
+            }
+          },
+          [_c("i", { staticClass: "fa fa-edit has-text-primary is-size-5" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            attrs: { href: "#" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.deleteCompetence(_vm.competence)
+              }
+            }
+          },
+          [_c("i", { staticClass: "fa fa-trash has-text-danger is-size-5" })]
+        )
+      ]),
       _vm._v(" "),
       _c("span", { staticClass: "has-text-weight-semibold" }, [
         _vm._v("Indicador (es):")
@@ -41705,7 +41905,7 @@ var render = function() {
       on: {
         submit: function($event) {
           $event.preventDefault()
-          return _vm.postCompetence($event)
+          return _vm.makeRequest($event)
         }
       }
     },
@@ -41847,7 +42047,41 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(0)
+      _c("div", { staticClass: "level-right" }, [
+        _c("div", { staticClass: "level-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "is-size-4",
+              attrs: { title: "Editar", href: "#" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.editComponent(_vm.component)
+                }
+              }
+            },
+            [_c("i", { staticClass: "fa fa-edit has-text-primary" })]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "level-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "is-size-4",
+              attrs: { title: "Eliminar", href: "#" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.deleteComponent(_vm.component)
+                }
+              }
+            },
+            [_c("i", { staticClass: "fa fa-trash has-text-danger" })]
+          )
+        ])
+      ])
     ]),
     _vm._v(" "),
     _c("section", { staticClass: "columns" }, [
@@ -41934,22 +42168,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "level-right" }, [
-      _c("div", { staticClass: "level-item" }, [
-        _c(
-          "a",
-          { staticClass: "is-size-4", attrs: { title: "Editar", href: "#" } },
-          [_c("i", { staticClass: "fa fa-edit has-text-primary" })]
-        )
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -41977,7 +42196,7 @@ var render = function() {
       on: {
         submit: function($event) {
           $event.preventDefault()
-          return _vm.postComponent($event)
+          return _vm.makeRequest($event)
         }
       }
     },
@@ -41994,6 +42213,7 @@ var render = function() {
                 _c("multiselect", {
                   attrs: {
                     options: _vm.areas,
+                    "track-by": "name",
                     label: "name",
                     placeholder: "Seleccione área"
                   },
@@ -42183,7 +42403,8 @@ var render = function() {
           on: {
             competence: function($event) {
               return _vm.passToCompetenceForm(component)
-            }
+            },
+            deleted: _vm.getComponents
           }
         })
       }),
@@ -42209,13 +42430,14 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "is-size-6" }, [
                 _vm._v(
-                  "\n        Es un conjunto de conocimientos o habilidades que están apropiadamente relacionadas entre sí para facilitar el desempeño flexible, eficaz y con sentido, de una actividad.\n      "
+                  "Es un conjunto de conocimientos o habilidades que están apropiadamente relacionadas entre sí para facilitar el desempeño flexible, eficaz y con sentido, de una actividad."
                 )
               ]),
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
               _c("competence-form", {
+                ref: "competenceForm",
                 attrs: { component: _vm.currentComponent },
                 on: {
                   success: _vm.showCompetenceMessage,
@@ -42249,6 +42471,7 @@ var render = function() {
             { staticClass: "content", attrs: { slot: "body" }, slot: "body" },
             [
               _c("indicator-form", {
+                ref: "indicatorForm",
                 attrs: { competence: _vm.currentCompetence },
                 on: {
                   success: _vm.showIndicatorMessage,
@@ -42302,11 +42525,7 @@ var render = function() {
               "a",
               {
                 staticClass: "button is-primary",
-                on: {
-                  click: function($event) {
-                    _vm.componentModalActive = true
-                  }
-                }
+                on: { click: _vm.showModal }
               },
               [_vm._m(1), _vm._v(" "), _c("span", [_vm._v("Crear componente")])]
             )
@@ -42341,6 +42560,7 @@ var render = function() {
                 _c("br"),
                 _vm._v(" "),
                 _c("component-form", {
+                  ref: "componentForm",
                   on: {
                     success: _vm.showMessage,
                     cancel: function($event) {
@@ -43075,7 +43295,37 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "is-inline" }, [
-    _c("p", [_vm._v(_vm._s(_vm.indicator.name))])
+    _c("p", [
+      _c("span", [_vm._v(_vm._s(_vm.indicator.name))]),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          attrs: { href: "#" },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.editIndicator(_vm.indicator)
+            }
+          }
+        },
+        [_c("i", { staticClass: "fa fa-edit has-text-primary is-size-5" })]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          attrs: { href: "#" },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.deleteIndicator(_vm.indicator)
+            }
+          }
+        },
+        [_c("i", { staticClass: "fa fa-trash has-text-danger is-size-5" })]
+      )
+    ])
   ])
 }
 var staticRenderFns = []
@@ -43106,7 +43356,7 @@ var render = function() {
       on: {
         submit: function($event) {
           $event.preventDefault()
-          return _vm.postIndicator($event)
+          return _vm.makeRequest($event)
         }
       }
     },
@@ -57450,6 +57700,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('multiselect', vue_multisel
 
 window.SubjectAreaEmitter = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 window.GradeClassEmitter = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
+window.ComponentEmitter = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 window.CompetenceComponentEmitter = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: "#app",
