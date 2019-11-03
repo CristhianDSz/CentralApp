@@ -64,8 +64,10 @@ class LearningSectionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(LearningSection $learningSection)
+    public function update($id)
     {
+        $learningSection = LearningSection::findOrFail($id);
+        
         $attributes = request()->validate([
             'title' => 'required|min:3',
             'start_date' => 'required',
@@ -83,7 +85,7 @@ class LearningSectionsController extends Controller
             'homeworks' => 'present|array',
         ]);
 
-        $learningSection = LearningSection::create($attributes);
+        $learningSection->update($attributes);
         $learningSection->components()->sync($extraAttributes['components']);
         $learningSection->competences()->sync($extraAttributes['competences']);
         $learningSection->indicators()->sync($extraAttributes['indicators']);

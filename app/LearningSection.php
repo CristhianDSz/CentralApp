@@ -8,6 +8,7 @@ class LearningSection extends Model
 {
     protected $table = 'learning_sections';
     protected $fillable = ['title', 'start_date', 'end_date', 'context', 'ova_id'];
+    protected $hidden = ['created_at','updated_at'];
 
     public function ova()
     {
@@ -122,7 +123,9 @@ class LearningSection extends Model
     */
     public function updateResource($resource = [])
     {
-        return $this->resources()->associate($resource);   
+        return $this->resources()
+        ->where('id',$resource['id'])
+        ->update($resource);   
     }
 
     /**
@@ -148,7 +151,9 @@ class LearningSection extends Model
     */
     public function updateBibliography($bibliography = [])
     {
-        return $this->bibliographies()->associate($bibliography);
+        return $this->bibliographies()
+        ->where('id',$bibliography['id'])
+        ->update($bibliography);
     }
 
     /**
@@ -200,7 +205,9 @@ class LearningSection extends Model
     */
     public function updateHomework($homework =[])
     {
-        return $this->homeworks()->associate($homework);
+        return $this->homeworks()
+        ->where('id',$homework['id'])
+        ->update($homework);
     }
 
 

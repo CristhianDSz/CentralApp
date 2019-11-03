@@ -106,35 +106,35 @@
         </p>
         <ul class="menu-list">
             <li>
-                <a class="is-active" href="/">
+                <a class="" href="/">
                     <span class="icon">
                         <i class="fa fa-home"></i>
                     </span> Tablero
                 </a>
             </li>
             <li>
-            <a class="" href="{{ route('ovas.render') }}">
+            <a class="{{ Route::currentRouteName() == 'ovas.render' ? 'is-active' : ''}}" href="{{ route('ovas.render') }}">
                     <span class="icon">
                         <i class="fa fa-edit"></i>
                     </span> Ovas
                 </a>
             </li>
             <li>
-            <a class="" href="{{ route('components.render') }}">
+            <a class="{{ Route::currentRouteName() == 'components.render' ? 'is-active' : ''}}" href="{{ route('components.render') }}">
                     <span class="icon">
                         <i class="fa fa-codepen"></i>
                     </span> Componentes
                 </a>
             </li>
             <li>
-            <a class="" href="{{ route('mandatory-areas.render') }}">
+            <a class="{{ Route::currentRouteName() == 'mandatory-areas.render' ? 'is-active' : ''}}" href="{{ route('mandatory-areas.render') }}">
                     <span class="icon">
                         <i class="fa fa-leanpub"></i>
                     </span>Áreas
                 </a>
             </li>
             <li>
-            <a class="" href="{{ route('grades.render') }}">
+            <a class="{{ Route::currentRouteName() == 'grades.render' ? 'is-active' : ''}}" href="{{ route('grades.render') }}">
                     <span class="icon">
                         <i class="fa fa-users"></i>
                     </span>Grados
@@ -155,7 +155,7 @@
                 </a>
             </li>
             <li>
-            <a class="" href="{{route('schools.index') }}">
+            <a class="{{ Route::currentRouteName() == 'schools.index' ? 'is-active' : ''}}" href="{{route('schools.index') }}">
                     <span class="icon">
                         <i class="fa fa-building"></i>
                     </span>Institución

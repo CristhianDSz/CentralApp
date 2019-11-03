@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="postLerningSection">
+  <form @submit.prevent="makeRequest">
     <div class="field is-horizontal">
       <div class="field-label is-normal">
         <label class="label">Título</label>
@@ -133,74 +133,13 @@
         </div>
       </div>
     </div>
-    <div class="field is-horizontal">
-       <div class="field-label is-normal">
-        <label class="label">Recursos</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <div class="control">
-            <input type="text" class="input is-small" @keydown.enter.prevent="addResource(currentResource)" v-model="currentResource" placeholder="Url">
-          </div>
-        </div>
-        <div class="field">
-          <div class="control">
-            <button type="button" class="button is-primary is-small" :disabled="currentResource.length < 3" @click="addResource(currentResource)">+</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="field is-horizontal">
-       <div class="field-label is-normal">
-        <label class="label">Recursos actuales</label>
-      </div>
-      <div class="field-body">
-        <div class="field is-size-7">
-          <ul v-if="learningSection.resources.length">
-            <li v-for="resource in learningSection.resources" :key="resource.url">
-                <p>{{resource.url}} <a href="#" @click.prevent="deleteResource(resource)"><i class="fa fa-minus-circle has-text-danger is-size-5"></i></a></p>
-              </li>
-          </ul>
-          <p class="is-size-7" v-else>Actualmente no se han agregado url's a recursos externos</p>
-        </div>
-      </div>
-    </div>
 
-    <div class="field is-horizontal">
-       <div class="field-label is-normal">
-        <label class="label">Ref. bibliográficas</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <div class="control">
-            <input type="text" class="input is-small" @keydown.enter.prevent="addBibliography(currentBibliography)" v-model="currentBibliography" placeholder="Referencia">
-          </div>
-        </div>
-        <div class="field">
-          <div class="control">
-            <button type="button" class="button is-primary is-small" :disabled="currentBibliography.length < 3" @click="addBibliography(currentBibliography)">+</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <resource-form ref="resourceForm" @resources="learningSection.resources=$event"></resource-form><br>
 
-    <div class="field is-horizontal">
-       <div class="field-label is-normal">
-        <label class="label">Ref. bibliográficas actuales</label>
-      </div>
-      <div class="field-body">
-        <div class="field is-size-7">
-          <ul v-if="learningSection.bibliographies.length">
-            <li v-for="bibliography in learningSection.bibliographies" :key="bibliography.url">
-                <p>{{bibliography.url}} <a href="#" @click.prevent="deleteBibliography(bibliography)"><i class="fa fa-minus-circle has-text-danger is-size-5"></i></a></p>
-              </li>
-          </ul>
-          <p class="is-size-7" v-else>Actualmente no se han agregado url's a refs. bibliográficas</p>
-        </div>
-      </div>
-    </div>
+    <bibliography-form ref="bibliographyForm" @bibliographies="learningSection.bibliographies = $event">
+    </bibliography-form><br>
 
-    <homework-form @homeworks="learningSection.homeworks=$event"></homework-form>
+    <homework-form ref="homeworkForm" @homeworks="learningSection.homeworks=$event"></homework-form>
    
     <div class="control has-text-right">
       <button type="submit" class="button is-primary" :disabled="formActionable">Agregar</button>
@@ -210,10 +149,12 @@
 </template>
 
 <script>
+import ResourceForm from '../resources/ResourceForm.vue'
 import HomeworkForm from '../homeworks/HomeworkForm.vue'
+import BibliographyForm from '../bibliographies/BibliographyForm.vue'
 export default {
   props: ['ova'],
-  components: {HomeworkForm},
+  components: {ResourceForm,BibliographyForm,HomeworkForm},
   data() {
     return {
       components: [],
@@ -236,24 +177,19 @@ export default {
         bibliographies:[],
         homeworks:[]
       },
-      currentResource: "",
-      currentBibliography:"",
     };
   },
   created() {
-    this.getData();
+    this.getComponents();
     this.setInitialDates()
   },
   methods: {
-    getData() {
-      axios.all([this.getComponents()]).then(
-        axios.spread(components => {
-          this.components = components.data;
-        })
-      );
-    },
     getComponents() {
-      return axios.get(`/ovas/${this.ova.id}/components`);
+      if (this.ova) {
+        axios.get(`/ovas/${this.ova.id}/components`).then(response => {
+          this.components = response.data
+        })
+      }
     },
     getCompetences(components = []) {
       // If we have competences, we reasign the property to an empty array
@@ -271,10 +207,34 @@ export default {
         this.indicators.push(...competence.indicators);
       });
     },
-    postLerningSection() {
-      //Set learning section's foreign keys after we make request
+    makeRequest() {
+      if (this.learningSection.id) {
+        this.putLearningSection()
+      } else {
+        this.postLearningSection()
+      }
+    },
+    postLearningSection() {
+      //Set learning section's foreign keys before we make request
       this.learningSection.ova_id = this.ova.id;
-
+      this.assignBeforeSend()
+      axios.post("/learning-sections", this.learningSection).then(response => {
+        console.log(response.data.message);
+        this.resetForm();
+        this.$emit("success");
+      });
+    },
+    putLearningSection() {
+      this.assignBeforeSend()
+      axios.put(`/learning-sections/${this.learningSection.id}`,
+        this.learningSection).then(response => {
+          console.log(response.data.message)
+          this.resetForm()
+          this.$emit('success')
+        })
+    },
+    /** Assign extra data before send request */
+    assignBeforeSend() {
       this.selectedComponents.forEach(component => {
         this.learningSection.components.push(component.id);
       });
@@ -283,13 +243,6 @@ export default {
       });
       this.selectedIndicators.forEach(indicator => {
         this.learningSection.indicators.push(indicator.id);
-      });
-
-      // Make post request
-      axios.post("/learning-sections", this.learningSection).then(response => {
-        console.log(response.data.message);
-        this.resetForm();
-        this.$emit("success");
       });
     },
     /** Clean the learning section property and extra content */
@@ -309,23 +262,7 @@ export default {
     setInitialDates() {
       this.learningSection.start_date = moment().format('YYYY-MM-DD')
       this.learningSection.end_date = moment().add(1, 'w').format('YYYY-MM-DD')
-    },
-    addResource(url) {
-      this.learningSection.resources.push({url})
-      this.currentResource = ""
-    },
-    deleteResource(resource) {
-      let index = this.learningSection.resources.indexOf(resource)
-      this.learningSection.resources.splice(index,1)
-    },
-    addBibliography(url) {
-      this.learningSection.bibliographies.push({url})
-      this.currentBibliography = ""
-    },
-    deleteBibliography(bibliograhphy) {
-      let index = this.learningSection.bibliographies.indexOf(bibliograhphy)
-      this.learningSection.bibliographies.splice(index,1)
-    },
+    }
   },
   computed: {
     enableComponents() {
@@ -340,6 +277,14 @@ export default {
     /** The form is not actionable if we don't have components or competences or indicators */
     formActionable () {
       return !this.components.length > 0 || !this.competences.length > 0 || !this.indicators.length > 0
+    }
+  },
+  watch: {
+    /**
+     * Initially ova property is undefined, so:
+     * Watching when ova property change, if it does then call the method getComponents */
+    ova() {
+      this.getComponents()
     }
   }
 };

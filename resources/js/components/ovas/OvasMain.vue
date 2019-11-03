@@ -32,7 +32,7 @@
           <h2>Qué es una Ova?</h2>
           <p>Las ovas para la educación están organizadas en componentes básicos interconectados. Esta forma de organización facilita una aproximación progresiva al conocimiento por parte de los estudiantes y orienta el trabajo de los docentes en el aula</p>
           <br />
-          <ova-form @success="showMessage" @cancel="ovaModalActive=false"></ova-form>
+          <ova-form ref="ovaForm" @success="showMessage" @cancel="ovaModalActive=false"></ova-form>
         </div>
       </modal>
     </div>
@@ -56,6 +56,16 @@ export default {
     return {
       ovaModalActive: false,
     };
+  },
+  created() {
+    OvaEmitter.$on('edit', ova => {
+      this.$refs.ovaForm.ova = ova
+      this.$refs.ovaForm.selectedArea = ova.mandatory_area
+      this.$refs.ovaForm.selectedClass = ova.class
+      this.$refs.ovaForm.selectedGrade = ova.grade
+      this.$refs.ovaForm.selectedSubject = ova.subject
+      this.ovaModalActive = true
+    })
   },
   methods: {
     showMessage() {

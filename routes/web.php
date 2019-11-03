@@ -38,3 +38,13 @@ Route::apiResource('ovas', 'OvasController');
 Route::get('ovas/{ova}/components', 'OvasController@components');
 //Learning sections
 Route::apiResource('learning-sections','LearningSectionsController');
+//Resources
+Route::post('/resources','ResourcesController@store');
+Route::delete('/resources/{resource}', 'ResourcesController@destroy');
+//Bibliographies
+Route::post('/bibliographies','BibliographiesController@store');
+Route::delete('/bibliographies/{bibliography}','BibliographiesController@destroy');
+//Homeworks
+Route::post('/homeworks','HomeworksController@store');
+Route::delete('/homeworks/{homework}','HomeworksController@destroy');
+

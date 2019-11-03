@@ -32,9 +32,13 @@ class OvasController extends Controller
             ->with('user')
             ->with(['learningSections' => function ($query) {
                 $query
-                    ->with('components')
-                    ->with('competences')
-                    ->with('indicators');
+                    ->with('ova')
+                    ->with('components.competences.indicators')
+                    ->with('competences.indicators')
+                    ->with('indicators')
+                    ->with('resources')
+                    ->with('bibliographies')
+                    ->with('homeworks');
             }])
             ->get();
     }
@@ -98,9 +102,10 @@ class OvasController extends Controller
             'class_id' => 'required|numeric',
             'mandatory_area_id' => 'required|numeric',
             'subject_id' => 'required|numeric',
+            'user_id' => 'required|numeric'
         ]);
         
-        $attributes['user_id'] = auth()->id();
+        //$attributes['user_id'] = auth()->id();
 
         $ova->update($attributes);
 

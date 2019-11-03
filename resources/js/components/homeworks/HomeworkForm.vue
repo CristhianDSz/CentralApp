@@ -8,7 +8,7 @@
     </div>
     <div class="field is-horizontal">
       <div class="field-label is-normal">
-        <label class="label">Contenido</label>
+        <label class="label">Actividad</label>
       </div>
       <div class="field-body">
         <div class="field">
@@ -30,13 +30,15 @@
       <div class="field-body">
         <div class="field">
           <div class="control">
-           <div class="select is-primary is-small">
-              <select
-              v-model="homework.presentation"
-            >
-              <option v-for="(presentation, index) in presentations" :key="index" :value="presentation">{{presentation}}</option>
-            </select>
-           </div>
+            <div class="select is-primary is-small">
+              <select v-model="homework.presentation">
+                <option
+                  v-for="(presentation, index) in presentations"
+                  :key="index"
+                  :value="presentation"
+                >{{presentation}}</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -50,16 +52,21 @@
       >+</button>
     </div>
 
-     <div class="field is-horizontal">
-       <div class="field-label is-normal">
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
         <label class="label">Actividades actuales</label>
       </div>
       <div class="field-body">
         <div class="field is-size-7">
           <ul v-if="homeworks.length">
             <li v-for="homework in homeworks" :key="homework.content">
-                <p>{{homework.content}} <a href="#" @click.prevent="deleteHomework(homework)"><i class="fa fa-minus-circle has-text-danger is-size-5"></i></a></p>
-              </li>
+              <p>
+                {{homework.content}}
+                <a href="#" @click.prevent="deleteHomework(homework)">
+                  <i class="fa fa-minus-circle has-text-danger is-size-5"></i>
+                </a>
+              </p>
+            </li>
           </ul>
           <p class="is-size-7" v-else>Actualmente no se han agregado actividades</p>
         </div>
@@ -69,7 +76,7 @@
 </template>
 
 <script>
-import {presentations} from './presentations' 
+import { presentations } from "./presentations";
 export default {
   data() {
     return {
@@ -77,34 +84,51 @@ export default {
         id: "",
         link: false,
         content: "",
-        presentation: "",
+        presentation: ""
       },
-      homeworks:[],
-      presentations:[]
+      homeworks: [],
+      presentations: []
     };
   },
   created() {
-    this.presentations = presentations
-    this.homework.presentation = this.presentations[0]
+    this.presentations = presentations;
+    this.homework.presentation = this.presentations[0];
   },
   methods: {
     addHomework(homework) {
-      const content = homework.content
-      const presentation = homework.presentation
-      this.homeworks.push({content, presentation})
-      this.$emit("homeworks",this.homeworks)
+      const content = homework.content;
+      const presentation = homework.presentation;
+      if (this.$parent.learningSection.id) {
+        const homework = {
+          learning_section_id: this.$parent.learningSection.id,
+          content,
+          presentation
+        };
+        axios.post("/homeworks", homework).then(response => {
+          this.homeworks.push(response.data.homework);
+        });
+      } else {
+        this.homeworks.push({ content, presentation });
+      }
+      this.$emit("homeworks", this.homeworks);
       this.resetForm();
     },
     deleteHomework(homework) {
-      let index = this.homeworks.indexOf(homework)
-      this.homeworks.splice(index,1)
+      if (this.$parent.learningSection.id) {
+        const tempHomework = homework;
+        axios.delete(`/homeworks/${tempHomework.id}`).then(response => {
+          console.log(response.data.message);
+        });
+      }
+      let index = this.homeworks.indexOf(homework);
+      this.homeworks.splice(index, 1);
+      this.$emit("homeworks", this.homeworks);
     },
     resetForm() {
       for (let property in this.homework) {
-        if (property === 'presentation') {
-          this.homework[property] = this.presentations[0]
-        }
-        else {
+        if (property === "presentation") {
+          this.homework[property] = this.presentations[0];
+        } else {
           this.homework[property] = "";
         }
       }

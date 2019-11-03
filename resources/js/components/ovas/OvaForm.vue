@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="postOva">
+  <form @submit.prevent="makeRequest">
     <div class="field is-horizontal">
       <div class="field-label is-normal">
         <label class="label">Área</label>
@@ -152,18 +152,35 @@ export default {
     getClasses(grade) {
       this.classes = grade.classes
     },
+    makeRequest() {
+      if (this.ova.id) {
+        this.putOva()
+      } else {
+        this.postOva()
+      }
+    },
     postOva() {
-      //Set ova's foreign keys
-      this.ova.mandatory_area_id = this.selectedArea.id;
-      this.ova.subject_id = this.selectedSubject.id
-      this.ova.grade_id = this.selectedGrade.id
-      this.ova.class_id = this.selectedClass.id
-
+      this.assignBeforeSend()
       axios.post("/ovas", this.ova).then(response => {
         console.log(response.data.message);
         this.resetForm();
         this.$emit("success");
       });
+    },
+    putOva() {
+      this.assignBeforeSend()
+      axios.put(`/ovas/${this.ova.id}`, this.ova).then(response => {
+        console.log(response.data.message)
+        this.resetForm()
+        this.$emit('success')
+      })
+    },
+    assignBeforeSend() {
+      //Set ova's foreign keys
+      this.ova.mandatory_area_id = this.selectedArea.id;
+      this.ova.subject_id = this.selectedSubject.id
+      this.ova.grade_id = this.selectedGrade.id
+      this.ova.class_id = this.selectedClass.id
     },
     resetForm() {
       for (let property in this.ova) {

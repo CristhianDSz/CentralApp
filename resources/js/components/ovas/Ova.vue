@@ -13,12 +13,12 @@
           </a>
         </div>
         <div class="level-item">
-          <a title="Editar" class="is-size-4" href="#">
+          <a title="Editar" class="is-size-4" href="#" @click.prevent="editOva(ova)">
             <i class="fa fa-edit has-text-primary"></i>
           </a>
         </div>
         <div class="level-item">
-          <a title="Eliminar" class="is-size-4" href="#">
+          <a title="Eliminar" class="is-size-4" href="#" @click.prevent="deleteOva(ova)">
             <i class="fa fa-trash has-text-danger"></i>
           </a>
         </div>
@@ -60,47 +60,7 @@
       </div>
     </div>
     <h6 class="has-text-weight-semibold has-text-centered is-size-6">Unidad(es) de aprendizaje:</h6>
-    <div class="columns" v-if="ova.learning_sections.length">
-      <div class="column" v-for="learningSection in ova.learning_sections" :key="learningSection.id">
-        <div class="is-size-7">
-              <p class="has-text-weight-semibold">{{learningSection.title}}</p>
-                <p>Contexto: {{learningSection.context}}</p>
-                <div>
-                  <p>Componentes:</p>
-                  <ul>
-                    <li
-                      v-for="component in learningSection.components"
-                      :key="component.id"
-                    >{{component.name}}</li>
-                  </ul>
-                </div>
-                <br />
-                <div>
-                  <p>Competencias:</p>
-                  <ul>
-                    <li
-                      v-for="competence in learningSection.competences"
-                      :key="competence.id"
-                    >{{competence.name}}</li>
-                  </ul>
-                </div>
-                <br />
-                <div>
-                  <p>Indicadores:</p>
-                  <ul>
-                    <li
-                      v-for="indicator in learningSection.indicators"
-                      :key="indicator.id"
-                    >{{indicator.name}}</li>
-                  </ul>
-                </div>
-          <!-- <competences v-if="component.competences.length" :competences="component.competences"></competences>
-          <div class="message is-warning is-size-7" v-else>
-            <p class="message-body">Aún no se ha(n) asignado competencia(s) a este componente.</p>
-          </div>-->
-        </div>
-      </div>
-    </div>
+    <learning-sections v-if="ova.learning_sections.length" :learningSections="ova.learning_sections"></learning-sections>
     <div class="message is-warning has-text-centered" v-else>
       <p class="message-body">Actualmente no existen unidades de aprendizaje para esta OVA</p>
     </div>
@@ -116,8 +76,8 @@
       </div>
       <div class="level-right">
         <div class="level-item">
-          <a class="is-size-6" href="#" @click.prevent="$emit('learningSection',ova)">
-            <i class="fa fa-plus"></i> Unidad de aprendizaje
+          <a class="is-size-6 has-text-primary" href="#" @click.prevent="$emit('learningSection',ova)">
+            <i class="fa fa-plus-circle is-size-5"></i> Unidad de aprendizaje
           </a>
         </div>
       </div>
@@ -126,14 +86,24 @@
 </template>
 
 <script>
-//import Competences from '../competences/Competences.vue'
+import learningSections from '../learning-sections/LearningSections'
 export default {
   props: ["ova"],
-  //components: {Competences},
+  components: {learningSections},
   data() {
     return {};
   },
   created() {},
-  methods: {}
+  methods: {
+    editOva(ova) {
+      OvaEmitter.$emit('edit', ova)
+    },
+    deleteOva(ova) {
+      axios.delete(`/ovas/${ova.id}`).then(response => {
+        console.log(response.data.message)
+        this.$emit('deleted')
+      })
+    }
+  }
 };
 </script>
