@@ -6,6 +6,11 @@ use App\MandatoryArea;
 
 class MandatoryAreasController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function render()
     {
         return view('areas.index');

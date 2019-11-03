@@ -6,7 +6,10 @@ use App\Ova;
 
 class OvasController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display the resource view
      *

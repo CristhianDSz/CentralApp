@@ -47,4 +47,6 @@ Route::delete('/bibliographies/{bibliography}','BibliographiesController@destroy
 //Homeworks
 Route::post('/homeworks','HomeworksController@store');
 Route::delete('/homeworks/{homework}','HomeworksController@destroy');
+//Authentication
+Auth::routes();
 

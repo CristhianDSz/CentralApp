@@ -6,7 +6,11 @@ use App\Subject;
 
 class SubjectsController extends Controller
 {
-   
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         return Subject::orderBy('name')->with('mandatoryArea')->get();

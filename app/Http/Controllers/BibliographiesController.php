@@ -6,6 +6,10 @@ use App\Bibliography;
 
 class BibliographiesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Save the incomming bibliography
      *

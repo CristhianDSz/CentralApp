@@ -6,6 +6,15 @@ use App\Homework;
 
 class HomeworksController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    /**
+     * Store the incomming resource
+     *
+     * @return Illuminate\HttpResponse
+     */
     public function store()
     {
         $attributes = request()->validate([

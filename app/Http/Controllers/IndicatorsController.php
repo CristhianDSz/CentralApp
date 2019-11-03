@@ -6,6 +6,15 @@ use App\Indicator;
 
 class IndicatorsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    /**
+     * List the current resources
+     *
+     * @return Illuminate\HttpResponse
+     */
     public function index()
     {
         return Indicator::orderBy('name')->get();
