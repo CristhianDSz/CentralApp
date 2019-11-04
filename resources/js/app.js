@@ -20,6 +20,16 @@ window.CompetenceComponentEmitter = new Vue()
 window.OvaEmitter = new Vue()
 window.OvaLearningEmitter = new Vue()
 
+// Navbar section
+const navMenu = new Vue({
+  el: '#navMenu',
+  data() {
+    return {
+      navbarDropdown: false
+    }
+  }
+})
+
 const app = new Vue({
     el: '#app',
     components: {

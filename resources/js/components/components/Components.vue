@@ -1,12 +1,18 @@
 <template>
   <div>
-    <my-component
+    <template v-if="components.length">
+      <my-component
       v-for="component in components"
       :key="component.id"
       :component="component"
       @competence="passToCompetenceForm(component)"
       @deleted="getComponents"
     ></my-component>
+    </template>
+
+    <div class="message is-warning is-size-7" v-else>
+      <p class="message-body">Actualmente no existen componentes. Puede agregar uno dando clic en el botón de la parte superior</p>
+    </div>
 
     <modal :modalActive="competenceModal" @close="competenceModal=!competenceModal">
       <template slot="title">Agregar competencia</template>

@@ -83,11 +83,12 @@
                             <figure class="avatar">
                                 <img src="https://api.adorable.io/avatars/128/abott@adorable.png">
                             </figure>
+                        @include('partials.errors')
                         <form action="{{route('login')}}" method="POST">
                                 @csrf
                                 <div class="field">
                                     <div class="control">
-                                        <input name="email" class="input is-large" type="email" placeholder="Correo" autofocus="">
+                                    <input name="email" value="{{old('email')}}" class="input is-large" type="email" placeholder="Correo" autofocus="">
                                     </div>
                                 </div>
 
@@ -96,7 +97,7 @@
                                         <input name="password" class="input is-large" type="password" placeholder="Contraseña">
                                     </div>
                                 </div>
-                                <button type="submit" class="button is-block is-info is-large is-fullwidth">Ingresar <i class="fa fa-sign-in" aria-hidden="true"></i></button>
+                                <button type="submit" class="button is-block is-primary is-large is-fullwidth">Ingresar <i class="fa fa-sign-in" aria-hidden="true"></i></button>
                             </form>
                         </div>
                         {{-- <p class="has-text-grey">

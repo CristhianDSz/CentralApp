@@ -58,40 +58,38 @@
     <div id="navMenu" class="navbar-menu column is-hidden-touch">
         <div class="navbar-end">
             <div class="navbar-item">
-                <a class="button is-white" onclick="Auth.logout()">
+                <a class="button is-white">
                     <span class="icon">
                         <i class="fa fa-lg fa-bell"></i>
                     </span>
                 </a>
             </div>
-            <div class="navbar-item">
-                <a class="button is-white" onclick="Auth.logout()">
-                    <span class="icon">
-                        <i class="fa fa-lg fa-power-off"></i>
-                    </span>
-                </a>
-            </div>
-            <div class="navbar-item has-dropdown">
+            <div class="navbar-item has-dropdown" :class="{'is-active': navbarDropdown}" @click="navbarDropdown = !navbarDropdown">
+                @if (auth()->check())
                 <a class="navbar-link">
                     <figure class="image avatar is-32x32">
-                        <img class="is-rounded" src="images/user1.png">
+                        <img class="is-rounded" src="https://api.adorable.io/avatars/64/{{auth()->user()->name}}@adorable.io.png">
                     </figure>
-                    &nbsp; Hi, Cristhian
+                    &nbsp;{{auth()->user()->name ?? 'Anónimo'}}
                 </a>
+                {{-- @else 
+                    <a href="{{ route('login') }}" class="navbar-link">
+                        Debes iniciar sesión
+                    </a> --}}
+                @endif
                 <div class="navbar-dropdown is-right">
                     <a class="navbar-item">
-                        Overview
-                    </a>
-                    <a class="navbar-item">
-                        Elements
-                    </a>
-                    <a class="navbar-item">
-                        Components
+                        Cambiar contraseña
                     </a>
                     <hr class="navbar-divider">
-                    <div class="navbar-item">
-                        Version 0.7.1
-                    </div>
+                    <a href="{{route('logout')}}" class="navbar-item" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit()
+                    ">
+                        Cerrar sesión
+                    </a>
+                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </div>
             </div>
         </div>
@@ -136,15 +134,29 @@
             <li>
             <a class="{{ Route::currentRouteName() == 'grades.render' ? 'is-active' : ''}}" href="{{ route('grades.render') }}">
                     <span class="icon">
-                        <i class="fa fa-users"></i>
+                        <i class="fa fa-pencil"></i>
                     </span>Grados
                 </a>
             </li>
             <li>
-                <a class="" href="datatables.html">
+            <a class="" href="{{ route('users.index') }}">
+                    <span class="icon">
+                        <i class="fa fa-users"></i>
+                    </span>Usuarios
+                </a>
+            </li>
+            <li>
+            <a class="" href="{{ route('roles.index') }}">
                     <span class="icon">
                         <i class="fa fa-user"></i>
-                    </span>Usuarios
+                    </span>Roles
+                </a>
+            </li>
+            <li>
+            <a class="" href="{{ route('permissions.index') }}">
+                    <span class="icon">
+                        <i class="fa fa-check"></i>
+                    </span>Permisos
                 </a>
             </li>
             <li>

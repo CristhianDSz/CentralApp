@@ -47,6 +47,20 @@ Route::delete('/bibliographies/{bibliography}','BibliographiesController@destroy
 //Homeworks
 Route::post('/homeworks','HomeworksController@store');
 Route::delete('/homeworks/{homework}','HomeworksController@destroy');
-//Authentication
-Auth::routes();
+//Users Authentication and Registration
+Route::namespace('Auth')->group(function () {
+    //Authentication
+    Route::get('login', 'LoginController@showLoginForm')->name('login');
+    Route::post('login', 'LoginController@login');
+    Route::post('logout', 'LoginController@logout')->name('logout');
+    //Registration
+    Route::get('register','RegisterController@showRegistrationForm')->name('register');
+    Route::post('register','RegisterController@register');
+});
+//Permissions
+Route::get('permissions', 'PermissionsController@index')->name('permissions.index');
+//Roles
+Route::resource('roles','RolesController')->except(['show']);
+//Users
+Route::resource('users','UsersController')->except(['show','create']);
 

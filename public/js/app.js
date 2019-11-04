@@ -3041,6 +3041,12 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4662,6 +4668,13 @@ function _objectWithoutProperties(source, excluded) { if (source == null) return
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -42950,18 +42963,26 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm._l(_vm.components, function(component) {
-        return _c("my-component", {
-          key: component.id,
-          attrs: { component: component },
-          on: {
-            competence: function($event) {
-              return _vm.passToCompetenceForm(component)
-            },
-            deleted: _vm.getComponents
-          }
-        })
-      }),
+      _vm.components.length
+        ? _vm._l(_vm.components, function(component) {
+            return _c("my-component", {
+              key: component.id,
+              attrs: { component: component },
+              on: {
+                competence: function($event) {
+                  return _vm.passToCompetenceForm(component)
+                },
+                deleted: _vm.getComponents
+              }
+            })
+          })
+        : _c("div", { staticClass: "message is-warning is-size-7" }, [
+            _c("p", { staticClass: "message-body" }, [
+              _vm._v(
+                "Actualmente no existen componentes. Puede agregar uno dando clic en el botón de la parte superior"
+              )
+            ])
+          ]),
       _vm._v(" "),
       _c(
         "modal",
@@ -45238,16 +45259,24 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm._l(_vm.ovas, function(ova) {
-        return _c("ova", {
-          key: ova.id,
-          attrs: { ova: ova },
-          on: {
-            learningSection: _vm.passToLearningSectionForm,
-            deleted: _vm.getOvas
-          }
-        })
-      }),
+      _vm.ovas.length
+        ? _vm._l(_vm.ovas, function(ova) {
+            return _c("ova", {
+              key: ova.id,
+              attrs: { ova: ova },
+              on: {
+                learningSection: _vm.passToLearningSectionForm,
+                deleted: _vm.getOvas
+              }
+            })
+          })
+        : _c("div", { staticClass: "message is-warning is-size-7" }, [
+            _c("p", { staticClass: "message-body" }, [
+              _vm._v(
+                "Actualmente no existen ovas. Puede agregar una dando clic en el botón de la parte superior"
+              )
+            ])
+          ]),
       _vm._v(" "),
       _c(
         "modal",
@@ -58362,7 +58391,16 @@ window.GradeClassEmitter = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 window.ComponentEmitter = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 window.CompetenceComponentEmitter = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 window.OvaEmitter = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
-window.OvaLearningEmitter = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
+window.OvaLearningEmitter = new vue__WEBPACK_IMPORTED_MODULE_0___default.a(); // Navbar section
+
+var navMenu = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+  el: '#navMenu',
+  data: function data() {
+    return {
+      navbarDropdown: false
+    };
+  }
+});
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
   components: {

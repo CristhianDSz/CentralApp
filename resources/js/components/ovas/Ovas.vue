@@ -1,8 +1,15 @@
 <template>
   <div>
-    <ova v-for="ova in ovas" :key="ova.id" :ova="ova" @learningSection="passToLearningSectionForm" 
-    @deleted="getOvas">
-    </ova>
+    <template v-if="ovas.length">
+      <ova v-for="ova in ovas" :key="ova.id" :ova="ova"   @learningSection="passToLearningSectionForm" 
+      @deleted="getOvas">
+      </ova>
+    </template>
+
+
+    <div class="message is-warning is-size-7" v-else>
+      <p class="message-body">Actualmente no existen ovas. Puede agregar una dando clic en el botón de la parte superior</p>
+    </div>
     
     <modal
       :modalActive="learningSectionModal"

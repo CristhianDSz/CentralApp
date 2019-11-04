@@ -23,4 +23,9 @@ class MandatoryArea extends Model
     {
         return $this->hasMany(Ova::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
 }

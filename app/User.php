@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','role_id'
     ];
 
     /**
@@ -36,4 +36,34 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function mandatoryAreas()
+    {
+        return $this->belongsToMany(MandatoryArea::class);
+    }
+
+     /**
+     * Get the current model mandatoryAreas
+     *
+     * @param int $id
+     * @return void
+     */
+    public function existentMandatoryAreas($id)
+    {
+        foreach ($this->mandatoryAreas->pluck('id') as $idMandatoryArea) {
+            if ($idMandatoryArea ===  $id) {
+                return true;
+            }
+        }
+    }
+
+    public function permissions()
+    {
+        return $this->role->permissions;
+    }
 }
