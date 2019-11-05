@@ -7,10 +7,10 @@
        </div>
      </div>
       <div class="level-right">
-        <div class="level-item">
+        <div class="level-item" v-if="$can('update components')">
             <a title="Editar" class="is-size-4" href="#" @click.prevent="editComponent(component)"><i class="fa fa-edit has-text-primary"></i></a>
         </div>
-        <div class="level-item">
+        <div class="level-item" v-if="$can('delete components')">
             <a title="Eliminar" class="is-size-4" href="#" @click.prevent="deleteComponent(component)"><i class="fa fa-trash has-text-danger"></i></a>
         </div>
       </div>
@@ -50,9 +50,11 @@
 </template>
 
 <script>
+import {permissionsMixin} from '../../mixins/PermissionsMixin'
 import Competences from '../competences/Competences.vue'
 export default {
   props:['component'],
+  mixins:[permissionsMixin],
   components: {Competences},
   data() {
     return {};

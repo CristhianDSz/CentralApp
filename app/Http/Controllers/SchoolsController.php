@@ -9,6 +9,7 @@ class SchoolsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->authorizeResource(School::class,'school');
     }
     /**
      * Display a listing of the resource.
@@ -46,6 +47,7 @@ class SchoolsController extends Controller
 
     public function edit(School $school)
     {
+        $this->authorize("update",$school);
         return view('schools.edit', compact('school'));
     }
 
@@ -58,6 +60,8 @@ class SchoolsController extends Controller
      */
     public function update(School $school)
     {
+        $this->authorize("update",$school);
+
         $attributes = request()->validate([
             'name' => 'required',
             'location' => 'required',

@@ -10,12 +10,19 @@ class PermissionPolicy
     use HandlesAuthorization;
 
     /**
-     * Create a new policy instance.
+     * Determine if the user ($user) has a permission action ($name)
      *
-     * @return void
+     * @param User $user
+     * @param string $name
+     * @return boolean
      */
-    public function __construct()
+    public static function hasPermission(User $user, $name)
     {
-        //
+        foreach ($user->role->permissions as $permission) {
+            if ($permission->name === $name) {
+                return true;
+            }
+        }
+        return false;
     }
 }

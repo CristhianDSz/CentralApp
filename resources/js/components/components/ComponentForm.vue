@@ -40,14 +40,16 @@
       </div>
     </div>
     <div class="control has-text-right">
-      <button type="submit" class="button is-primary">Agregar</button>
+      <button :disabled="disableButton" type="submit" class="button is-primary">Agregar</button>
       <button type="button" class="button is-danger" @click="$emit('cancel')">Cancelar</button>
     </div>
   </form>
 </template>
 
 <script>
+import {permissionsMixin} from '../../mixins/PermissionsMixin'
 export default {
+  mixins:[permissionsMixin],
   data() {
     return {
       areas: [],
@@ -59,11 +61,17 @@ export default {
           name: '',
           mandatory_area_id: '',
           grades:[]
-      }
+      },
+      disableButton:false
     };
   },
   created() {
     this.getData();
+  },
+  mounted() {
+    setTimeout(() => {
+      this.disableButton = !this.$can('create components')
+    }, 2000);
   },
   methods: {
     getData() {

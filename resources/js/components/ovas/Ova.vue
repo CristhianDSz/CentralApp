@@ -12,12 +12,12 @@
             <i class="fa fa-file-pdf-o has-text-danger"></i>
           </a>
         </div>
-        <div class="level-item">
+        <div class="level-item" v-if="$can('update ovas')">
           <a title="Editar" class="is-size-4" href="#" @click.prevent="editOva(ova)">
             <i class="fa fa-edit has-text-primary"></i>
           </a>
         </div>
-        <div class="level-item">
+        <div class="level-item" v-if="$can('delete ovas')">
           <a title="Eliminar" class="is-size-4" href="#" @click.prevent="deleteOva(ova)">
             <i class="fa fa-trash has-text-danger"></i>
           </a>
@@ -86,9 +86,11 @@
 </template>
 
 <script>
+import {permissionsMixin} from '../../mixins/PermissionsMixin'
 import learningSections from '../learning-sections/LearningSections'
 export default {
   props: ["ova"],
+  mixins:[permissionsMixin],
   components: {learningSections},
   data() {
     return {};

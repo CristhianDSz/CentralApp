@@ -3,6 +3,8 @@ require('./bootstrap')
 import Vue from 'vue'
 import Multiselect from 'vue-multiselect'
 
+
+
 Vue.component('multiselect', Multiselect)
 
 import AreasMain from './components/areas/AreasMain.vue'
@@ -19,6 +21,8 @@ window.ComponentEmitter = new Vue()
 window.CompetenceComponentEmitter = new Vue()
 window.OvaEmitter = new Vue()
 window.OvaLearningEmitter = new Vue()
+
+
 
 // Navbar section
 const navMenu = new Vue({

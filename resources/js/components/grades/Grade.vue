@@ -7,7 +7,7 @@
     </td>
     <td class="has-text-centered">
       <div class="field is-grouped action">
-        <p class="control">
+        <p class="control" v-if="$can('update grades')">
           <a
             href="#"
             class="button is-rounded is-text"
@@ -24,7 +24,12 @@
             </span>
           </a>
         </p>
-        <p class="control">
+        <a class="button is-rounded is-text has-background-grey-light" v-else>
+          <span class="icon">
+            <i class="fa fa-edit has-text-white"></i>
+          </span>
+        </a>
+        <p class="control" v-if="$can('delete grades')">
           <a href="#" class="button is-rounded is-text action-delete" v-if="showEditButton" @click.prevent="deleteGrade">
             <span class="icon">
               <i class="fa fa-trash"></i>
@@ -36,14 +41,21 @@
             </span>
           </a>
         </p>
+       <a class="button is-rounded is-text has-background-grey-light" v-else>
+          <span class="icon">
+          <i class="fa fa-trash has-text-white"></i>
+        </span>
+      </a>
       </div>
     </td>
   </tr>
 </template>
 
 <script>
+import {permissionsMixin} from '../../mixins/PermissionsMixin'
 export default {
   props: ['grade','index'],
+  mixins:[permissionsMixin],
   data() {
     return {
       showEditButton: true,

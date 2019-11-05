@@ -63,6 +63,6 @@
         </div>
     </div>
 </div>
-<h1>Página de Inicio</h1>
+<h1>Pendiente añadir gráfica, aunque no está contemplado como requisito del sistema!!</h1>
 @endsection
 

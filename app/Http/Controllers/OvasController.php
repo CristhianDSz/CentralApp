@@ -27,10 +27,11 @@ class OvasController extends Controller
      */
     public function index()
     {
-        return Ova::orderBy('created_at')
+        $idsAuthUser = auth()->user()->mandatoryAreas->pluck('id');
+        return Ova::from('ovas as ovas')->orderBy('ovas.created_at')->whereIn('mandatory_area_id',$idsAuthUser)
+            ->with('mandatoryArea')
             ->with('grade')
             ->with('class')
-            ->with('mandatoryArea')
             ->with('subject')
             ->with('user')
             ->with(['learningSections' => function ($query) {
@@ -67,7 +68,7 @@ class OvasController extends Controller
         $code = 'TEST';
         //$code = Ova::buildCodeWith($attributes['grade_id], $attributes['mandatory_area_id]);
 
-        $attributes['user_id'] = 1;
+        $attributes['user_id'] = auth()->id();
         $attributes['code'] = $code;
 
         Ova::create($attributes);
@@ -108,7 +109,7 @@ class OvasController extends Controller
             'user_id' => 'required|numeric'
         ]);
         
-        //$attributes['user_id'] = auth()->id();
+        $attributes['user_id'] = auth()->id();
 
         $ova->update($attributes);
 

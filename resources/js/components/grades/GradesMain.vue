@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="field has-addons">
-        <p class="control">
+        <p class="control" >
           <a class="button" href="#" @click.prevent="modalActive = !modalActive">
             <span class="icon is-small">
               <i class="fa fa-plus"></i>
@@ -68,7 +68,8 @@ export default {
   components: { Grades, GradeForm },
   data() {
     return {
-      modalActive: false
+      modalActive: false,
+      enableCreateButton:true
     }
   },
   methods: {
@@ -77,6 +78,6 @@ export default {
       this.$refs.grades.getGrades()
       //Mostrar modal sweetalert
     }
-  }
+  },
 };
 </script>

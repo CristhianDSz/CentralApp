@@ -9,6 +9,7 @@ class MandatoryAreasController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->authorizeResource(MandatoryArea::class,'mandatory_area');
     }
     
     public function render()
@@ -16,14 +17,25 @@ class MandatoryAreasController extends Controller
         return view('areas.index');
     }
 
-    // REST methods
+    /**
+     * List the mandatory areas of the aunthenticated user
+     *
+     * @return Illuminate\Http\Response
+     */
     public function index()
     {
-        return MandatoryArea::orderBy('name')->with('subjects')->get();
+        return auth()->user()
+        ->mandatoryAreas()
+        ->with('subjects')
+        ->orderBy('name')
+        ->get();
+        //return MandatoryArea::orderBy('name')->with('subjects')->get();
     }
 
     public function store()
     {
+        $this->authorize('create',MandatoryArea::class);
+
         $attributes = request()->validate([
             'name' => 'required'
         ]);
@@ -33,6 +45,8 @@ class MandatoryAreasController extends Controller
 
     public function update(MandatoryArea $mandatoryArea)
     {
+        $this->authorize('update', $mandatoryArea);
+
         $attributes = request()->validate([
             'name' => 'required'
         ]);
@@ -42,6 +56,8 @@ class MandatoryAreasController extends Controller
 
     public function destroy(MandatoryArea $mandatoryArea)
     {
+        $this->authorize('delete', $mandatoryArea);
+
         $mandatoryArea->delete();
         return response()->json(['message' => 'Área eliminada correctamente']);
     }

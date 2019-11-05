@@ -1838,6 +1838,7 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/PermissionsMixin */ "./resources/js/mixins/PermissionsMixin.js");
 //
 //
 //
@@ -1881,8 +1882,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['area', 'index'],
+  mixins: [_mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__["permissionsMixin"]],
   data: function data() {
     return {
       showEditButton: true,
@@ -1939,6 +1952,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/PermissionsMixin */ "./resources/js/mixins/PermissionsMixin.js");
 //
 //
 //
@@ -1954,25 +1968,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__["permissionsMixin"]],
   data: function data() {
     return {
       area: {
         id: "",
         name: ""
-      }
+      },
+      disableButton: false
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    setTimeout(function () {
+      _this.disableButton = !_this.$can('create mandatory_areas');
+    }, 2000);
   },
   methods: {
     postArea: function postArea() {
-      var _this = this;
+      var _this2 = this;
 
       axios.post("/mandatory-areas", this.$data.area).then(function (response) {
         console.log(response.data.message);
 
-        _this.$emit("success", response.data.message);
+        _this2.$emit("success", response.data.message);
 
-        _this.resetForm();
+        _this2.resetForm();
       });
     },
     resetForm: function resetForm() {
@@ -2244,6 +2268,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/PermissionsMixin */ "./resources/js/mixins/PermissionsMixin.js");
 //
 //
 //
@@ -2306,8 +2331,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["schoolClass", "index", "grades"],
+  mixins: [_mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__["permissionsMixin"]],
   data: function data() {
     return {
       showEditButton: true,
@@ -2365,6 +2402,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/PermissionsMixin */ "./resources/js/mixins/PermissionsMixin.js");
 //
 //
 //
@@ -2394,7 +2432,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__["permissionsMixin"]],
   data: function data() {
     return {
       schoolClass: {
@@ -2402,7 +2442,8 @@ __webpack_require__.r(__webpack_exports__);
         name: "",
         grade_id: ""
       },
-      grades: []
+      grades: [],
+      disableControls: false
     };
   },
   created: function created() {
@@ -2414,16 +2455,23 @@ __webpack_require__.r(__webpack_exports__);
       _this.schoolClass.grade_id = _this.grades[0].id;
     });
   },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    setTimeout(function () {
+      _this2.disableControls = !_this2.$can('create classes');
+    }, 2000);
+  },
   methods: {
     postClass: function postClass() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.post("/classes", this.$data.schoolClass).then(function (response) {
         console.log(response.data.message);
 
-        _this2.$emit("success", response.data.message);
+        _this3.$emit("success", response.data.message);
 
-        _this2.resetForm();
+        _this3.resetForm();
       });
     },
     resetForm: function resetForm() {
@@ -2752,7 +2800,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _competences_Competences_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../competences/Competences.vue */ "./resources/js/components/competences/Competences.vue");
+/* harmony import */ var _mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/PermissionsMixin */ "./resources/js/mixins/PermissionsMixin.js");
+/* harmony import */ var _competences_Competences_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../competences/Competences.vue */ "./resources/js/components/competences/Competences.vue");
 //
 //
 //
@@ -2805,10 +2854,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['component'],
+  mixins: [_mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__["permissionsMixin"]],
   components: {
-    Competences: _competences_Competences_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Competences: _competences_Competences_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {};
@@ -2842,6 +2893,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/PermissionsMixin */ "./resources/js/mixins/PermissionsMixin.js");
 //
 //
 //
@@ -2890,7 +2942,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__["permissionsMixin"]],
   data: function data() {
     return {
       areas: [],
@@ -2902,19 +2956,27 @@ __webpack_require__.r(__webpack_exports__);
         name: '',
         mandatory_area_id: '',
         grades: []
-      }
+      },
+      disableButton: false
     };
   },
   created: function created() {
     this.getData();
   },
+  mounted: function mounted() {
+    var _this = this;
+
+    setTimeout(function () {
+      _this.disableButton = !_this.$can('create components');
+    }, 2000);
+  },
   methods: {
     getData: function getData() {
-      var _this = this;
+      var _this2 = this;
 
       axios.all([this.getAreas(), this.getGrades()]).then(axios.spread(function (areas, grades) {
-        _this.areas = areas.data;
-        _this.grades = grades.data;
+        _this2.areas = areas.data;
+        _this2.grades = grades.data;
       }));
     },
     getAreas: function getAreas() {
@@ -2931,22 +2993,10 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     postComponent: function postComponent() {
-      var _this2 = this;
-
-      this.assignBeforeSend();
-      axios.post('/components', this.component).then(function (response) {
-        console.log(response.data.message);
-
-        _this2.resetForm();
-
-        _this2.$emit('success');
-      });
-    },
-    putComponent: function putComponent() {
       var _this3 = this;
 
       this.assignBeforeSend();
-      axios.put("/components/".concat(this.component.id), this.component).then(function (response) {
+      axios.post('/components', this.component).then(function (response) {
         console.log(response.data.message);
 
         _this3.resetForm();
@@ -2954,12 +3004,24 @@ __webpack_require__.r(__webpack_exports__);
         _this3.$emit('success');
       });
     },
-    assignBeforeSend: function assignBeforeSend() {
+    putComponent: function putComponent() {
       var _this4 = this;
+
+      this.assignBeforeSend();
+      axios.put("/components/".concat(this.component.id), this.component).then(function (response) {
+        console.log(response.data.message);
+
+        _this4.resetForm();
+
+        _this4.$emit('success');
+      });
+    },
+    assignBeforeSend: function assignBeforeSend() {
+      var _this5 = this;
 
       if (this.component.grades.length) this.component.grades = [];
       this.selectedGrade.forEach(function (grade) {
-        _this4.component.grades.push(grade.id);
+        _this5.component.grades.push(grade.id);
       });
       this.component.mandatory_area_id = this.selectedArea.id;
     },
@@ -3248,6 +3310,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/PermissionsMixin */ "./resources/js/mixins/PermissionsMixin.js");
 //
 //
 //
@@ -3291,8 +3354,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['grade', 'index'],
+  mixins: [_mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__["permissionsMixin"]],
   data: function data() {
     return {
       showEditButton: true,
@@ -3349,6 +3424,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/PermissionsMixin */ "./resources/js/mixins/PermissionsMixin.js");
 //
 //
 //
@@ -3364,25 +3440,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__["permissionsMixin"]],
   data: function data() {
     return {
       grade: {
         id: "",
         name: ""
-      }
+      },
+      disableButton: false
     };
+  },
+
+  /** Check for user permissions and disabled button unless user has permission */
+  mounted: function mounted() {
+    var _this = this;
+
+    setTimeout(function () {
+      _this.disableButton = !_this.$can('create grades');
+    }, 2000);
   },
   methods: {
     postGrade: function postGrade() {
-      var _this = this;
+      var _this2 = this;
 
       axios.post("/grades", this.$data.grade).then(function (response) {
         console.log(response.data.message);
 
-        _this.$emit("success", response.data.message);
+        _this2.$emit("success", response.data.message);
 
-        _this.resetForm();
+        _this2.resetForm();
       });
     },
     resetForm: function resetForm() {
@@ -3522,7 +3610,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      modalActive: false
+      modalActive: false,
+      enableCreateButton: true
     };
   },
   methods: {
@@ -4321,7 +4410,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _learning_sections_LearningSections__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../learning-sections/LearningSections */ "./resources/js/components/learning-sections/LearningSections.vue");
+/* harmony import */ var _mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/PermissionsMixin */ "./resources/js/mixins/PermissionsMixin.js");
+/* harmony import */ var _learning_sections_LearningSections__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../learning-sections/LearningSections */ "./resources/js/components/learning-sections/LearningSections.vue");
 //
 //
 //
@@ -4410,10 +4500,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["ova"],
+  mixins: [_mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__["permissionsMixin"]],
   components: {
-    learningSections: _learning_sections_LearningSections__WEBPACK_IMPORTED_MODULE_0__["default"]
+    learningSections: _learning_sections_LearningSections__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {};
@@ -4446,6 +4538,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/PermissionsMixin */ "./resources/js/mixins/PermissionsMixin.js");
 //
 //
 //
@@ -4552,7 +4645,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__["permissionsMixin"]],
   data: function data() {
     return {
       areas: [],
@@ -4572,19 +4667,27 @@ __webpack_require__.r(__webpack_exports__);
         subject_id: "",
         grade_id: "",
         class_id: ""
-      }
+      },
+      disableButton: false
     };
   },
   created: function created() {
     this.getData();
   },
+  mounted: function mounted() {
+    var _this = this;
+
+    setTimeout(function () {
+      _this.disableButton = !_this.$can('create ovas');
+    }, 2000);
+  },
   methods: {
     getData: function getData() {
-      var _this = this;
+      var _this2 = this;
 
       axios.all([this.getAreas(), this.getGrades()]).then(axios.spread(function (areas, grades) {
-        _this.areas = areas.data;
-        _this.grades = grades.data;
+        _this2.areas = areas.data;
+        _this2.grades = grades.data;
       }));
     },
     getAreas: function getAreas() {
@@ -4607,27 +4710,27 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     postOva: function postOva() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.assignBeforeSend();
       axios.post("/ovas", this.ova).then(function (response) {
         console.log(response.data.message);
 
-        _this2.resetForm();
+        _this3.resetForm();
 
-        _this2.$emit("success");
+        _this3.$emit("success");
       });
     },
     putOva: function putOva() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.assignBeforeSend();
       axios.put("/ovas/".concat(this.ova.id), this.ova).then(function (response) {
         console.log(response.data.message);
 
-        _this3.resetForm();
+        _this4.resetForm();
 
-        _this3.$emit('success');
+        _this4.$emit('success');
       });
     },
     assignBeforeSend: function assignBeforeSend() {
@@ -5016,6 +5119,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/PermissionsMixin */ "./resources/js/mixins/PermissionsMixin.js");
 //
 //
 //
@@ -5078,8 +5182,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["subject", "index", "areas"],
+  mixins: [_mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__["permissionsMixin"]],
   data: function data() {
     return {
       showEditButton: true,
@@ -5137,6 +5253,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/PermissionsMixin */ "./resources/js/mixins/PermissionsMixin.js");
 //
 //
 //
@@ -5166,7 +5283,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_mixins_PermissionsMixin__WEBPACK_IMPORTED_MODULE_0__["permissionsMixin"]],
   data: function data() {
     return {
       subject: {
@@ -5174,7 +5293,8 @@ __webpack_require__.r(__webpack_exports__);
         name: "",
         mandatory_area_id: ""
       },
-      areas: []
+      areas: [],
+      disableControls: false
     };
   },
   created: function created() {
@@ -5186,16 +5306,23 @@ __webpack_require__.r(__webpack_exports__);
       _this.subject.mandatory_area_id = _this.areas[0].id;
     });
   },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    setTimeout(function () {
+      _this2.disableControls = !_this2.$can('create subjects');
+    }, 2000);
+  },
   methods: {
     postSubject: function postSubject() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.post("/subjects", this.$data.subject).then(function (response) {
         console.log(response.data.message);
 
-        _this2.$emit("success", response.data.message);
+        _this3.$emit("success", response.data.message);
 
-        _this2.resetForm();
+        _this3.resetForm();
       });
     },
     resetForm: function resetForm() {
@@ -41291,68 +41418,86 @@ var render = function() {
     _vm._v(" "),
     _c("td", { staticClass: "has-text-centered" }, [
       _c("div", { staticClass: "field is-grouped action" }, [
-        _c("p", { staticClass: "control" }, [
-          _vm.showEditButton
-            ? _c(
-                "a",
-                {
-                  staticClass: "button is-rounded is-text",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.changeStates($event)
-                    }
-                  }
-                },
-                [_vm._m(0)]
-              )
-            : _c(
-                "a",
-                {
-                  staticClass: "button is-rounded is-text",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.putArea($event)
-                    }
-                  }
-                },
-                [_vm._m(1)]
-              )
-        ]),
+        _vm.$can("update mandatory_areas")
+          ? _c("p", { staticClass: "control" }, [
+              _vm.showEditButton
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "button is-rounded is-text",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.changeStates($event)
+                        }
+                      }
+                    },
+                    [_vm._m(0)]
+                  )
+                : _c(
+                    "a",
+                    {
+                      staticClass: "button is-rounded is-text",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.putArea($event)
+                        }
+                      }
+                    },
+                    [_vm._m(1)]
+                  )
+            ])
+          : _c(
+              "a",
+              {
+                staticClass:
+                  "button is-rounded is-text has-background-grey-light"
+              },
+              [_vm._m(2)]
+            ),
         _vm._v(" "),
-        _c("p", { staticClass: "control" }, [
-          _vm.showEditButton
-            ? _c(
-                "a",
-                {
-                  staticClass: "button is-rounded is-text action-delete",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.deleteArea($event)
-                    }
-                  }
-                },
-                [_vm._m(2)]
-              )
-            : _c(
-                "a",
-                {
-                  staticClass: "button is-rounded is-text action-delete",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.changeStates(false)
-                    }
-                  }
-                },
-                [_vm._m(3)]
-              )
-        ])
+        _vm.$can("delete mandatory_areas")
+          ? _c("p", { staticClass: "control" }, [
+              _vm.showEditButton
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "button is-rounded is-text action-delete",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.deleteArea($event)
+                        }
+                      }
+                    },
+                    [_vm._m(3)]
+                  )
+                : _c(
+                    "a",
+                    {
+                      staticClass: "button is-rounded is-text action-delete",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.changeStates(false)
+                        }
+                      }
+                    },
+                    [_vm._m(4)]
+                  )
+            ])
+          : _c(
+              "a",
+              {
+                staticClass:
+                  "button is-rounded is-text has-background-grey-light"
+              },
+              [_vm._m(5)]
+            )
       ])
     ])
   ])
@@ -41379,6 +41524,14 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "icon" }, [
+      _c("i", { staticClass: "fa fa-edit has-text-white" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "icon" }, [
       _c("i", { staticClass: "fa fa-trash" })
     ])
   },
@@ -41388,6 +41541,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "icon" }, [
       _c("i", { staticClass: "fa fa-times" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "icon" }, [
+      _c("i", { staticClass: "fa fa-trash has-text-white" })
     ])
   }
 ]
@@ -41449,24 +41610,22 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(0)
+      _c("div", { staticClass: "field" }, [
+        _c("p", { staticClass: "control" }, [
+          _c(
+            "button",
+            {
+              staticClass: "button is-success is-fullwidth",
+              attrs: { disabled: _vm.disableButton }
+            },
+            [_vm._v("Crear")]
+          )
+        ])
+      ])
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("p", { staticClass: "control" }, [
-        _c("button", { staticClass: "button is-success is-fullwidth" }, [
-          _vm._v("Crear")
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -41925,68 +42084,86 @@ var render = function() {
     _vm._v(" "),
     _c("td", { staticClass: "has-text-centered" }, [
       _c("div", { staticClass: "field is-grouped action" }, [
-        _c("p", { staticClass: "control" }, [
-          _vm.showEditButton
-            ? _c(
-                "a",
-                {
-                  staticClass: "button is-rounded is-text",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.changeStates($event)
-                    }
-                  }
-                },
-                [_vm._m(0)]
-              )
-            : _c(
-                "a",
-                {
-                  staticClass: "button is-rounded is-text",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.putClass($event)
-                    }
-                  }
-                },
-                [_vm._m(1)]
-              )
-        ]),
+        _vm.$can("update classes")
+          ? _c("p", { staticClass: "control" }, [
+              _vm.showEditButton
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "button is-rounded is-text",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.changeStates($event)
+                        }
+                      }
+                    },
+                    [_vm._m(0)]
+                  )
+                : _c(
+                    "a",
+                    {
+                      staticClass: "button is-rounded is-text",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.putClass($event)
+                        }
+                      }
+                    },
+                    [_vm._m(1)]
+                  )
+            ])
+          : _c(
+              "a",
+              {
+                staticClass:
+                  "button is-rounded is-text has-background-grey-light"
+              },
+              [_vm._m(2)]
+            ),
         _vm._v(" "),
-        _c("p", { staticClass: "control" }, [
-          _vm.showEditButton
-            ? _c(
-                "a",
-                {
-                  staticClass: "button is-rounded is-text action-delete",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.deleteClass($event)
-                    }
-                  }
-                },
-                [_vm._m(2)]
-              )
-            : _c(
-                "a",
-                {
-                  staticClass: "button is-rounded is-text action-delete",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.changeStates(false)
-                    }
-                  }
-                },
-                [_vm._m(3)]
-              )
-        ])
+        _vm.$can("delete classes")
+          ? _c("p", { staticClass: "control" }, [
+              _vm.showEditButton
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "button is-rounded is-text action-delete",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.deleteClass($event)
+                        }
+                      }
+                    },
+                    [_vm._m(3)]
+                  )
+                : _c(
+                    "a",
+                    {
+                      staticClass: "button is-rounded is-text action-delete",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.changeStates(false)
+                        }
+                      }
+                    },
+                    [_vm._m(4)]
+                  )
+            ])
+          : _c(
+              "a",
+              {
+                staticClass:
+                  "button is-rounded is-text has-background-grey-light"
+              },
+              [_vm._m(5)]
+            )
       ])
     ])
   ])
@@ -42013,6 +42190,14 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "icon" }, [
+      _c("i", { staticClass: "fa fa-edit has-text-white" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "icon" }, [
       _c("i", { staticClass: "fa fa-trash" })
     ])
   },
@@ -42022,6 +42207,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "icon" }, [
       _c("i", { staticClass: "fa fa-times" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "icon" }, [
+      _c("i", { staticClass: "fa fa-trash has-text-white" })
     ])
   }
 ]
@@ -42128,24 +42321,22 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(0)
+      _c("div", { staticClass: "field" }, [
+        _c("p", { staticClass: "control" }, [
+          _c(
+            "button",
+            {
+              staticClass: "button is-success is-fullwidth",
+              attrs: { disabled: _vm.disableControls }
+            },
+            [_vm._v("Crear")]
+          )
+        ])
+      ])
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("p", { staticClass: "control" }, [
-        _c("button", { staticClass: "button is-success is-fullwidth" }, [
-          _vm._v("Crear")
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -42615,39 +42806,43 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "level-right" }, [
-        _c("div", { staticClass: "level-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "is-size-4",
-              attrs: { title: "Editar", href: "#" },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.editComponent(_vm.component)
-                }
-              }
-            },
-            [_c("i", { staticClass: "fa fa-edit has-text-primary" })]
-          )
-        ]),
+        _vm.$can("update components")
+          ? _c("div", { staticClass: "level-item" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "is-size-4",
+                  attrs: { title: "Editar", href: "#" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.editComponent(_vm.component)
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-edit has-text-primary" })]
+              )
+            ])
+          : _vm._e(),
         _vm._v(" "),
-        _c("div", { staticClass: "level-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "is-size-4",
-              attrs: { title: "Eliminar", href: "#" },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.deleteComponent(_vm.component)
-                }
-              }
-            },
-            [_c("i", { staticClass: "fa fa-trash has-text-danger" })]
-          )
-        ])
+        _vm.$can("delete components")
+          ? _c("div", { staticClass: "level-item" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "is-size-4",
+                  attrs: { title: "Eliminar", href: "#" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.deleteComponent(_vm.component)
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-trash has-text-danger" })]
+              )
+            ])
+          : _vm._e()
       ])
     ]),
     _vm._v(" "),
@@ -42892,7 +43087,10 @@ var render = function() {
       _c("div", { staticClass: "control has-text-right" }, [
         _c(
           "button",
-          { staticClass: "button is-primary", attrs: { type: "submit" } },
+          {
+            staticClass: "button is-primary",
+            attrs: { disabled: _vm.disableButton, type: "submit" }
+          },
           [_vm._v("Agregar")]
         ),
         _vm._v(" "),
@@ -43248,68 +43446,86 @@ var render = function() {
     _vm._v(" "),
     _c("td", { staticClass: "has-text-centered" }, [
       _c("div", { staticClass: "field is-grouped action" }, [
-        _c("p", { staticClass: "control" }, [
-          _vm.showEditButton
-            ? _c(
-                "a",
-                {
-                  staticClass: "button is-rounded is-text",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.changeStates($event)
-                    }
-                  }
-                },
-                [_vm._m(0)]
-              )
-            : _c(
-                "a",
-                {
-                  staticClass: "button is-rounded is-text",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.putGrade($event)
-                    }
-                  }
-                },
-                [_vm._m(1)]
-              )
-        ]),
+        _vm.$can("update grades")
+          ? _c("p", { staticClass: "control" }, [
+              _vm.showEditButton
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "button is-rounded is-text",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.changeStates($event)
+                        }
+                      }
+                    },
+                    [_vm._m(0)]
+                  )
+                : _c(
+                    "a",
+                    {
+                      staticClass: "button is-rounded is-text",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.putGrade($event)
+                        }
+                      }
+                    },
+                    [_vm._m(1)]
+                  )
+            ])
+          : _c(
+              "a",
+              {
+                staticClass:
+                  "button is-rounded is-text has-background-grey-light"
+              },
+              [_vm._m(2)]
+            ),
         _vm._v(" "),
-        _c("p", { staticClass: "control" }, [
-          _vm.showEditButton
-            ? _c(
-                "a",
-                {
-                  staticClass: "button is-rounded is-text action-delete",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.deleteGrade($event)
-                    }
-                  }
-                },
-                [_vm._m(2)]
-              )
-            : _c(
-                "a",
-                {
-                  staticClass: "button is-rounded is-text action-delete",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.changeStates(false)
-                    }
-                  }
-                },
-                [_vm._m(3)]
-              )
-        ])
+        _vm.$can("delete grades")
+          ? _c("p", { staticClass: "control" }, [
+              _vm.showEditButton
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "button is-rounded is-text action-delete",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.deleteGrade($event)
+                        }
+                      }
+                    },
+                    [_vm._m(3)]
+                  )
+                : _c(
+                    "a",
+                    {
+                      staticClass: "button is-rounded is-text action-delete",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.changeStates(false)
+                        }
+                      }
+                    },
+                    [_vm._m(4)]
+                  )
+            ])
+          : _c(
+              "a",
+              {
+                staticClass:
+                  "button is-rounded is-text has-background-grey-light"
+              },
+              [_vm._m(5)]
+            )
       ])
     ])
   ])
@@ -43336,6 +43552,14 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "icon" }, [
+      _c("i", { staticClass: "fa fa-edit has-text-white" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "icon" }, [
       _c("i", { staticClass: "fa fa-trash" })
     ])
   },
@@ -43345,6 +43569,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "icon" }, [
       _c("i", { staticClass: "fa fa-times" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "icon" }, [
+      _c("i", { staticClass: "fa fa-trash has-text-white" })
     ])
   }
 ]
@@ -43406,24 +43638,22 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(0)
+      _c("div", { staticClass: "field" }, [
+        _c("p", { staticClass: "control" }, [
+          _c(
+            "button",
+            {
+              staticClass: "button is-success is-fullwidth",
+              attrs: { disabled: _vm.disableButton }
+            },
+            [_vm._v("Crear")]
+          )
+        ])
+      ])
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("p", { staticClass: "control" }, [
-        _c("button", { staticClass: "button is-success is-fullwidth" }, [
-          _vm._v("Crear")
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -44761,39 +44991,43 @@ var render = function() {
           _c("div", { staticClass: "level-right" }, [
             _vm._m(0),
             _vm._v(" "),
-            _c("div", { staticClass: "level-item" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "is-size-4",
-                  attrs: { title: "Editar", href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.editOva(_vm.ova)
-                    }
-                  }
-                },
-                [_c("i", { staticClass: "fa fa-edit has-text-primary" })]
-              )
-            ]),
+            _vm.$can("update ovas")
+              ? _c("div", { staticClass: "level-item" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "is-size-4",
+                      attrs: { title: "Editar", href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.editOva(_vm.ova)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-edit has-text-primary" })]
+                  )
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _c("div", { staticClass: "level-item" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "is-size-4",
-                  attrs: { title: "Eliminar", href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.deleteOva(_vm.ova)
-                    }
-                  }
-                },
-                [_c("i", { staticClass: "fa fa-trash has-text-danger" })]
-              )
-            ])
+            _vm.$can("delete ovas")
+              ? _c("div", { staticClass: "level-item" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "is-size-4",
+                      attrs: { title: "Eliminar", href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.deleteOva(_vm.ova)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-trash has-text-danger" })]
+                  )
+                ])
+              : _vm._e()
           ])
         ]
       ),
@@ -45172,7 +45406,10 @@ var render = function() {
       _c("div", { staticClass: "control has-text-right" }, [
         _c(
           "button",
-          { staticClass: "button is-primary", attrs: { type: "submit" } },
+          {
+            staticClass: "button is-primary",
+            attrs: { disabled: _vm.disableButton, type: "submit" }
+          },
           [_vm._v("Agregar")]
         ),
         _vm._v(" "),
@@ -45710,68 +45947,86 @@ var render = function() {
     _vm._v(" "),
     _c("td", { staticClass: "has-text-centered" }, [
       _c("div", { staticClass: "field is-grouped action" }, [
-        _c("p", { staticClass: "control" }, [
-          _vm.showEditButton
-            ? _c(
-                "a",
-                {
-                  staticClass: "button is-rounded is-text",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.changeStates($event)
-                    }
-                  }
-                },
-                [_vm._m(0)]
-              )
-            : _c(
-                "a",
-                {
-                  staticClass: "button is-rounded is-text",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.putSubject($event)
-                    }
-                  }
-                },
-                [_vm._m(1)]
-              )
-        ]),
+        _vm.$can("update subjects")
+          ? _c("p", { staticClass: "control" }, [
+              _vm.showEditButton
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "button is-rounded is-text",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.changeStates($event)
+                        }
+                      }
+                    },
+                    [_vm._m(0)]
+                  )
+                : _c(
+                    "a",
+                    {
+                      staticClass: "button is-rounded is-text",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.putSubject($event)
+                        }
+                      }
+                    },
+                    [_vm._m(1)]
+                  )
+            ])
+          : _c(
+              "a",
+              {
+                staticClass:
+                  "button is-rounded is-text has-background-grey-light"
+              },
+              [_vm._m(2)]
+            ),
         _vm._v(" "),
-        _c("p", { staticClass: "control" }, [
-          _vm.showEditButton
-            ? _c(
-                "a",
-                {
-                  staticClass: "button is-rounded is-text action-delete",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.deleteSubject($event)
-                    }
-                  }
-                },
-                [_vm._m(2)]
-              )
-            : _c(
-                "a",
-                {
-                  staticClass: "button is-rounded is-text action-delete",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.changeStates(false)
-                    }
-                  }
-                },
-                [_vm._m(3)]
-              )
-        ])
+        _vm.$can("delete subjects")
+          ? _c("p", { staticClass: "control" }, [
+              _vm.showEditButton
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "button is-rounded is-text action-delete",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.deleteSubject($event)
+                        }
+                      }
+                    },
+                    [_vm._m(3)]
+                  )
+                : _c(
+                    "a",
+                    {
+                      staticClass: "button is-rounded is-text action-delete",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.changeStates(false)
+                        }
+                      }
+                    },
+                    [_vm._m(4)]
+                  )
+            ])
+          : _c(
+              "a",
+              {
+                staticClass:
+                  "button is-rounded is-text has-background-grey-light"
+              },
+              [_vm._m(5)]
+            )
       ])
     ])
   ])
@@ -45798,6 +46053,14 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "icon" }, [
+      _c("i", { staticClass: "fa fa-edit has-text-white" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "icon" }, [
       _c("i", { staticClass: "fa fa-trash" })
     ])
   },
@@ -45807,6 +46070,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "icon" }, [
       _c("i", { staticClass: "fa fa-times" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "icon" }, [
+      _c("i", { staticClass: "fa fa-trash has-text-white" })
     ])
   }
 ]
@@ -45913,24 +46184,22 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(0)
+      _c("div", { staticClass: "field" }, [
+        _c("p", { staticClass: "control" }, [
+          _c(
+            "button",
+            {
+              staticClass: "button is-success is-fullwidth",
+              attrs: { disabled: _vm.disableControls }
+            },
+            [_vm._v("Crear")]
+          )
+        ])
+      ])
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("p", { staticClass: "control" }, [
-        _c("button", { staticClass: "button is-success is-fullwidth" }, [
-          _vm._v("Crear")
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -61039,6 +61308,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Modal_vue_vue_type_template_id_577dab34_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/mixins/PermissionsMixin.js":
+/*!*************************************************!*\
+  !*** ./resources/js/mixins/PermissionsMixin.js ***!
+  \*************************************************/
+/*! exports provided: permissionsMixin */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "permissionsMixin", function() { return permissionsMixin; });
+var permissionsMixin = {
+  data: function data() {
+    return {
+      $permissions: []
+    };
+  },
+  mounted: function mounted() {
+    this.$permissions = Permissions;
+  },
+  methods: {
+    $can: function $can(permissionName) {
+      return Permissions.indexOf(permissionName) !== -1;
+    }
+  }
+};
 
 /***/ }),
 

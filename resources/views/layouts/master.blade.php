@@ -8,6 +8,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+
         <title>Central App - Vicente Azuero</title>
 
         <meta charset="UTF-8">
@@ -160,13 +161,6 @@
                 </a>
             </li>
             <li>
-                <a class="" href="datatables.html">
-                    <span class="icon">
-                        <i class="fa fa-smile-o"></i>
-                    </span>Usuario grado
-                </a>
-            </li>
-            <li>
             <a class="{{ Route::currentRouteName() == 'schools.index' ? 'is-active' : ''}}" href="{{route('schools.index') }}">
                     <span class="icon">
                         <i class="fa fa-building"></i>
@@ -196,6 +190,13 @@
     </div>
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+        @auth
+          window.Permissions = {!! json_encode(Auth::user()->allPermissions, true) !!};
+        @else
+          window.Permissions = [];
+        @endauth
+    </script>
     @yield('scripts')
 </body>
 </html>

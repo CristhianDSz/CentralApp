@@ -11,6 +11,7 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->authorizeResource(User::class, 'user');
     }
 
     /**
@@ -32,6 +33,8 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
+        $this->authorize('update', $user);
+
         $roles = Role::all();
         $areas = MandatoryArea::all();
         return view('users.edit',compact('user','roles','areas'));
@@ -45,6 +48,8 @@ class UsersController extends Controller
      */
     public function update(User $user)
     {
+        $this->authorize('update', $user);
+
         $attributes = request()->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
@@ -65,6 +70,8 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
+        $this->authorize('delete', $user);
+
         $user->delete();
         return redirect()->route('users.index');
     }

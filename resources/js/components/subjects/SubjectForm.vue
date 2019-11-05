@@ -21,14 +21,16 @@
     </div>
     <div class="field">
       <p class="control">
-        <button class="button is-success is-fullwidth">Crear</button>
+        <button :disabled="disableControls" class="button is-success is-fullwidth">Crear</button>
       </p>
     </div>
   </form>
 </template>
 
 <script>
+import {permissionsMixin} from '../../mixins/PermissionsMixin'
 export default {
+  mixins:[permissionsMixin],
   data() {
     return {
       subject: {
@@ -37,6 +39,7 @@ export default {
         mandatory_area_id: ""
       },
       areas:[],
+      disableControls:false
     };
   },
   created() {
@@ -45,6 +48,11 @@ export default {
       this.areas = areas
       this.subject.mandatory_area_id = this.areas[0].id
     })
+  },
+  mounted() {
+    setTimeout(() => {
+      this.disableControls = !this.$can('create subjects')
+    }, 2000);
   },
   methods: {
     postSubject() {

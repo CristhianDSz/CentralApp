@@ -157,7 +157,9 @@
                     <p> Teléfono: {{$school->phone}}</p>
                 </div>
                 <div class="edit-info has-text-centered">
-                <a href="{{route('schools.edit',$school->id)}}" class="button is-outlined is-link">Editar información</a>
+                @can('update',$school)
+                  <a href="{{route('schools.edit',$school->id)}}" class="button is-outlined is-link">Editar información</a>
+                @endcan
                 </div>
               </div>
             <div class="column">

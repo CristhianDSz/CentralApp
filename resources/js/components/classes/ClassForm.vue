@@ -21,14 +21,16 @@
     </div>
     <div class="field">
       <p class="control">
-        <button class="button is-success is-fullwidth">Crear</button>
+        <button :disabled="disableControls" class="button is-success is-fullwidth">Crear</button>
       </p>
     </div>
   </form>
 </template>
 
 <script>
+import {permissionsMixin} from '../../mixins/PermissionsMixin'
 export default {
+  mixins:[permissionsMixin],
   data() {
     return {
       schoolClass: {
@@ -37,6 +39,7 @@ export default {
         grade_id: ""
       },
       grades:[],
+      disableControls: false
     };
   },
   created() {
@@ -45,6 +48,11 @@ export default {
       this.grades = grades
       this.schoolClass.grade_id = this.grades[0].id
     })
+  },
+  mounted() {
+    setTimeout(() => {
+      this.disableControls = !this.$can('create classes')
+    }, 2000);
   },
   methods: {
     postClass() {

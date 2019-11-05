@@ -10,6 +10,7 @@ class RolesController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->authorizeResource(Role::class,"role");
     }
     /**
      * Display a listing of the resource.
@@ -29,6 +30,8 @@ class RolesController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Role::class);
+
         $permissions = Permission::all();
         return view('roles.create', compact('permissions'));
     }
@@ -40,6 +43,8 @@ class RolesController extends Controller
      */
     public function store()
     {
+        $this->authorize('create', Role::class);
+
         $attributes = request()->validate([
             'name' => 'required|string|min:3',
         ]);
@@ -61,6 +66,8 @@ class RolesController extends Controller
      */
     public function edit(Role $role)
     {
+        $this->authorize('update', $role);
+
         $permissions = Permission::all();
         return view('roles.edit', compact('role','permissions'));
     }
@@ -73,6 +80,8 @@ class RolesController extends Controller
      */
     public function update(Role $role)
     {
+        $this->authorize('update', $role);
+
         $attributes = request()->validate([
             'name' => 'required|string|min:3',
         ]);
@@ -94,6 +103,8 @@ class RolesController extends Controller
      */
     public function destroy(Role $role)
     {
+        $this->authorize('delete', $role);
+
         $role->delete();
         return redirect()->back();
     }

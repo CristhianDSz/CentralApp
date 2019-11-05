@@ -49,6 +49,8 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
+        $this->authorize('create', User::class);
+
         $roles = Role::all();
         $areas = MandatoryArea::all();
         return view('auth.register',compact('roles','areas'));
@@ -79,6 +81,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $this->authorize('create', User::class);
+
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],

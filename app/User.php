@@ -47,7 +47,7 @@ class User extends Authenticatable
         return $this->belongsToMany(MandatoryArea::class);
     }
 
-     /**
+    /**
      * Get the current model mandatoryAreas
      *
      * @param int $id
@@ -62,8 +62,12 @@ class User extends Authenticatable
         }
     }
 
-    public function permissions()
+    public function getAllPermissionsAttribute()
     {
-        return $this->role->permissions;
+        $permissions = [];
+        foreach ($this->role->permissions as $permission) {
+            $permissions[] = $permission->name;
+        }
+        return $permissions;
     }
 }

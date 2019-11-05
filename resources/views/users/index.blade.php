@@ -9,9 +9,11 @@ Usuarios de central app
 @endsection
 
 @section('content')
-      <div class="has-text-right" style="margin-bottom:1em;">
-          <a href="{{route('register')}}" class="button"><span class="icon is-small"><i class="fa fa-plus"></i></span> <span>Crear nuevo</span></a>
-      </div>
+     @can('create', App\User::class)
+     <div class="has-text-right" style="margin-bottom:1em;">
+      <a href="{{route('register')}}" class="button"><span class="icon is-small"><i class="fa fa-plus"></i></span> <span>Crear nuevo</span></a>
+    </div>
+     @endcan
       <div class="card">
       <div class="card-content">
         <div id="datatable_wrapper" class="dataTables_wrapper dt-bulma no-footer">
@@ -44,17 +46,25 @@ Usuarios de central app
                         </td>
                         <td class="has-text-centered">{{$user->role->name}}</td>
                         <td class="has-text-centered">
-                            <a href="{{route('users.edit', $user->id)}}">
-                              <i class="fa fa-edit is-size-5 has-text-primary"></i>
-                            </a>
-                            <a href="{{route('users.destroy', $user->id)}}" onclick="event.preventDefault();
-                            document.getElementById('destroy-form').submit()">
-                              <i class="fa fa-trash is-size-5 has-text-danger"></i>
-                            </a>
-                            <form id="destroy-form" action="{{route('users.destroy',    $user->id)}}" method="POST" style="display:none">
-                              @csrf
-                              @method('DELETE')
-                            </form>
+                            @can('update', App\User::class)
+                              <a href="{{route('users.edit', $user->id)}}">
+                                <i class="fa fa-edit is-size-5 has-text-primary"></i>
+                              </a>
+                            @else
+                              <p class="is-size-7">No disponible</p>
+                            @endcan
+                             @can('delete', App\User::class)
+                                <a href="{{route('users.destroy', $user->id)}}" onclick="event.preventDefault();
+                                document.getElementById('destroy-form').submit()">
+                                  <i class="fa fa-trash is-size-5 has-text-danger"></i>
+                                </a>
+                                <form id="destroy-form" action="{{route('users.destroy',    $user->id)}}" method="POST" style="display:none">
+                                  @csrf
+                                  @method('DELETE')
+                                </form>
+                             @else
+                                <p class="is-size-7">No disponible</p>
+                             @endcan
                         </td>
                         </tr>
                     @endforeach
