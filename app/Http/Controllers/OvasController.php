@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Ova;
+use App\School;
+use PDF;
 
 class OvasController extends Controller
 {
@@ -138,5 +140,19 @@ class OvasController extends Controller
     public function components(Ova $ova)
     {
         return $ova->components()->with('competences.indicators')->get();
+    }
+
+    /**
+     * Display the pdf file for the resource
+     *
+     * @return void
+     */
+    public function pdf($id)
+    {
+        $school = School::first();
+        $ova = Ova::with('learningSections')->findOrFail($id);
+        //return view('ovas.pdf',compact('ova','school'));
+        $pdf = PDF::loadView('ovas.pdf',compact('ova','school'));
+        return $pdf->download('listado.pdf');
     }
 }

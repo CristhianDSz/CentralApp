@@ -8,7 +8,7 @@
       </div>
       <div class="level-right">
         <div class="level-item">
-          <a title="Generar PDF" class="is-size-4" href="#">
+          <a title="Generar PDF" class="is-size-4" target="_blank" :href="`/app/ovas/pdf/${ova.id}`">
             <i class="fa fa-file-pdf-o has-text-danger"></i>
           </a>
         </div>

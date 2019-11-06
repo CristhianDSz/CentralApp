@@ -34,6 +34,7 @@ Route::apiResource('competences', 'CompetencesController');
 Route::apiResource('indicators','IndicatorsController');
 //Ovas
 Route::get('app/ovas','OvasController@render')->name('ovas.render');
+Route::get('app/ovas/pdf/{id}','OvasController@pdf');
 Route::apiResource('ovas', 'OvasController');
 Route::get('ovas/{ova}/components', 'OvasController@components');
 //Learning sections
