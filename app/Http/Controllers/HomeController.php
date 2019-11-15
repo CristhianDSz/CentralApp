@@ -26,7 +26,7 @@ class HomeController extends Controller
             ->with('grade:id,name')
             ->with('class:id,name')
             ->with('user:id,name,email')
-            ->get();
+            ->paginate(15);
         
         $countSubjects = Subject::count();
         $countOvas = Ova::count();

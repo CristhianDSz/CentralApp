@@ -68,7 +68,7 @@
         </div>
     </div>
     <div class="column">
-        <div class="box quick-stats has-background-warning has-text-white">
+        <div class="box quick-stats has-background-dark has-text-white">
             <div class="quick-stats-icon">
                 <span class="icon is-large">
                     <i class="fa fa-3x fa-pencil"></i>
@@ -118,9 +118,12 @@
                     </article>
                     @endforeach            
                 </div>
+            <div class="has-text-centered">
+                {{$ovas->links()}}
+            </div>
         @else
             <div class="message is-warning">
-                <div class="message-body">
+                <div class="message-body has-text-centered">
                     Actualmente no existen ovas registradas en la aplicación.
                 </div>
             </div>
