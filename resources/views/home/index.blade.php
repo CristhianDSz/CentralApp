@@ -1,5 +1,15 @@
 @extends('layouts.master')
 
+@section('styles')
+    <style>
+    article.post {
+        margin: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #E6EAEE;
+        }
+    </style>
+@endsection
+
 @section('header-title')
     Tablero principal
 @endsection
@@ -14,12 +24,14 @@
         <div class="box quick-stats has-background-primary has-text-white">
             <div class="quick-stats-icon">
                 <span class="icon is-large">
-                    <i class="fa fa-3x fa-users"></i>
+                    <i class="fa fa-3x fa-book"></i>
                 </span>
             </div>
             <div class="quick-stats-content">
                 <h3 class="title is-4">Ovas</h3>
-                <div class="inlinesparkline-bar"></div>
+                <div class="inlinesparkline-bar has-text-centered">
+                <span class="is-size-5">{{$countOvas}}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -31,8 +43,11 @@
                 </span>
             </div>
             <div class="quick-stats-content">
-                <h3 class="title is-4">Áreas</h3>
-                <div class="inlinesparkline-bar"></div>
+                <h3 class="title is-4">Asignaturas</h3>
+                <div class="inlinesparkline-bar has-text-centered">
+                    <span class="is-size-5">{{$countSubjects}}</span>
+
+                </div>
             </div>
         </div>
     </div>
@@ -40,12 +55,15 @@
         <div class="box quick-stats has-background-danger has-text-white">
             <div class="quick-stats-icon">
                 <span class="icon is-large">
-                    <i class="fa fa-3x fa-bar-chart"></i>
+                    <i class="fa fa-3x fa-users"></i>
                 </span>
             </div>
             <div class="quick-stats-content">
-                <h3 class="title is-4">Docentes</h3>
-                <div class="inlinesparkline-line"></div>
+                <h3 class="title is-4">Usuarios</h3>
+                <div class="inlinesparkline-line has-text-centered">
+                    <span class="is-size-5">{{$countUsers}}</span>
+
+                </div>
             </div>
         </div>
     </div>
@@ -53,16 +71,62 @@
         <div class="box quick-stats has-background-warning has-text-white">
             <div class="quick-stats-icon">
                 <span class="icon is-large">
-                    <i class="fa fa-3x fa-bell"></i>
+                    <i class="fa fa-3x fa-pencil"></i>
                 </span>
             </div>
             <div class="quick-stats-content">
-                <h3 class="title is-4">Alertas</h3>
-                <div class="inlinesparkline-line"></div>
+                <h3 class="title is-4">Cursos</h3>
+                <div class="inlinesparkline-line has-text-centered">
+                    <span class="is-size-5">{{$countClasses}}</span>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<h1>Pendiente añadir gráfica, aunque no está contemplado como requisito del sistema!!</h1>
+
+
+<div class="columns">
+    <div class="column">
+        @if (count($ovas) > 0)
+        <h3 class="is-size-7 has-text-centered">Resumen Actual de Ovas Institución</h3>
+            <div class="box content">
+                @foreach ($ovas as $ova)
+                    <article class="post">
+                    <h4>{{$ova->theme}}</h4>
+                        <div class="media">
+                            <div class="media-left">
+                                <p class="image is-32x32">
+                                <img src="https://api.adorable.io/avatars/128/{{$ova->user->name}}@adorable.pngCopy to Clipboard
+                                    ">
+                                </p>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                    <a href="#">{{$ova->user->name}}</a> hace {{$ova->created_at->diffForHumans()}} &nbsp;
+                                    <span class="tag is-primary">{{$ova->mandatoryArea->name}}</span>
+                                    <span class="tag is-info">{{$ova->subject->name}}</span>
+                                    <span class="tag is-light">{{$ova->grade->name}}</span>
+                                    <span class="tag is-dark">{{$ova->class->name}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="media-right">
+                                {{-- <span class="has-text-grey-light"><i class="fa fa-comments"></i> 1</span> --}}
+                            </div>
+                        </div>
+                    </article>
+                    @endforeach            
+                </div>
+        @else
+            <div class="message is-warning">
+                <div class="message-body">
+                    Actualmente no existen ovas registradas en la aplicación.
+                </div>
+            </div>
+        @endif
+    </div>
+</div>
+
 @endsection
 

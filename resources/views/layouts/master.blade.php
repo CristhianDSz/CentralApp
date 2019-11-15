@@ -18,6 +18,7 @@
         <meta name="author" content="Cristhian Sánchez">
         {{-- <link href="https://fonts.googleapis.com/icon?family=Poppins" rel="stylesheet"> --}}
         <link rel="stylesheet" href="{{ asset('css/app.css')}}">
+        @yield('styles')
     </head>
     <body>
         <!-- START NAV -->
