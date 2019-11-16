@@ -146,26 +146,32 @@
                 <div class="content article-body has-text-centered">
                     <p class="title article-title">Institución: {{$school->name}}</p>
                     <p class="subtitle is-6 article-subtitle">
-                      Sitio web: <a href="{{$school->website}}" target="_blank">{{$school->website}}</a>
+                      <span class="has-text-weight-semibold">
+                          Sitio web
+                      </span>: <a href="{{$school->website}}" target="_blank">{{$school->website}}</a>
                     </p>
                     <p>
-                        Direccion: {{$school->address}}
+                        <span class="has-text-weight-semibold">
+                            Direccion
+                        </span>: {{$school->address}}
                     </p>
                     <p>
-                        Ciudad: {{$school->location}}
+                       <span class="has-text-weight-semibold">
+                          Ciudad   
+                      </span>: {{$school->location}}
                     </p>
-                    <p> Teléfono: {{$school->phone}}</p>
+                    <p> <span class="has-text-weight-semibold">Teléfono</span>: {{$school->phone}}</p>
                 </div>
                 <div class="edit-info has-text-centered">
                 @can('update',$school)
-                  <a href="{{route('schools.edit',$school->id)}}" class="button is-outlined is-link">Editar información</a>
+                  <a href="{{route('schools.edit',$school->id)}}" class="button is-primary">Editar información</a>
                 @endcan
                 </div>
               </div>
             <div class="column">
               <div class="media">
                   <div class="media-center">
-                  <img width="400" height="400" src="{{$school->logo ? asset('storage/'.$school->logo) : 'https://ui-avatars.com/api/?name=Centrall+App'}}" class="author-image" alt="Placeholder image">
+                  <img src="{{$school->logo ? asset('storage/'.$school->logo) : 'https://ui-avatars.com/api/?name=Centrall+App'}}" class="author-image" style="width:200px;border-radius:50%" alt="Placeholder image">
                   </div>
               </div>
             </div>
