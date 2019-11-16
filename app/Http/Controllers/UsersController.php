@@ -21,7 +21,12 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        if (auth()->user()->id == '1') {
+            $users = User::all();
+        }
+        else {
+            $users = User::where('id','!=','1')->get();
+        }
         return view('users.index',compact('users'));
     }
 
@@ -52,11 +57,15 @@ class UsersController extends Controller
 
         $attributes = request()->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
+            'email' => [
+                'required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id
+            ],
+            'password' => ['required','confirmed'],
             'role_id' => ['required','numeric'],
             'areas' => ['required','array']
         ]);
 
+        $attributes['password'] =  bcrypt($attributes['password']);
         $user->update($attributes);
         $user->mandatoryAreas()->sync(request('areas'));
         return redirect()->route('users.index');

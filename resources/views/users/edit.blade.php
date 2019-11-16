@@ -40,7 +40,19 @@ Usuarios de central app
                             </select>
                         </div>
                         </div>
-                      </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Contraseña</label>
+                        <div class="control">
+                        <input name="password" class="input" type="password" placeholder="Contraseña del usuario">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Contraseña</label>
+                        <div class="control">
+                        <input name="password_confirmation" class="input" type="password" placeholder="Confirmar contraseña del usuario">
+                        </div>
+                    </div>
                     <div class="field">
                         <label class="label">Áreas</label>
                         <div class="control">
