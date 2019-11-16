@@ -51,19 +51,16 @@ Usuarios de central app
                                 <i class="fa fa-edit is-size-5 has-text-primary"></i>
                               </a>
                             @else
-                              <p class="is-size-7">No disponible</p>
+                              <span class="fa fa-edit is-size-5 has-text-light"></span>
                             @endcan
                              @can('delete', App\User::class)
-                                <a href="{{route('users.destroy', $user->id)}}" onclick="event.preventDefault();
-                                document.getElementById('destroy-form').submit()">
-                                  <i class="fa fa-trash is-size-5 has-text-danger"></i>
-                                </a>
-                                <form id="destroy-form" action="{{route('users.destroy',    $user->id)}}" method="POST" style="display:none">
+                                <form class="destroy-form" action="{{route('users.destroy',    $user->id)}}" method="POST" style="display:inline">
                                   @csrf
                                   @method('DELETE')
+                                  <button class="fa fa-trash is-size-5 has-text-danger"  type="submit" style="border:none;background:none;cursor:pointer"></button>
                                 </form>
                              @else
-                                <p class="is-size-7">No disponible</p>
+                              <span class="fa fa-trash is-size-5 has-text-light"></span>
                              @endcan
                         </td>
                         </tr>
