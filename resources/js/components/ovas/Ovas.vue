@@ -30,16 +30,18 @@
         </learning-section-form>
       </div>
     </modal>
+    <ova-detail></ova-detail>
   </div>
 </template>
 
 <script>
 import Modal from "../utils/Modal.vue";
 import Ova from "./Ova.vue";
+import OvaDetail from './OvaDetail.vue'
 import LearningSectionForm from '../learning-sections/LearningSectionForm.vue'
 
 export default {
-  components: { Ova, Modal, LearningSectionForm},
+  components: { Ova, Modal, LearningSectionForm, OvaDetail},
   data() {
     return {
       ovas: [],
@@ -75,7 +77,6 @@ export default {
       this.$refs.learningForm.$refs.homeworkForm.homeworks = learningSection.homeworks
       /** Show modal with form */
       this.learningSectionModal = true
-      
     })
     /** Listening to event when a learning section is deleted */
     OvaLearningEmitter.$on('learning-section-deleted', () => {

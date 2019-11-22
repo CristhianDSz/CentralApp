@@ -51,7 +51,7 @@ Usuarios de central app
                                 <i class="fa fa-edit is-size-5 has-text-primary"></i>
                               </a>
                             @else
-                              <span class="fa fa-edit is-size-5 has-text-light"></span>
+                              <span class="fa fa-edit is-size-5 has-text-grey-light"></span>
                             @endcan
                              @can('delete', App\User::class)
                                 <form class="destroy-form" action="{{route('users.destroy',    $user->id)}}" method="POST" style="display:inline">
@@ -60,7 +60,7 @@ Usuarios de central app
                                   <button class="fa fa-trash is-size-5 has-text-danger"  type="submit" style="border:none;background:none;cursor:pointer"></button>
                                 </form>
                              @else
-                              <span class="fa fa-trash is-size-5 has-text-light"></span>
+                              <span class="fa fa-trash is-size-5 has-text-grey-light"></span>
                              @endcan
                         </td>
                         </tr>

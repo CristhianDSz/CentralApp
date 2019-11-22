@@ -10,7 +10,7 @@
           </a>
         </p>
         <p>Contexto: {{learningSection.context}}</p>
-        <div>
+        <!-- <div>
           <p>Componentes:</p>
           <ul>
             <li
@@ -19,8 +19,8 @@
             >{{component.name}}</li>
           </ul>
         </div>
-        <br />
-        <div>
+        <br /> -->
+        <!-- <div>
           <p>Competencias:</p>
           <ul>
             <li
@@ -71,7 +71,7 @@
             </li>
           </ul>
           <p class="is-small has-text-info" v-else>No existen actividades para esta unidad de aprendizaje</p>
-        </div>
+        </div> -->
       </div>
 </template>
 

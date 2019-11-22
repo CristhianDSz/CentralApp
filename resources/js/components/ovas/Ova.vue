@@ -12,6 +12,11 @@
             <i class="fa fa-file-pdf-o has-text-danger"></i>
           </a>
         </div>
+        <div class="level-item">
+          <a title="Detalles" class="is-size-4" href="#" @click.prevent="detailOva(ova)">
+            <i class="fa fa-eye has-text-primary"></i>
+          </a>
+        </div>
         <div class="level-item" v-if="$can('update ovas')">
           <a title="Editar" class="is-size-4" href="#" @click.prevent="editOva(ova)">
             <i class="fa fa-edit has-text-primary"></i>
@@ -24,11 +29,6 @@
         </div>
       </div>
     </div>
-    <p class="is-size-7">
-            Creado el:
-            <em>{{ova.created_at}}</em> por
-            <em>{{ova.user.name}}</em>
-          </p>
     <div class="columns">
       <div class="column">
         <p class="is-size-6">
@@ -105,6 +105,9 @@ export default {
         console.log(response.data.message)
         this.$emit('deleted')
       })
+    },
+    detailOva(ova) {
+      OvaEmitter.$emit('detail',ova)
     }
   }
 };
