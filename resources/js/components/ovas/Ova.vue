@@ -17,6 +17,11 @@
             <i class="fa fa-eye has-text-primary"></i>
           </a>
         </div>
+        <div class="level-item">
+          <a title="Imagen" class="is-size-4" href="#" @click.prevent="addOrUpdateImage(ova)">
+            <i class="fa fa-image has-text-primary"></i>
+          </a>
+        </div>
         <div class="level-item" v-if="$can('update ovas')">
           <a title="Editar" class="is-size-4" href="#" @click.prevent="editOva(ova)">
             <i class="fa fa-edit has-text-primary"></i>
@@ -108,6 +113,9 @@ export default {
     },
     detailOva(ova) {
       OvaEmitter.$emit('detail',ova)
+    },
+    addOrUpdateImage(ova) {
+      OvaEmitter.$emit('image',ova)
     }
   }
 };

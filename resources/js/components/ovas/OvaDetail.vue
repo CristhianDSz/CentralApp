@@ -2,6 +2,13 @@
     <modal :modalActive="modalActive" :large="true" @close="modalActive=!modalActive">
         <template slot="title">Información de Objeto de Aprendizaje</template>
         <template slot="body">
+            <div class="row" v-if="currentOva.image">
+                <div class="image has-text-centered">
+                    <figure class="image is-96x96">
+                    <img class="is-rounded" :src="`/storage/${currentOva.image}`">
+                </figure>
+                </div>
+            </div>
             <div class="level" style="margin-bottom:12px;">
                 <div class="level-left">
                     <div class="level-item">
@@ -50,7 +57,7 @@
                 </div>
            </div>
            <hr>
-           <div class="row">
+           <div class="row" v-if="currentOva.learning_sections.length">
                <h6 class="is-size-6 has-text-centered">Unidades de aprendizaje</h6>
                <table class="table is-size-7">
                    <thead>
@@ -89,16 +96,25 @@
                        <tr v-for="(learningSection,index) in currentOva.learning_sections" :key="learningSection.title">
                            <td>{{index +1}}</td>
                            <td>
-                                <p v-for="resource in learningSection.resources" :key="resource.id">{{resource.url}}</p>
+                               <template v-if="learningSection.resources.length">
+                                    <p v-for="resource in learningSection.resources" :key="resource.id">{{resource.url}}</p>
+                               </template>
+                               <span v-else>Ninguno</span>
                            </td>
                            <td class="has-text-centered">
-                               <p v-for="bibliography in learningSection.bibliographies" :key="bibliography.id">{{bibliography.url}}</p>
+                              <template v-if="learningSection.bibliographies.length">
+                                   <p v-for="bibliography in learningSection.bibliographies" :key="bibliography.id">{{bibliography.url}}</p>
+                              </template>
+                               <span v-else>Ninguna</span>
                            </td>
                            <td class="has-text-right">
-                                <div v-for="homework in learningSection.homeworks" :key="homework.id">
+                               <template v-if="learningSection.homeworks.length">
+                                    <div v-for="homework in learningSection.homeworks" :key="homework.id">
                                     <p><span class="has-text-weight-semibold">Contenido:</span> {{homework.content}}</p>
                                     <p><span class="has-text-weight-semibold">Entregable:</span> {{homework.presentation}}</p>
                                 </div>
+                               </template>
+                               <span v-else>Ninguna</span>
                            </td>
                        </tr>
                    </tbody>
@@ -127,3 +143,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+    .image {
+        display: flex;
+        justify-content: center;
+    }
+</style>

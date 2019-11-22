@@ -16,7 +16,8 @@ class Ova extends Model
         'class_id',
         'mandatory_area_id',
         'subject_id',
-        'user_id'
+        'user_id',
+        'image'
     ];
 
     public function grade()

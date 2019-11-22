@@ -31,6 +31,7 @@
       </div>
     </modal>
     <ova-detail></ova-detail>
+    <ova-image @success="getOvas"></ova-image>
   </div>
 </template>
 
@@ -38,10 +39,11 @@
 import Modal from "../utils/Modal.vue";
 import Ova from "./Ova.vue";
 import OvaDetail from './OvaDetail.vue'
+import OvaImage from './OvaImage.vue'
 import LearningSectionForm from '../learning-sections/LearningSectionForm.vue'
 
 export default {
-  components: { Ova, Modal, LearningSectionForm, OvaDetail},
+  components: { Ova, Modal, LearningSectionForm, OvaDetail, OvaImage},
   data() {
     return {
       ovas: [],

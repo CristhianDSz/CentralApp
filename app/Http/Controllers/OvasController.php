@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Ova;
 use App\School;
+use Illuminate\Support\Facades\Storage;
 use PDF;
 
 class OvasController extends Controller
@@ -154,5 +155,29 @@ class OvasController extends Controller
         //return view('ovas.pdf',compact('ova','school'));
         $pdf = PDF::loadView('ovas.pdf',compact('ova','school'));
         return $pdf->download('listado.pdf');
+    }
+
+    /**
+     * Store/Update image for the resource
+     *
+     * @param int $id
+     * @return void
+     */
+    public function storeImage($id)
+    {
+        $ova = Ova::findOrFail($id);
+
+        request()->validate([
+            'file' => 'sometimes|required|file|image'
+        ]);
+
+        if (request()->has('file')) {
+            Storage::disk('public')->delete($ova->image);
+            $ova->update([
+                'image' => request()->file->store('ovas', 'public')
+            ]);
+        }
+       
+        return response()->json(['message' => 'Archivo subido correctamente']);
     }
 }
