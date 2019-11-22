@@ -168,6 +168,13 @@
                     </span>Institución
                 </a>
             </li>
+            <li>
+            <a class="{{ Route::currentRouteName() == 'manuals.index' ? 'is-active' : ''}}" href="{{route('manuals.index') }}">
+                    <span class="icon">
+                        <i class="fa fa-file"></i>
+                    </span>Manuales
+                </a>
+            </li>
         </ul>
     </aside>
 </div>

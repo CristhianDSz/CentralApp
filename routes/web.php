@@ -65,4 +65,7 @@ Route::get('permissions', 'PermissionsController@index')->name('permissions.inde
 Route::resource('roles','RolesController')->except(['show']);
 //Users
 Route::resource('users','UsersController')->except(['show','create']);
+//Manuals
+Route::resource('manuals', 'ManualsController')->except(['show','destroy']);
+
 
