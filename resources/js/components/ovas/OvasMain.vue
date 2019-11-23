@@ -27,7 +27,7 @@
         <template slot="title">Agregar Ova</template>
         <div class="content" slot="body">
           <h2>Qué es una Ova?</h2>
-          <p>Las ovas para la educación están organizadas en componentes básicos interconectados. Esta forma de organización facilita una aproximación progresiva al conocimiento por parte de los estudiantes y orienta el trabajo de los docentes en el aula</p>
+          <p>Un Objeto de Aprendizaje es un conjunto de recursos digitales, autocontenible y reutilizable, con un propósito educativo. Cuenta con una estructura de información externa la cual facilita su almacenamiento, identificación y recuperación</p>
           <br />
           <ova-form ref="ovaForm" @success="showMessage" @cancel="ovaModalActive=false"></ova-form>
         </div>

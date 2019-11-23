@@ -60350,301 +60350,315 @@ var render = function() {
         _vm._v("Información de Objeto de Aprendizaje")
       ]),
       _vm._v(" "),
-      _c("template", { slot: "body" }, [
-        _vm.currentOva.image
-          ? _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "image has-text-centered" }, [
-                _c("figure", { staticClass: "image is-96x96" }, [
-                  _c("img", {
-                    staticClass: "is-rounded",
-                    attrs: { src: "/storage/" + _vm.currentOva.image }
-                  })
-                ])
-              ])
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "level", staticStyle: { "margin-bottom": "12px" } },
-          [
-            _c("div", { staticClass: "level-left" }, [
-              _c("div", { staticClass: "level-item" }, [
-                _c(
-                  "h4",
-                  { staticClass: "title is-3", attrs: { id: "const" } },
-                  [_vm._v("Tema: " + _vm._s(_vm.currentOva.theme))]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "level-right" }, [
-              _c("div", { staticClass: "level-item" }, [
-                _c("div", { staticClass: "tags has-addons" }, [
-                  _c("span", { staticClass: "tag" }, [_vm._v("Grado")]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "tag is-primary" }, [
-                    _vm._v(_vm._s(_vm.currentOva.grade.name))
+      _vm.currentOva
+        ? _c("template", { slot: "body" }, [
+            _vm.currentOva.image
+              ? _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "image has-text-centered" }, [
+                    _c("figure", { staticClass: "image is-96x96" }, [
+                      _c("img", {
+                        staticClass: "is-rounded",
+                        attrs: { src: "/storage/" + _vm.currentOva.image }
+                      })
+                    ])
                   ])
                 ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "level-item" }, [
-                _c("div", { staticClass: "tags has-addons" }, [
-                  _c("span", { staticClass: "tag" }, [_vm._v("Clase")]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "tag is-info" }, [
-                    _vm._v(_vm._s(_vm.currentOva.class.name))
-                  ])
-                ])
-              ])
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "columns" }, [
-            _c("div", { staticClass: "column" }, [
-              _c("p", { staticClass: "is-size-7" }, [
-                _c("span", { staticClass: "has-text-weight-semibold" }, [
-                  _vm._v("Fecha de creación:")
-                ]),
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.currentOva.created_at) +
-                    "\n                "
-                )
-              ]),
-              _vm._v(" "),
-              _c("p", { staticClass: "is-size-7" }, [
-                _c("span", { staticClass: "has-text-weight-semibold" }, [
-                  _vm._v("Autor:")
-                ]),
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.currentOva.user.name) +
-                    "\n                "
-                )
-              ])
-            ]),
+              : _vm._e(),
             _vm._v(" "),
-            _c("div", { staticClass: "column" }, [
-              _c("p", { staticClass: "has-text-left is-size-6" }, [
-                _c("span", { staticClass: "has-text-weight-semibold" }, [
-                  _vm._v("Área:")
-                ]),
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.currentOva.mandatory_area.name) +
-                    "\n                "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "column has-text-centered" }, [
-              _c("p"),
-              _vm._v(" "),
-              _c("p", { staticClass: "is-size-7" }, [
-                _c("span", { staticClass: "has-text-weight-semibold" }, [
-                  _vm._v("Asignatura:")
-                ]),
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.currentOva.subject.name) +
-                    "\n                "
-                )
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("hr"),
-        _vm._v(" "),
-        _vm.currentOva.learning_sections.length
-          ? _c("div", { staticClass: "row" }, [
-              _c("h6", { staticClass: "is-size-6 has-text-centered" }, [
-                _vm._v("Unidades de aprendizaje")
-              ]),
-              _vm._v(" "),
-              _c("table", { staticClass: "table is-size-7" }, [
-                _c("thead", [
-                  _c("th", [_vm._v("Unid.")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("Título")]),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "has-text-centered" }, [
-                    _vm._v("Contexto")
-                  ]),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "has-text-centered" }, [
-                    _vm._v("Componentes")
-                  ]),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "has-text-centered" }, [
-                    _vm._v("Competencias")
-                  ]),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "has-text-right" }, [
-                    _vm._v("Indicadores")
+            _c(
+              "div",
+              {
+                staticClass: "level",
+                staticStyle: { "margin-bottom": "12px" }
+              },
+              [
+                _c("div", { staticClass: "level-left" }, [
+                  _c("div", { staticClass: "level-item" }, [
+                    _c(
+                      "h4",
+                      { staticClass: "title is-3", attrs: { id: "const" } },
+                      [_vm._v("Tema: " + _vm._s(_vm.currentOva.theme))]
+                    )
                   ])
                 ]),
                 _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.currentOva.learning_sections, function(
-                    learningSection,
-                    index
-                  ) {
-                    return _c("tr", { key: learningSection.title }, [
-                      _c("td", [_vm._v(_vm._s(index + 1))]),
+                _c("div", { staticClass: "level-right" }, [
+                  _c("div", { staticClass: "level-item" }, [
+                    _c("div", { staticClass: "tags has-addons" }, [
+                      _c("span", { staticClass: "tag" }, [_vm._v("Grado")]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(learningSection.title))]),
+                      _c("span", { staticClass: "tag is-primary" }, [
+                        _vm._v(_vm._s(_vm.currentOva.grade.name))
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "level-item" }, [
+                    _c("div", { staticClass: "tags has-addons" }, [
+                      _c("span", { staticClass: "tag" }, [_vm._v("Clase")]),
                       _vm._v(" "),
-                      _c("td", { staticClass: "has-text-centered" }, [
-                        _vm._v(_vm._s(learningSection.context))
+                      _c("span", { staticClass: "tag is-info" }, [
+                        _vm._v(_vm._s(_vm.currentOva.class.name))
+                      ])
+                    ])
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "columns" }, [
+                _c("div", { staticClass: "column" }, [
+                  _c("p", { staticClass: "is-size-7" }, [
+                    _c("span", { staticClass: "has-text-weight-semibold" }, [
+                      _vm._v("Fecha de creación:")
+                    ]),
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.currentOva.created_at) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "is-size-7" }, [
+                    _c("span", { staticClass: "has-text-weight-semibold" }, [
+                      _vm._v("Autor:")
+                    ]),
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.currentOva.user.name) +
+                        "\n                "
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "column" }, [
+                  _c("p", { staticClass: "has-text-left is-size-6" }, [
+                    _c("span", { staticClass: "has-text-weight-semibold" }, [
+                      _vm._v("Área:")
+                    ]),
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.currentOva.mandatory_area.name) +
+                        "\n                "
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "column has-text-centered" }, [
+                  _c("p"),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "is-size-7" }, [
+                    _c("span", { staticClass: "has-text-weight-semibold" }, [
+                      _vm._v("Asignatura:")
+                    ]),
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.currentOva.subject.name) +
+                        "\n                "
+                    )
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _vm.currentOva.learning_sections.length
+              ? _c("div", { staticClass: "row" }, [
+                  _c("h6", { staticClass: "is-size-6 has-text-centered" }, [
+                    _vm._v("Unidades de aprendizaje")
+                  ]),
+                  _vm._v(" "),
+                  _c("table", { staticClass: "table is-size-7" }, [
+                    _c("thead", [
+                      _c("th", [_vm._v("Unid.")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Título")]),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "has-text-centered" }, [
+                        _vm._v("Contexto")
                       ]),
                       _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticClass: "has-text-centered" },
-                        _vm._l(learningSection.components, function(component) {
-                          return _c("p", { key: component.id }, [
-                            _vm._v(_vm._s(component.name))
-                          ])
-                        }),
-                        0
-                      ),
+                      _c("th", { staticClass: "has-text-centered" }, [
+                        _vm._v("Componentes")
+                      ]),
                       _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticClass: "has-text-centered" },
-                        _vm._l(learningSection.competences, function(
-                          competence
-                        ) {
-                          return _c("p", { key: competence.id }, [
-                            _vm._v(_vm._s(competence.name))
-                          ])
-                        }),
-                        0
-                      ),
+                      _c("th", { staticClass: "has-text-centered" }, [
+                        _vm._v("Competencias")
+                      ]),
                       _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticClass: "has-text-right" },
-                        _vm._l(learningSection.indicators, function(indicator) {
-                          return _c("p", { key: indicator.id }, [
-                            _vm._v(_vm._s(indicator.name))
-                          ])
-                        }),
-                        0
-                      )
-                    ])
-                  }),
-                  0
-                )
-              ]),
-              _vm._v(" "),
-              _c("table", { staticClass: "table is-size-7" }, [
-                _c("thead", [
-                  _c("th", [_vm._v("Unid.")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("Recursos")]),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "has-text-centered" }, [
-                    _vm._v("Referencias bibliográficas")
+                      _c("th", { staticClass: "has-text-right" }, [
+                        _vm._v("Indicadores")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.currentOva.learning_sections, function(
+                        learningSection,
+                        index
+                      ) {
+                        return _c("tr", { key: learningSection.title }, [
+                          _c("td", [_vm._v(_vm._s(index + 1))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(learningSection.title))]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "has-text-centered" }, [
+                            _vm._v(_vm._s(learningSection.context))
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            { staticClass: "has-text-centered" },
+                            _vm._l(learningSection.components, function(
+                              component
+                            ) {
+                              return _c("p", { key: component.id }, [
+                                _vm._v(_vm._s(component.name))
+                              ])
+                            }),
+                            0
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            { staticClass: "has-text-centered" },
+                            _vm._l(learningSection.competences, function(
+                              competence
+                            ) {
+                              return _c("p", { key: competence.id }, [
+                                _vm._v(_vm._s(competence.name))
+                              ])
+                            }),
+                            0
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            { staticClass: "has-text-right" },
+                            _vm._l(learningSection.indicators, function(
+                              indicator
+                            ) {
+                              return _c("p", { key: indicator.id }, [
+                                _vm._v(_vm._s(indicator.name))
+                              ])
+                            }),
+                            0
+                          )
+                        ])
+                      }),
+                      0
+                    )
                   ]),
                   _vm._v(" "),
-                  _c("th", { staticClass: "has-text-right" }, [
-                    _vm._v("Actividades")
+                  _c("table", { staticClass: "table is-size-7" }, [
+                    _c("thead", [
+                      _c("th", [_vm._v("Unid.")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Recursos")]),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "has-text-centered" }, [
+                        _vm._v("Referencias bibliográficas")
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "has-text-right" }, [
+                        _vm._v("Actividades")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.currentOva.learning_sections, function(
+                        learningSection,
+                        index
+                      ) {
+                        return _c("tr", { key: learningSection.title }, [
+                          _c("td", [_vm._v(_vm._s(index + 1))]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              learningSection.resources.length
+                                ? _vm._l(learningSection.resources, function(
+                                    resource
+                                  ) {
+                                    return _c("p", { key: resource.id }, [
+                                      _vm._v(_vm._s(resource.url))
+                                    ])
+                                  })
+                                : _c("span", [_vm._v("Ninguno")])
+                            ],
+                            2
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            { staticClass: "has-text-centered" },
+                            [
+                              learningSection.bibliographies.length
+                                ? _vm._l(
+                                    learningSection.bibliographies,
+                                    function(bibliography) {
+                                      return _c("p", { key: bibliography.id }, [
+                                        _vm._v(_vm._s(bibliography.url))
+                                      ])
+                                    }
+                                  )
+                                : _c("span", [_vm._v("Ninguna")])
+                            ],
+                            2
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            { staticClass: "has-text-right" },
+                            [
+                              learningSection.homeworks.length
+                                ? _vm._l(learningSection.homeworks, function(
+                                    homework
+                                  ) {
+                                    return _c("div", { key: homework.id }, [
+                                      _c("p", [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "has-text-weight-semibold"
+                                          },
+                                          [_vm._v("Contenido:")]
+                                        ),
+                                        _vm._v(" " + _vm._s(homework.content))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("p", [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "has-text-weight-semibold"
+                                          },
+                                          [_vm._v("Entregable:")]
+                                        ),
+                                        _vm._v(
+                                          " " + _vm._s(homework.presentation)
+                                        )
+                                      ])
+                                    ])
+                                  })
+                                : _c("span", [_vm._v("Ninguna")])
+                            ],
+                            2
+                          )
+                        ])
+                      }),
+                      0
+                    )
                   ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.currentOva.learning_sections, function(
-                    learningSection,
-                    index
-                  ) {
-                    return _c("tr", { key: learningSection.title }, [
-                      _c("td", [_vm._v(_vm._s(index + 1))]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
-                          learningSection.resources.length
-                            ? _vm._l(learningSection.resources, function(
-                                resource
-                              ) {
-                                return _c("p", { key: resource.id }, [
-                                  _vm._v(_vm._s(resource.url))
-                                ])
-                              })
-                            : _c("span", [_vm._v("Ninguno")])
-                        ],
-                        2
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticClass: "has-text-centered" },
-                        [
-                          learningSection.bibliographies.length
-                            ? _vm._l(learningSection.bibliographies, function(
-                                bibliography
-                              ) {
-                                return _c("p", { key: bibliography.id }, [
-                                  _vm._v(_vm._s(bibliography.url))
-                                ])
-                              })
-                            : _c("span", [_vm._v("Ninguna")])
-                        ],
-                        2
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticClass: "has-text-right" },
-                        [
-                          learningSection.homeworks.length
-                            ? _vm._l(learningSection.homeworks, function(
-                                homework
-                              ) {
-                                return _c("div", { key: homework.id }, [
-                                  _c("p", [
-                                    _c(
-                                      "span",
-                                      {
-                                        staticClass: "has-text-weight-semibold"
-                                      },
-                                      [_vm._v("Contenido:")]
-                                    ),
-                                    _vm._v(" " + _vm._s(homework.content))
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _c(
-                                      "span",
-                                      {
-                                        staticClass: "has-text-weight-semibold"
-                                      },
-                                      [_vm._v("Entregable:")]
-                                    ),
-                                    _vm._v(" " + _vm._s(homework.presentation))
-                                  ])
-                                ])
-                              })
-                            : _c("span", [_vm._v("Ninguna")])
-                        ],
-                        2
-                      )
-                    ])
-                  }),
-                  0
-                )
-              ])
-            ])
-          : _vm._e()
-      ])
+                ])
+              : _vm._e()
+          ])
+        : _vm._e()
     ],
     2
   )
@@ -61338,7 +61352,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("p", [
                   _vm._v(
-                    "Las ovas para la educación están organizadas en componentes básicos interconectados. Esta forma de organización facilita una aproximación progresiva al conocimiento por parte de los estudiantes y orienta el trabajo de los docentes en el aula"
+                    "Un Objeto de Aprendizaje es un conjunto de recursos digitales, autocontenible y reutilizable, con un propósito educativo. Cuenta con una estructura de información externa la cual facilita su almacenamiento, identificación y recuperación"
                   )
                 ]),
                 _vm._v(" "),

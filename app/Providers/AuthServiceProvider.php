@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Component;
 use App\Grade;
 use App\MandatoryArea;
+use App\Manual;
 use App\Ova;
 use App\Role;
 use App\School;
@@ -14,6 +15,7 @@ use App\User;
 use App\Policies\ComponentPolicy;
 use App\Policies\GradePolicy;
 use App\Policies\MandatoryAreaPolicy;
+use App\Policies\ManualPolicy;
 use App\Policies\OvaPolicy;
 use App\Policies\RolePolicy;
 use App\Policies\SchoolClassPolicy;
@@ -35,6 +37,7 @@ class AuthServiceProvider extends ServiceProvider
         Role::class => RolePolicy::class,
         User::class => UserPolicy::class,
         MandatoryArea::class => MandatoryAreaPolicy::class,
+        Manual::class => ManualPolicy::class,
         Subject::class => SubjectPolicy::class,
         Grade::class => GradePolicy::class,
         SchoolClass::class => SchoolClassPolicy::class,

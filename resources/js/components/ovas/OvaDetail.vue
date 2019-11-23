@@ -1,7 +1,7 @@
 <template>
     <modal :modalActive="modalActive" :large="true" @close="modalActive=!modalActive">
         <template slot="title">Información de Objeto de Aprendizaje</template>
-        <template slot="body">
+        <template slot="body" v-if="currentOva">
             <div class="row" v-if="currentOva.image">
                 <div class="image has-text-centered">
                     <figure class="image is-96x96">

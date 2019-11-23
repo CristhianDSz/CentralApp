@@ -251,6 +251,9 @@
         </div>
         <div id="invoice">
         <h1>{{$ova->theme}}</h1>
+        @if ($ova->image)
+        <img src="{{public_path('storage/'.$ova->image)}}" width="64" height="64" alt="Imagen">
+        @endif
         <div class="date">Grado: {{$ova->grade->name}}</div>
         <div class="date">Clase: {{$ova->class->name}}</div>
         <div class="date">Materia: {{$ova->subject->name}}</div>
