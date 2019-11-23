@@ -2,12 +2,13 @@
   <form @submit.prevent="postArea">
     <div class="field">
       <p class="control has-icons-left has-icons-right">
-        <input class="input" type="text" v-model="area.name" placeholder="Nombre del área" />
+        <input v-validate="'required|min:3'" data-vv-as="Área" name="area" class="input" type="text" v-model="area.name" placeholder="Nombre del área" />
+         <small class="help is-danger" v-if="errors.has('area')">{{errors.first('area')}}</small>
       </p>
     </div>
     <div class="field">
       <p class="control">
-        <button :disabled="disableButton" class="button is-success is-fullwidth">Crear</button>
+        <button :disabled="disableButton || errors.any()" class="button is-success is-fullwidth">Crear</button>
       </p>
     </div>
   </form>

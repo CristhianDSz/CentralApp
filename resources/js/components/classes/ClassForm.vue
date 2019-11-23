@@ -4,10 +4,14 @@
       <p class="control has-icons-left has-icons-right">
         <input
           class="input"
+          v-validate="'required|min:3'"
+          data-vv-as="curso"
+          name="schoolClass"
           type="text"
           v-model="schoolClass.name"
           placeholder="Nombre de la clase"
         />
+         <small class="help is-danger" v-if="errors.has('schoolClass')">{{errors.first('schoolClass')}}</small>
       </p>
     </div>
     <div class="field">
@@ -21,7 +25,7 @@
     </div>
     <div class="field">
       <p class="control">
-        <button :disabled="disableControls" class="button is-success is-fullwidth">Crear</button>
+        <button :disabled="disableControls || errors.any()" class="button is-success is-fullwidth">Crear</button>
       </p>
     </div>
   </form>

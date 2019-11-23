@@ -57,13 +57,10 @@ Roles de central app
                             @endcan
 
                             @can('delete', App\Role::class)
-                              <a href="{{route('roles.destroy', $role->id)}}" onclick="event.preventDefault();
-                              document.getElementById('destroy-form').submit()">
-                                <i class="fa fa-trash is-size-5 has-text-danger"></i>
-                              </a>
-                              <form id="destroy-form" action="{{route('roles.destroy',    $role->id)}}" method="POST" style="display:none">
+                              <form id="destroy-form" action="{{route('roles.destroy',    $role->id)}}" method="POST" style="display:inline" onsubmit="return confirm('Está seguro(a)? Este cambio no se podrá revertir')">
                                 @csrf
                                 @method('DELETE')
+                                <button class="fa fa-trash is-size-5 has-text-danger"  type="submit" style="border:none;background:none;cursor:pointer"></button>
                               </form>
                             @else 
                               <p class="is-size-7">No disponible</p>

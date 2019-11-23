@@ -1,11 +1,21 @@
 require('./bootstrap')
 
 import Vue from 'vue'
+import VueSweetalert2 from "vue-sweetalert2";
 import Multiselect from 'vue-multiselect'
-
-
+import VeeValidate, { Validator } from "vee-validate";
+import es from "vee-validate/dist/locale/es";
 
 Vue.component('multiselect', Multiselect)
+import "sweetalert2/dist/sweetalert2.min.css";
+
+Vue.use(VueSweetalert2);
+Validator.localize({ es: es });
+Vue.use(VeeValidate, {
+    locale: "es",
+    fieldsBagName: "vvFields",
+    events: "change|focus|input|blur"
+});
 
 import AreasMain from './components/areas/AreasMain.vue'
 import SubjectsMain from './components/subjects/SubjectsMain.vue'

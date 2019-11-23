@@ -62,8 +62,8 @@
         </p>
         <a class="button is-rounded is-text has-background-grey-light" v-else>
           <span class="icon">
-          <i class="fa fa-trash has-text-white"></i>
-        </span>
+            <i class="fa fa-trash has-text-white"></i>
+          </span>
         </a>
       </div>
     </td>
@@ -71,10 +71,10 @@
 </template>
 
 <script>
-import {permissionsMixin} from '../../mixins/PermissionsMixin'
+import { permissionsMixin } from "../../mixins/PermissionsMixin";
 export default {
   props: ["schoolClass", "index", "grades"],
-  mixins:[permissionsMixin],
+  mixins: [permissionsMixin],
   data() {
     return {
       showEditButton: true,
@@ -95,19 +95,36 @@ export default {
       this.showClassInput = !this.showClassInput;
     },
     putClass() {
-      axios.put(`/classes/${this.schoolClass.id}`, this.schoolClass).then(response => {
-        //console.log(response.data.message)
-        this.initial = Object.assign({}, this.schoolClass);
-        this.changeStates();
-        this.$emit("success");
-      });
+      axios
+        .put(`/classes/${this.schoolClass.id}`, this.schoolClass)
+        .then(response => {
+          //console.log(response.data.message)
+          this.initial = Object.assign({}, this.schoolClass);
+          this.changeStates();
+          this.$emit("success");
+        });
     },
     deleteClass() {
-      axios
-        .delete(`/classes/${this.schoolClass.id}`, this.schoolClass)
-        .then(response => {
-          console.log(response.data.message);
-          this.$emit("success");
+      this.$swal
+        .fire({
+          title: "Está seguro(a)?",
+          text: "Este cambio no se podrá revertir!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Si, eliminar!",
+          cancelButtonText: "Cancelar"
+        })
+        .then(result => {
+          if (result.value) {
+            axios
+              .delete(`/classes/${this.schoolClass.id}`, this.schoolClass)
+              .then(response => {
+                this.$swal.fire('Eliminado!', response.data.message, 'success')
+                this.$emit("success");
+              });
+          }
         });
     }
   }

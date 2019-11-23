@@ -16,9 +16,23 @@ export default {
         CompetenceComponentEmitter.$emit('edit-indicator', indicator)
       },
       deleteIndicator(indicator) {
-        axios.delete(`/indicators/${indicator.id}`).then(response => {
-          console.log(response.data.message)
-          CompetenceComponentEmitter.$emit('indicator-deleted')
+        this.$swal
+        .fire({
+          title: "Está seguro(a)?",
+          text: "Este cambio no se podrá revertir!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Si, eliminar!",
+          cancelButtonText: "Cancelar"
+        }).then(result => {
+          if (result.value) {
+            axios.delete(`/indicators/${indicator.id}`).then(response => {
+              this.$swal.fire('Eliminado!', response.data.message,'success')
+              CompetenceComponentEmitter.$emit('indicator-deleted')
+            })
+          }
         })
       }
     }

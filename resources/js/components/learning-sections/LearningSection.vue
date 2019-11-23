@@ -83,10 +83,24 @@ export default {
       OvaLearningEmitter.$emit('edit-learning-section', learningSection)
     },
     deleteLearningSecion(learningSection) {
-      axios.delete(`/learning-sections/${learningSection.id}`).then(response => {
-        console.log(response.data.message)
-        OvaLearningEmitter.$emit('learning-section-deleted')
-      })
+      this.$swal
+        .fire({
+          title: "Está seguro(a)?",
+          text: "Este cambio no se podrá revertir!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Si, eliminar!",
+          cancelButtonText: "Cancelar"
+        }).then(result => {
+          if (result.value) {
+            axios.delete(`/learning-sections/${learningSection.id}`).then(response => {
+              this.$swal.fire('Eliminada!', response.data.message, 'success')
+              OvaLearningEmitter.$emit('learning-section-deleted')
+            })
+          }
+        })
     }
   }
 }

@@ -83,10 +83,23 @@ export default {
       })
     },
     deleteArea() {
-        axios.delete(`/mandatory-areas/${this.area.id}`, this.area).then(response=>{
-          console.log(response.data.message)
+       this.$swal.fire({
+        title: 'Está seguro(a)?',
+        text: "Este cambio no se podrá revertir!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, eliminar!',
+        cancelButtonText: 'Cancelar'
+      }).then(result => {
+        if (result.value) {
+          axios.delete(`/mandatory-areas/${this.area.id}`, this.area).then(response=>{
+          this.$swal.fire('Eliminada!', response.data.message,'success')
           this.$emit('success')
         })
+        }
+      })
     }
   }
 };

@@ -7,7 +7,8 @@
       <div class="field-body">
         <div class="field">
           <div class="control">
-            <multiselect v-model="selectedArea" :options="areas" track-by="name" label="name" placeholder="Seleccione área"></multiselect>
+            <multiselect name="area" v-model="selectedArea" v-validate="'required'" data-vv-as="area" :options="areas" track-by="name" label="name" placeholder="Seleccione área"></multiselect>
+             <small class="help is-danger" v-if="errors.has('area')">{{errors.first('area')}}</small>
           </div>
         </div>
       </div>
@@ -34,13 +35,14 @@
       <div class="field-body">
         <div class="field">
           <div class="control">
-            <input class="input" v-model="component.name" type="text" placeholder="Nombre" />
+            <input class="input" v-validate="'required|min:3'" data-vv-as="componente" v-model="component.name" type="text" name="component" placeholder="Nombre" />
+             <small class="help is-danger" v-if="errors.has('component')">{{errors.first('component')}}</small>
           </div>
         </div>
       </div>
     </div>
     <div class="control has-text-right">
-      <button :disabled="disableButton" type="submit" class="button is-primary">Agregar</button>
+      <button :disabled="disableButton || errors.any()" type="submit" class="button is-primary">Agregar</button>
       <button type="button" class="button is-danger" @click="$emit('cancel')">Cancelar</button>
     </div>
   </form>

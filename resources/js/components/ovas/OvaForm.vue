@@ -9,11 +9,15 @@
           <div class="control">
             <multiselect
               v-model="selectedArea"
+              v-validate="'required'"
+              data-vv-as="area"
               :options="areas"
               label="name"
+              name="area"
               @input="getSubjects(selectedArea)"
               placeholder="Seleccione área"
             ></multiselect>
+             <small class="help is-danger" v-if="errors.has('area')">{{errors.first('area')}}</small>
           </div>
         </div>
       </div>
@@ -27,11 +31,15 @@
           <div class="control">
             <multiselect
               v-model="selectedSubject"
+              v-validate="'required|min:3'"
+              data-vv-as="asignatura"
               :options="subjects"
               :disabled="(!selectedArea || !subjects.length)"
               label="name"
               placeholder="Seleccione asignatura"
+              name="subject"
             ></multiselect>
+             <small class="help is-danger" v-if="errors.has('subject')">{{errors.first('subject')}}</small>
           </div>
         </div>
       </div>
@@ -45,13 +53,17 @@
           <div class="control">
             <multiselect
               v-model="selectedGrade"
+              v-validate="'required|min:3'"
+              data-vv-as="grado"
               track-by="name"
               :options="grades"
               label="name"
+              name="grade"
               @input="getClasses(selectedGrade)"
               placeholder="Seleccione grado"
             >
             </multiselect>
+             <small class="help is-danger" v-if="errors.has('grade')">{{errors.first('grade')}}</small>
           </div>
         </div>
       </div>
@@ -65,13 +77,17 @@
           <div class="control">
             <multiselect
               v-model="selectedClass"
+              v-validate="'required|min:3'"
+              data-vv-as="clase"
               track-by="name"
               :options="classes"
               :disabled="(!selectedGrade || !classes.length)"
+              name="schoolClass"
               label="name"
               placeholder="Seleccione clase"
             >
             </multiselect>
+             <small class="help is-danger" v-if="errors.has('schoolClass')">{{errors.first('schoolClass')}}</small>
           </div>
         </div>
       </div>
@@ -83,7 +99,8 @@
       <div class="field-body">
         <div class="field">
           <div class="control">
-            <input class="input" v-model="ova.theme" type="text" placeholder="Nombre" />
+            <input class="input" v-validate="'required|min:3'" data-vv-as="tema" v-model="ova.theme" type="text" name="theme" placeholder="Nombre" />
+             <small class="help is-danger" v-if="errors.has('theme')">{{errors.first('theme')}}</small>
           </div>
         </div>
         <div class="field">
@@ -98,7 +115,7 @@
       </div>
     </div>
     <div class="control has-text-right">
-      <button :disabled="disableButton" type="submit" class="button is-primary">Agregar</button>
+      <button :disabled="disableButton || errors.any()" type="submit" class="button is-primary">Agregar</button>
       <button type="button" class="button is-danger" @click="$emit('cancel')">Cancelar</button>
     </div>
   </form>

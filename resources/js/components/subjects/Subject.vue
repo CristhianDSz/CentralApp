@@ -71,10 +71,10 @@
 </template>
 
 <script>
-import {permissionsMixin} from '../../mixins/PermissionsMixin'
+import { permissionsMixin } from "../../mixins/PermissionsMixin";
 export default {
   props: ["subject", "index", "areas"],
-  mixins:[permissionsMixin],
+  mixins: [permissionsMixin],
   data() {
     return {
       showEditButton: true,
@@ -103,11 +103,26 @@ export default {
       });
     },
     deleteSubject() {
-      axios
-        .delete(`/subjects/${this.subject.id}`, this.subject)
-        .then(response => {
-          console.log(response.data.message);
-          this.$emit("success");
+      this.$swal
+        .fire({
+          title: "Está seguro(a)?",
+          text: "Este cambio no se podrá revertir!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Si, eliminar!",
+          cancelButtonText: "Cancelar"
+        })
+        .then(result => {
+          if (result.value) {
+            axios
+              .delete(`/subjects/${this.subject.id}`, this.subject)
+              .then(response => {
+                this.$swal.fire('Eliminada!', response.data.message, 'success')
+                this.$emit("success");
+              });
+          }
         });
     }
   }

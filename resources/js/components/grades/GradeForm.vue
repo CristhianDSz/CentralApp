@@ -2,12 +2,13 @@
   <form @submit.prevent="postGrade">
     <div class="field">
       <p class="control has-icons-left has-icons-right">
-        <input class="input" type="text" v-model="grade.name" placeholder="Nombre del grado" />
+        <input v-validate="'required|min:3'" data-vv-as="grado" name="grade" class="input" type="text" v-model="grade.name" placeholder="Nombre del grado" />
       </p>
+       <small class="help is-danger" v-if="errors.has('grade')">{{errors.first('grade')}}</small>
     </div>
     <div class="field">
       <p class="control">
-        <button :disabled="disableButton"  class="button is-success is-fullwidth">Crear</button>
+        <button :disabled="disableButton || errors.any()"  class="button is-success is-fullwidth">Crear</button>
       </p>
     </div>
   </form>
