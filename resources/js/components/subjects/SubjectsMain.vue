@@ -3,7 +3,7 @@
     <div class="card-filter">
       <div class="field">
         <div class="control has-icons-left has-icons-right">
-          <input class="input" id="table-search" type="text" placeholder="Buscar asignaturas" />
+          <input class="input" id="table-search" v-model="subjectSearch" type="text" placeholder="Buscar asignaturas" />
           <span class="icon is-left">
             <i class="fa fa-search"></i>
           </span>
@@ -23,7 +23,7 @@
     <div class="card-content">
       <div id="datatable_wrapper" class="dataTables_wrapper dt-bulma no-footer">
         <div class="columns table-wrapper">
-           <subjects ref="subjects"></subjects>
+          <subjects ref="subjects"></subjects>
         </div>
       </div>
     </div>
@@ -47,19 +47,40 @@
 
 <script>
 import Subjects from "./Subjects.vue";
-import SubjectForm from './SubjectForm.vue'
+import SubjectForm from "./SubjectForm.vue";
 export default {
   components: { Subjects, SubjectForm },
   data() {
     return {
-      modalActive: false
-    }
+      modalActive: false,
+      subjectSearch: ""
+    };
   },
   methods: {
     showMessage() {
-      this.modalActive = false
-      this.$refs.subjects.getSubjects()
+      this.modalActive = false;
+      this.$refs.subjects.getSubjects();
       //Mostrar modal sweetalert
+    }
+  },
+  watch: {
+    subjectSearch() {
+      if (this.subjectSearch.length) {
+        this.$refs.subjects.subjects = this.$refs.subjects.originalSubjects.filter(
+          subject => {
+            return (
+              subject.name
+                .toLowerCase()
+                .indexOf(this.subjectSearch.toLowerCase()) > -1 ||
+              subject.mandatory_area.name
+                .toLowerCase()
+                .indexOf(this.subjectSearch.toLowerCase()) > -1  
+            );
+          }
+        );
+      } else {
+        this.$refs.subjects.subjects = this.$refs.subjects.originalSubjects;
+      }
     }
   }
 };

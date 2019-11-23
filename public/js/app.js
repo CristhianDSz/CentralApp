@@ -2073,7 +2073,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      areas: []
+      areas: [],
+      originalAreas: []
     };
   },
   created: function created() {
@@ -2091,6 +2092,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.$refs.areasPagination.setPagination(response);
 
         _this.areas = response.data.data;
+        _this.originalAreas = response.data.data;
 
         _this.$refs.areasPagination.getPagesNumber();
 
@@ -2174,13 +2176,27 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      modalActive: false
+      modalActive: false,
+      areaSearch: ''
     };
   },
   methods: {
     showMessage: function showMessage() {
       this.modalActive = false;
       this.$refs.areas.getAreas(); //Mostrar modal sweetalert
+    }
+  },
+  watch: {
+    areaSearch: function areaSearch() {
+      var _this = this;
+
+      if (this.areaSearch.length) {
+        this.$refs.areas.areas = this.$refs.areas.originalAreas.filter(function (area) {
+          return area.name.toLowerCase().indexOf(_this.areaSearch.toLowerCase()) > -1;
+        });
+      } else {
+        this.$refs.areas.areaas = this.$refs.areas.originalAreas;
+      }
     }
   }
 });
@@ -2590,6 +2606,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       classes: [],
+      originalClasses: [],
       grades: []
     };
   },
@@ -2614,6 +2631,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.$refs.classesPagination.setPagination(response);
 
         _this2.classes = response.data.data;
+        _this2.originalClasses = response.data.data;
 
         _this2.$refs.classesPagination.getPagesNumber();
       });
@@ -2690,13 +2708,27 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      modalActive: false
+      modalActive: false,
+      classSearch: ""
     };
   },
   methods: {
     showMessage: function showMessage() {
       this.modalActive = false;
       this.$refs.classes.getClasses(); //Mostrar modal sweetalert
+    }
+  },
+  watch: {
+    classSearch: function classSearch() {
+      var _this = this;
+
+      if (this.classSearch.length) {
+        this.$refs.classes.classes = this.$refs.classes.originalClasses.filter(function (schoolClass) {
+          return schoolClass.name.toLowerCase().indexOf(_this.classSearch.toLowerCase()) > -1 || schoolClass.grade.name.toLowerCase().indexOf(_this.classSearch.toLowerCase()) > -1;
+        });
+      } else {
+        this.$refs.classes.classes = this.$refs.classes.originalClasses;
+      }
     }
   }
 });
@@ -3679,6 +3711,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       grades: [],
+      originalGrades: [],
       pagination: {},
       pagesNumber: 0
     };
@@ -3704,6 +3737,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.pagination.from = response.data.from;
         _this.pagination.to = response.data.total;
         _this.grades = response.data.data;
+        _this.originalGrades = response.data.data;
 
         _this.getPagesNumber();
 
@@ -3810,13 +3844,27 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       modalActive: false,
-      enableCreateButton: true
+      enableCreateButton: true,
+      gradeSearch: ""
     };
   },
   methods: {
     showMessage: function showMessage() {
       this.modalActive = false;
       this.$refs.grades.getGrades(); //Mostrar modal sweetalert
+    }
+  },
+  watch: {
+    gradeSearch: function gradeSearch() {
+      var _this = this;
+
+      if (this.gradeSearch.length) {
+        this.$refs.grades.grades = this.$refs.grades.originalGrades.filter(function (grade) {
+          return grade.name.toLowerCase().indexOf(_this.gradeSearch.toLowerCase()) > -1;
+        });
+      } else {
+        this.$refs.grades.grades = this.$refs.grades.originalGrades;
+      }
     }
   }
 });
@@ -5957,6 +6005,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       subjects: [],
+      originalSubjects: [],
       areas: []
     };
   },
@@ -5983,6 +6032,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.$refs.subjectsPagination.getPagesNumber();
 
         _this2.subjects = response.data.data;
+        _this2.originalSubjects = response.data.data;
       });
     }
   }
@@ -6057,13 +6107,27 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      modalActive: false
+      modalActive: false,
+      subjectSearch: ""
     };
   },
   methods: {
     showMessage: function showMessage() {
       this.modalActive = false;
       this.$refs.subjects.getSubjects(); //Mostrar modal sweetalert
+    }
+  },
+  watch: {
+    subjectSearch: function subjectSearch() {
+      var _this = this;
+
+      if (this.subjectSearch.length) {
+        this.$refs.subjects.subjects = this.$refs.subjects.originalSubjects.filter(function (subject) {
+          return subject.name.toLowerCase().indexOf(_this.subjectSearch.toLowerCase()) > -1 || subject.mandatory_area.name.toLowerCase().indexOf(_this.subjectSearch.toLowerCase()) > -1;
+        });
+      } else {
+        this.$refs.subjects.subjects = this.$refs.subjects.originalSubjects;
+      }
     }
   }
 });
@@ -56580,9 +56644,9 @@ var staticRenderFns = [
       _c("tr", { attrs: { role: "row" } }, [
         _c("th", { staticStyle: { width: "105.2px" } }, [_vm._v("No")]),
         _vm._v(" "),
-        _c("th", { staticStyle: { width: "529.2px" } }, [_vm._v("Name")]),
+        _c("th", { staticStyle: { width: "529.2px" } }, [_vm._v("Área")]),
         _vm._v(" "),
-        _c("th", { staticStyle: { width: "198.2px" } }, [_vm._v("Action")])
+        _c("th", { staticStyle: { width: "198.2px" } }, [_vm._v("Acción")])
       ])
     ])
   }
@@ -56610,7 +56674,37 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
     _c("div", { staticClass: "card-filter" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "field" }, [
+        _c("div", { staticClass: "control has-icons-left has-icons-right" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.areaSearch,
+                expression: "areaSearch"
+              }
+            ],
+            staticClass: "input",
+            attrs: {
+              id: "table-search",
+              type: "text",
+              placeholder: "Buscar áreas"
+            },
+            domProps: { value: _vm.areaSearch },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.areaSearch = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm._m(0)
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "field has-addons" }, [
         _c("p", { staticClass: "control" }, [
@@ -56704,21 +56798,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("div", { staticClass: "control has-icons-left has-icons-right" }, [
-        _c("input", {
-          staticClass: "input",
-          attrs: {
-            id: "table-search",
-            type: "text",
-            placeholder: "Buscar áreas"
-          }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "icon is-left" }, [
-          _c("i", { staticClass: "fa fa-search" })
-        ])
-      ])
+    return _c("span", { staticClass: "icon is-left" }, [
+      _c("i", { staticClass: "fa fa-search" })
     ])
   },
   function() {
@@ -57360,7 +57441,37 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
     _c("div", { staticClass: "card-filter" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "field" }, [
+        _c("div", { staticClass: "control has-icons-left has-icons-right" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.classSearch,
+                expression: "classSearch"
+              }
+            ],
+            staticClass: "input",
+            attrs: {
+              id: "table-search",
+              type: "text",
+              placeholder: "Buscar clases"
+            },
+            domProps: { value: _vm.classSearch },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.classSearch = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm._m(0)
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "field has-addons" }, [
         _c("p", { staticClass: "control" }, [
@@ -57454,21 +57565,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("div", { staticClass: "control has-icons-left has-icons-right" }, [
-        _c("input", {
-          staticClass: "input",
-          attrs: {
-            id: "table-search",
-            type: "text",
-            placeholder: "Buscar clases"
-          }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "icon is-left" }, [
-          _c("i", { staticClass: "fa fa-search" })
-        ])
-      ])
+    return _c("span", { staticClass: "icon is-left" }, [
+      _c("i", { staticClass: "fa fa-search" })
     ])
   },
   function() {
@@ -58789,9 +58887,9 @@ var staticRenderFns = [
       _c("tr", { attrs: { role: "row" } }, [
         _c("th", { staticStyle: { width: "105.2px" } }, [_vm._v("No")]),
         _vm._v(" "),
-        _c("th", { staticStyle: { width: "529.2px" } }, [_vm._v("Name")]),
+        _c("th", { staticStyle: { width: "529.2px" } }, [_vm._v("Grado")]),
         _vm._v(" "),
-        _c("th", { staticStyle: { width: "198.2px" } }, [_vm._v("Action")])
+        _c("th", { staticStyle: { width: "198.2px" } }, [_vm._v("Acción")])
       ])
     ])
   }
@@ -58819,7 +58917,37 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
     _c("div", { staticClass: "card-filter" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "field" }, [
+        _c("div", { staticClass: "control has-icons-left has-icons-right" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.gradeSearch,
+                expression: "gradeSearch"
+              }
+            ],
+            staticClass: "input",
+            attrs: {
+              id: "table-search",
+              type: "text",
+              placeholder: "Buscar grados"
+            },
+            domProps: { value: _vm.gradeSearch },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.gradeSearch = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm._m(0)
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "field has-addons" }, [
         _c("p", { staticClass: "control" }, [
@@ -58913,21 +59041,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("div", { staticClass: "control has-icons-left has-icons-right" }, [
-        _c("input", {
-          staticClass: "input",
-          attrs: {
-            id: "table-search",
-            type: "text",
-            placeholder: "Buscar grados"
-          }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "icon is-left" }, [
-          _c("i", { staticClass: "fa fa-search" })
-        ])
-      ])
+    return _c("span", { staticClass: "icon is-left" }, [
+      _c("i", { staticClass: "fa fa-search" })
     ])
   },
   function() {
@@ -61823,11 +61938,11 @@ var staticRenderFns = [
       _c("tr", { attrs: { role: "row" } }, [
         _c("th", { staticStyle: { width: "105.2px" } }, [_vm._v("No")]),
         _vm._v(" "),
-        _c("th", { staticStyle: { width: "529.2px" } }, [_vm._v("Name")]),
+        _c("th", { staticStyle: { width: "529.2px" } }, [_vm._v("Asignatura")]),
         _vm._v(" "),
         _c("th", { staticStyle: { width: "529.2px" } }, [_vm._v("Área")]),
         _vm._v(" "),
-        _c("th", { staticStyle: { width: "198.2px" } }, [_vm._v("Action")])
+        _c("th", { staticStyle: { width: "198.2px" } }, [_vm._v("Acción")])
       ])
     ])
   }
@@ -61855,7 +61970,37 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
     _c("div", { staticClass: "card-filter" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "field" }, [
+        _c("div", { staticClass: "control has-icons-left has-icons-right" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.subjectSearch,
+                expression: "subjectSearch"
+              }
+            ],
+            staticClass: "input",
+            attrs: {
+              id: "table-search",
+              type: "text",
+              placeholder: "Buscar asignaturas"
+            },
+            domProps: { value: _vm.subjectSearch },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.subjectSearch = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm._m(0)
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "field has-addons" }, [
         _c("p", { staticClass: "control" }, [
@@ -61949,21 +62094,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("div", { staticClass: "control has-icons-left has-icons-right" }, [
-        _c("input", {
-          staticClass: "input",
-          attrs: {
-            id: "table-search",
-            type: "text",
-            placeholder: "Buscar asignaturas"
-          }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "icon is-left" }, [
-          _c("i", { staticClass: "fa fa-search" })
-        ])
-      ])
+    return _c("span", { staticClass: "icon is-left" }, [
+      _c("i", { staticClass: "fa fa-search" })
     ])
   },
   function() {

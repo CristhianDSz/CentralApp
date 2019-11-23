@@ -3,7 +3,7 @@
     <div class="card-filter">
       <div class="field">
         <div class="control has-icons-left has-icons-right">
-          <input class="input" id="table-search" type="text" placeholder="Buscar áreas" />
+          <input class="input" id="table-search" type="text" v-model="areaSearch" placeholder="Buscar áreas" />
           <span class="icon is-left">
             <i class="fa fa-search"></i>
           </span>
@@ -52,7 +52,8 @@ export default {
   components: { Areas, AreaForm },
   data() {
     return {
-      modalActive: false
+      modalActive: false,
+      areaSearch: ''
     }
   },
   methods: {
@@ -60,6 +61,17 @@ export default {
       this.modalActive = false
       this.$refs.areas.getAreas()
       //Mostrar modal sweetalert
+    }
+  },
+  watch:{
+    areaSearch() {
+      if (this.areaSearch.length) {
+        this.$refs.areas.areas = this.$refs.areas.originalAreas.filter(area => {
+          return area.name.toLowerCase().indexOf(this.areaSearch.toLowerCase()) > -1
+        })
+      } else {
+        this.$refs.areas.areaas = this.$refs.areas.originalAreas
+      }
     }
   }
 };

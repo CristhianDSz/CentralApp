@@ -37,6 +37,7 @@ export default {
   data() {
     return {
       classes: [],
+      originalClasses: [],
       grades: []
     };
   },
@@ -55,6 +56,7 @@ export default {
       axios.get("/classes?page=" + page).then(response => {
         this.$refs.classesPagination.setPagination(response)
         this.classes = response.data.data;
+        this.originalClasses = response.data.data
         this.$refs.classesPagination.getPagesNumber();
       });
     },

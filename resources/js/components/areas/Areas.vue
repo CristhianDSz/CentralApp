@@ -9,8 +9,8 @@
       <thead>
         <tr role="row">
           <th style="width: 105.2px;">No</th>
-          <th style="width: 529.2px;">Name</th>
-          <th style="width: 198.2px;">Action</th>
+          <th style="width: 529.2px;">Área</th>
+          <th style="width: 198.2px;">Acción</th>
         </tr>
       </thead>
       <tbody>
@@ -34,7 +34,8 @@ export default {
   components: { "mandatory-area": Area, Pagination },
   data() {
     return {
-      areas: []
+      areas: [],
+      originalAreas: []
     };
   },
   created() {
@@ -48,6 +49,7 @@ export default {
       axios.get("/mandatory-areas?page=" + page).then(response => {
         this.$refs.areasPagination.setPagination(response)
         this.areas = response.data.data;
+        this.originalAreas = response.data.data
         this.$refs.areasPagination.getPagesNumber();
         this.getAllAreas()
       });

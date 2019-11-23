@@ -3,7 +3,7 @@
     <div class="card-filter">
       <div class="field">
         <div class="control has-icons-left has-icons-right">
-          <input class="input" id="table-search" type="text" placeholder="Buscar clases" />
+          <input class="input" id="table-search" type="text" v-model="classSearch" placeholder="Buscar clases" />
           <span class="icon is-left">
             <i class="fa fa-search"></i>
           </span>
@@ -52,7 +52,8 @@ export default {
   components: { Classes, ClassForm },
   data() {
     return {
-      modalActive: false
+      modalActive: false,
+      classSearch: ""
     }
   },
   methods: {
@@ -60,6 +61,26 @@ export default {
       this.modalActive = false
       this.$refs.classes.getClasses()
       //Mostrar modal sweetalert
+    }
+  },
+  watch: {
+    classSearch() {
+      if (this.classSearch.length) {
+        this.$refs.classes.classes = this.$refs.classes.originalClasses.filter(
+          schoolClass => {
+            return (
+              schoolClass.name
+                .toLowerCase()
+                .indexOf(this.classSearch.toLowerCase()) > -1 ||
+              schoolClass.grade.name
+                .toLowerCase()
+                .indexOf(this.classSearch.toLowerCase()) > -1  
+            );
+          }
+        );
+      } else {
+        this.$refs.classes.classes = this.$refs.classes.originalClasses;
+      }
     }
   }
 };

@@ -3,7 +3,7 @@
     <div class="card-filter">
       <div class="field">
         <div class="control has-icons-left has-icons-right">
-          <input class="input" id="table-search" type="text" placeholder="Buscar grados" />
+          <input class="input" id="table-search" type="text" v-model="gradeSearch" placeholder="Buscar grados" />
           <span class="icon is-left">
             <i class="fa fa-search"></i>
           </span>
@@ -53,7 +53,8 @@ export default {
   data() {
     return {
       modalActive: false,
-      enableCreateButton:true
+      enableCreateButton:true,
+      gradeSearch: ""
     }
   },
   methods: {
@@ -63,5 +64,16 @@ export default {
       //Mostrar modal sweetalert
     }
   },
+  watch:{
+    gradeSearch() {
+      if (this.gradeSearch.length) {
+        this.$refs.grades.grades = this.$refs.grades.originalGrades.filter(grade => {
+          return grade.name.toLowerCase().indexOf(this.gradeSearch.toLowerCase()) > -1
+        })
+      } else {
+        this.$refs.grades.grades = this.$refs.grades.originalGrades
+      }
+    }
+  }
 };
 </script>

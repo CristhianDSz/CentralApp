@@ -9,9 +9,9 @@
       <thead>
         <tr role="row">
           <th style="width: 105.2px;">No</th>
-          <th style="width: 529.2px;">Name</th>
+          <th style="width: 529.2px;">Asignatura</th>
           <th style="width: 529.2px;">Área</th>
-          <th style="width: 198.2px;">Action</th>
+          <th style="width: 198.2px;">Acción</th>
         </tr>
       </thead>
       <tbody>
@@ -37,6 +37,7 @@ export default {
   data() {
     return {
       subjects: [],
+      originalSubjects: [],
       areas: []
     };
   },
@@ -56,6 +57,7 @@ export default {
         this.$refs.subjectsPagination.setPagination(response)
         this.$refs.subjectsPagination.getPagesNumber();
         this.subjects = response.data.data;
+        this.originalSubjects = response.data.data
       });
     }
   }

@@ -9,8 +9,8 @@
       <thead>
         <tr role="row">
           <th style="width: 105.2px;">No</th>
-          <th style="width: 529.2px;">Name</th>
-          <th style="width: 198.2px;">Action</th>
+          <th style="width: 529.2px;">Grado</th>
+          <th style="width: 198.2px;">Acción</th>
         </tr>
       </thead>
       <tbody>
@@ -47,6 +47,7 @@ export default {
   data() {
     return {
       grades: [],
+      originalGrades:[],
       pagination: {},
       pagesNumber: 0
     };
@@ -69,6 +70,7 @@ export default {
         this.pagination.from = response.data.from;
         this.pagination.to = response.data.total;
         this.grades = response.data.data;
+        this.originalGrades = response.data.data
         this.getPagesNumber();
         this.getAllGrades();
       });
