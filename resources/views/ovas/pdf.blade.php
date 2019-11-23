@@ -50,6 +50,10 @@
         text-align: right
         }
 
+        .ova-image {
+          border-radius: 50%;
+        }
+
 
         #details {
         margin-bottom: 50px;
@@ -252,7 +256,7 @@
         <div id="invoice">
         <h1>{{$ova->theme}}</h1>
         @if ($ova->image)
-        <img src="{{public_path('storage/'.$ova->image)}}" width="64" height="64" alt="Imagen">
+        <img class="ova-image" src="{{public_path('storage/'.$ova->image)}}" width="64" height="64" alt="Imagen">
         @endif
         <div class="date">Grado: {{$ova->grade->name}}</div>
         <div class="date">Clase: {{$ova->class->name}}</div>
