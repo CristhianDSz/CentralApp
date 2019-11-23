@@ -67,7 +67,7 @@
                             </td>
                             <td class="has-text-centered">
                             <a href="{{route('manuals.edit',$manual->id)}}" class="button is-primary is-small">Editar</a>
-                            <a href="{{asset('storage/'.$manual->file)}}" target="_blank" class="button is-info is-small">Visualizar</a>
+                            <a href="{{public_path('storage/'.$manual->file)}}" target="_blank" class="button is-info is-small">Visualizar</a>
                             </td>
                         </tr>
                     </tbody>
