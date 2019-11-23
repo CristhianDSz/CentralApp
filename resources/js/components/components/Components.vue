@@ -14,6 +14,8 @@
       <p class="message-body">Actualmente no existen componentes. Puede agregar uno dando clic en el botón de la parte superior</p>
     </div>
 
+   
+
     <modal :modalActive="competenceModal" @close="competenceModal=!competenceModal">
       <template slot="title">Agregar competencia</template>
       <div class="content" slot="body">
@@ -41,6 +43,8 @@
         ></indicator-form>
       </div>
     </modal>
+
+     <pagination ref="componentsPagination" @page="goToPage"></pagination>
   </div>
 </template>
 
@@ -49,13 +53,15 @@ import Modal from "../utils/Modal.vue";
 import Component from "./Component.vue";
 import CompetenceForm from "../competences/CompetenceForm.vue";
 import IndicatorForm from "../indicators/IndicatorForm.vue";
+import Pagination from '../utils/Pagination.vue'
 
 export default {
   components: {
     "my-component": Component,
     Modal,
     CompetenceForm,
-    IndicatorForm
+    IndicatorForm,
+    Pagination
   },
   data() {
     return {
@@ -90,9 +96,14 @@ export default {
     this.getComponents();
   },
   methods: {
-    getComponents() {
-      axios.get("/components").then(response => {
-        this.components = response.data;
+    goToPage(page) {
+      this.getComponents(page)
+    },
+    getComponents(page = 1) {
+      axios.get("/components?page=" + page).then(response => {
+        this.$refs.componentsPagination.setPagination(response)
+        this.components = response.data.data;
+        this.$refs.componentsPagination.getPagesNumber()
       });
     },
     showCompetenceMessage() {

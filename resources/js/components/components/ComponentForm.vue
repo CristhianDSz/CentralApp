@@ -83,10 +83,10 @@ export default {
       );
     },
     getAreas() {
-      return axios.get("/mandatory-areas");
+      return axios.get("/app/mandatory-areas/all");
     },
     getGrades() {
-      return axios.get("/grades");
+      return axios.get("/app/grades/all");
     },
     makeRequest() {
       if (this.component.id) {

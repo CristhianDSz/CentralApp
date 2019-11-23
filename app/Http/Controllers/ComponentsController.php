@@ -18,6 +18,11 @@ class ComponentsController extends Controller
 
     public function index()
     {
+        return Component::orderBy('name')->with('mandatoryArea')->with('grades')->with('competences.indicators')->paginate(6);
+    }
+
+    public function components()
+    {
         return Component::orderBy('name')->with('mandatoryArea')->with('grades')->with('competences.indicators')->get();
     }
 

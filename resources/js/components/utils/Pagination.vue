@@ -12,7 +12,7 @@
       @click.prevent="goToPage(pagination.current_page + 1)"
     >Siguiente</a>
     <ul class="pagination-list">
-      <li v-for="(page,index) in pagesNumber" :key="index">
+      <li v-for="(page,index) in pagesNumber" :key="index" style="list-style:none">
         <a
           class="pagination-link"
           :class="{'is-current': page === pagination.current_page}"

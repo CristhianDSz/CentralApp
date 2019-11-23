@@ -3023,10 +3023,10 @@ __webpack_require__.r(__webpack_exports__);
       }));
     },
     getAreas: function getAreas() {
-      return axios.get("/mandatory-areas");
+      return axios.get("/app/mandatory-areas/all");
     },
     getGrades: function getGrades() {
-      return axios.get("/grades");
+      return axios.get("/app/grades/all");
     },
     makeRequest: function makeRequest() {
       if (this.component.id) {
@@ -3096,6 +3096,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Component_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Component.vue */ "./resources/js/components/components/Component.vue");
 /* harmony import */ var _competences_CompetenceForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../competences/CompetenceForm.vue */ "./resources/js/components/competences/CompetenceForm.vue");
 /* harmony import */ var _indicators_IndicatorForm_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../indicators/IndicatorForm.vue */ "./resources/js/components/indicators/IndicatorForm.vue");
+/* harmony import */ var _utils_Pagination_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/Pagination.vue */ "./resources/js/components/utils/Pagination.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -3152,6 +3153,11 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
@@ -3161,7 +3167,8 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
     "my-component": _Component_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     Modal: _utils_Modal_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     CompetenceForm: _competences_CompetenceForm_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    IndicatorForm: _indicators_IndicatorForm_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    IndicatorForm: _indicators_IndicatorForm_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Pagination: _utils_Pagination_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     return {
@@ -3202,11 +3209,19 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
     this.getComponents();
   },
   methods: {
+    goToPage: function goToPage(page) {
+      this.getComponents(page);
+    },
     getComponents: function getComponents() {
       var _this2 = this;
 
-      axios.get("/components").then(function (response) {
-        _this2.components = response.data;
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get("/components?page=" + page).then(function (response) {
+        _this2.$refs.componentsPagination.setPagination(response);
+
+        _this2.components = response.data.data;
+
+        _this2.$refs.componentsPagination.getPagesNumber();
       });
     },
     showCompetenceMessage: function showCompetenceMessage() {
@@ -43873,7 +43888,12 @@ var render = function() {
           )
         ],
         2
-      )
+      ),
+      _vm._v(" "),
+      _c("pagination", {
+        ref: "componentsPagination",
+        on: { page: _vm.goToPage }
+      })
     ],
     2
   )
@@ -47589,23 +47609,27 @@ var render = function() {
         "ul",
         { staticClass: "pagination-list" },
         _vm._l(_vm.pagesNumber, function(page, index) {
-          return _c("li", { key: index }, [
-            _c(
-              "a",
-              {
-                staticClass: "pagination-link",
-                class: { "is-current": page === _vm.pagination.current_page },
-                attrs: { "aria-label": "Goto page 1" },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.goToPage(page)
+          return _c(
+            "li",
+            { key: index, staticStyle: { "list-style": "none" } },
+            [
+              _c(
+                "a",
+                {
+                  staticClass: "pagination-link",
+                  class: { "is-current": page === _vm.pagination.current_page },
+                  attrs: { "aria-label": "Goto page 1" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.goToPage(page)
+                    }
                   }
-                }
-              },
-              [_vm._v(_vm._s(page))]
-            )
-          ])
+                },
+                [_vm._v(_vm._s(page))]
+              )
+            ]
+          )
         }),
         0
       )

@@ -31,6 +31,7 @@ Route::get('app/classes/all','ClassesController@classes');
 Route::resource('schools','SchoolsController')->except(['create','show']);
 //Components
 Route::get('app/components','ComponentsController@render')->name('components.render');
+Route::get('app/components/all','ComponentsController@components');
 Route::apiResource('components','ComponentsController');
 //Competences
 Route::apiResource('competences', 'CompetencesController');
