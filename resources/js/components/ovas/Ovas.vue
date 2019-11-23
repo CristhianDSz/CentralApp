@@ -10,6 +10,8 @@
     <div class="message is-warning is-size-7" v-else>
       <p class="message-body">Actualmente no existen ovas. Puede agregar una dando clic en el botón de la parte superior</p>
     </div>
+
+    <pagination ref="ovasPagination" @page="goToPage"></pagination>
     
     <modal
       :modalActive="learningSectionModal"
@@ -41,9 +43,10 @@ import Ova from "./Ova.vue";
 import OvaDetail from './OvaDetail.vue'
 import OvaImage from './OvaImage.vue'
 import LearningSectionForm from '../learning-sections/LearningSectionForm.vue'
+import Pagination from '../utils/Pagination.vue'
 
 export default {
-  components: { Ova, Modal, LearningSectionForm, OvaDetail, OvaImage},
+  components: { Ova, Modal, LearningSectionForm, OvaDetail, OvaImage, Pagination},
   data() {
     return {
       ovas: [],
@@ -88,9 +91,14 @@ export default {
     this.getOvas();
   },
   methods: {
-    getOvas() {
-      axios.get("/ovas").then(response => {
-        this.ovas = response.data;
+    goToPage(page) {
+      this.getOvas(page)
+    },
+    getOvas(page = 1) {
+      axios.get("/ovas?page=" + page).then(response => {
+        this.$refs.ovasPagination.setPagination(response)
+        this.ovas = response.data.data;
+        this.$refs.ovasPagination.getPagesNumber()
       });
     },
     showLearningSectionMessage() {

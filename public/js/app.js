@@ -4984,13 +4984,13 @@ __webpack_require__.r(__webpack_exports__);
       }));
     },
     getAreas: function getAreas() {
-      return axios.get("/mandatory-areas");
+      return axios.get("/app/mandatory-areas/all");
     },
     getSubjects: function getSubjects(area) {
       this.subjects = area.subjects;
     },
     getGrades: function getGrades() {
-      return axios.get("/grades");
+      return axios.get("/app/grades/all");
     },
     getClasses: function getClasses(grade) {
       this.classes = grade.classes;
@@ -5162,6 +5162,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _OvaDetail_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./OvaDetail.vue */ "./resources/js/components/ovas/OvaDetail.vue");
 /* harmony import */ var _OvaImage_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./OvaImage.vue */ "./resources/js/components/ovas/OvaImage.vue");
 /* harmony import */ var _learning_sections_LearningSectionForm_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../learning-sections/LearningSectionForm.vue */ "./resources/js/components/learning-sections/LearningSectionForm.vue");
+/* harmony import */ var _utils_Pagination_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/Pagination.vue */ "./resources/js/components/utils/Pagination.vue");
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
@@ -5203,6 +5204,9 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 //
 //
 //
+//
+//
+
 
 
 
@@ -5214,7 +5218,8 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
     Modal: _utils_Modal_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     LearningSectionForm: _learning_sections_LearningSectionForm_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     OvaDetail: _OvaDetail_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    OvaImage: _OvaImage_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    OvaImage: _OvaImage_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Pagination: _utils_Pagination_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   data: function data() {
     return {
@@ -5279,11 +5284,19 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
     this.getOvas();
   },
   methods: {
+    goToPage: function goToPage(page) {
+      this.getOvas(page);
+    },
     getOvas: function getOvas() {
       var _this2 = this;
 
-      axios.get("/ovas").then(function (response) {
-        _this2.ovas = response.data;
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get("/ovas?page=" + page).then(function (response) {
+        _this2.$refs.ovasPagination.setPagination(response);
+
+        _this2.ovas = response.data.data;
+
+        _this2.$refs.ovasPagination.getPagesNumber();
       });
     },
     showLearningSectionMessage: function showLearningSectionMessage() {
@@ -46567,6 +46580,8 @@ var render = function() {
               )
             ])
           ]),
+      _vm._v(" "),
+      _c("pagination", { ref: "ovasPagination", on: { page: _vm.goToPage } }),
       _vm._v(" "),
       _c(
         "modal",

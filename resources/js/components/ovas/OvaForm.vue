@@ -149,13 +149,13 @@ export default {
       );
     },
     getAreas() {
-      return axios.get("/mandatory-areas");
+      return axios.get("/app/mandatory-areas/all");
     },
     getSubjects(area){
       this.subjects = area.subjects
     },
     getGrades() {
-      return axios.get("/grades");
+      return axios.get("/app/grades/all");
     },
     getClasses(grade) {
       this.classes = grade.classes

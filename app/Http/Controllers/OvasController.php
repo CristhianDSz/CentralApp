@@ -47,7 +47,7 @@ class OvasController extends Controller
                     ->with('bibliographies')
                     ->with('homeworks');
             }])
-            ->get();
+            ->paginate(6);
     }
 
     /**
