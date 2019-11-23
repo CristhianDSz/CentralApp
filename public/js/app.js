@@ -2797,6 +2797,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["component"],
   data: function data() {
@@ -4045,6 +4046,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -57607,6 +57609,12 @@ var render = function() {
               _c("textarea", {
                 directives: [
                   {
+                    name: "validate",
+                    rawName: "v-validate",
+                    value: "required|min:3",
+                    expression: "'required|min:3'"
+                  },
+                  {
                     name: "model",
                     rawName: "v-model",
                     value: _vm.competence.name,
@@ -57614,7 +57622,11 @@ var render = function() {
                   }
                 ],
                 staticClass: "textarea",
-                attrs: { placeholder: "Nombre" },
+                attrs: {
+                  "data-vv-as": "competencia",
+                  name: "competence",
+                  placeholder: "Nombre"
+                },
                 domProps: { value: _vm.competence.name },
                 on: {
                   input: function($event) {
@@ -57624,7 +57636,13 @@ var render = function() {
                     _vm.$set(_vm.competence, "name", $event.target.value)
                   }
                 }
-              })
+              }),
+              _vm._v(" "),
+              _vm.errors.has("competence")
+                ? _c("small", { staticClass: "help is-danger" }, [
+                    _vm._v(_vm._s(_vm.errors.first("competence")))
+                  ])
+                : _vm._e()
             ])
           ])
         ])
@@ -57633,7 +57651,10 @@ var render = function() {
       _c("div", { staticClass: "control has-text-right" }, [
         _c(
           "button",
-          { staticClass: "button is-primary", attrs: { type: "submit" } },
+          {
+            staticClass: "button is-primary",
+            attrs: { type: "submit", disabled: _vm.errors.any() }
+          },
           [_vm._v("Agregar")]
         ),
         _vm._v(" "),
@@ -59240,6 +59261,12 @@ var render = function() {
               _c("textarea", {
                 directives: [
                   {
+                    name: "validate",
+                    rawName: "v-validate",
+                    value: "required|min:3",
+                    expression: "'required|min:3'"
+                  },
+                  {
                     name: "model",
                     rawName: "v-model",
                     value: _vm.indicator.name,
@@ -59247,7 +59274,11 @@ var render = function() {
                   }
                 ],
                 staticClass: "textarea",
-                attrs: { placeholder: "Nombre" },
+                attrs: {
+                  "data-vv-as": "indicador",
+                  name: "indicator",
+                  placeholder: "Nombre"
+                },
                 domProps: { value: _vm.indicator.name },
                 on: {
                   input: function($event) {
@@ -59257,7 +59288,13 @@ var render = function() {
                     _vm.$set(_vm.indicator, "name", $event.target.value)
                   }
                 }
-              })
+              }),
+              _vm._v(" "),
+              _vm.errors.has("indicator")
+                ? _c("small", { staticClass: "help is-danger" }, [
+                    _vm._v(_vm._s(_vm.errors.first("indicator")))
+                  ])
+                : _vm._e()
             ])
           ])
         ])
@@ -59266,7 +59303,10 @@ var render = function() {
       _c("div", { staticClass: "control has-text-right" }, [
         _c(
           "button",
-          { staticClass: "button is-primary", attrs: { type: "submit" } },
+          {
+            staticClass: "button is-primary",
+            attrs: { type: "submit", disabled: _vm.errors.any() }
+          },
           [_vm._v("Agregar")]
         ),
         _vm._v(" "),

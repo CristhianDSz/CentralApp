@@ -7,13 +7,14 @@
       <div class="field-body">
         <div class="field">
           <div class="control">
-            <textarea class="textarea" v-model="indicator.name" placeholder="Nombre"></textarea>
+            <textarea v-validate="'required|min:3'" data-vv-as="indicador" class="textarea" v-model="indicator.name" name="indicator" placeholder="Nombre"></textarea>
+            <small class="help is-danger" v-if="errors.has('indicator')">{{errors.first('indicator')}}</small>
           </div>
         </div>
       </div>
     </div>
     <div class="control has-text-right">
-      <button type="submit" class="button is-primary">Agregar</button>
+      <button type="submit" :disabled="errors.any()" class="button is-primary">Agregar</button>
       <button type="button" class="button is-danger" @click="$emit('cancel')">Cancelar</button>
     </div>
   </form>
