@@ -50,6 +50,7 @@ export default {
   data() {
     return {
       ovas: [],
+      originalOvas: [],
       learningSectionModal:false,
       currentOva: '',
       currentLearningSection: '',
@@ -98,6 +99,7 @@ export default {
       axios.get("/ovas?page=" + page).then(response => {
         this.$refs.ovasPagination.setPagination(response)
         this.ovas = response.data.data;
+        this.originalOvas = response.data.data
         this.$refs.ovasPagination.getPagesNumber()
       });
     },

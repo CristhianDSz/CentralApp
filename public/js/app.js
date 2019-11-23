@@ -3268,6 +3268,7 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
   data: function data() {
     return {
       components: [],
+      originalComponents: [],
       competenceModal: false,
       indicatorModal: false,
       currentComponent: "",
@@ -3315,6 +3316,7 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
         _this2.$refs.componentsPagination.setPagination(response);
 
         _this2.components = response.data.data;
+        _this2.originalComponents = response.data.data;
 
         _this2.$refs.componentsPagination.getPagesNumber();
       });
@@ -3412,9 +3414,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 
@@ -3426,7 +3425,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      componentModalActive: false
+      componentModalActive: false,
+      componentSearch: ""
     };
   },
   created: function created() {
@@ -3448,6 +3448,19 @@ __webpack_require__.r(__webpack_exports__);
     showModal: function showModal() {
       this.$refs.componentForm.resetForm();
       this.componentModalActive = true;
+    }
+  },
+  watch: {
+    componentSearch: function componentSearch() {
+      var _this2 = this;
+
+      if (this.componentSearch.length) {
+        this.$refs.components.components = this.$refs.components.originalComponents.filter(function (component) {
+          return component.name.toLowerCase().indexOf(_this2.componentSearch.toLowerCase()) > -1 || component.mandatory_area.name.toLowerCase().indexOf(_this2.componentSearch.toLowerCase()) > -1;
+        });
+      } else {
+        this.$refs.components.components = this.$refs.components.originalComponents;
+      }
     }
   }
 });
@@ -5412,6 +5425,7 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
   data: function data() {
     return {
       ovas: [],
+      originalOvas: [],
       learningSectionModal: false,
       currentOva: '',
       currentLearningSection: ''
@@ -5483,6 +5497,7 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
         _this2.$refs.ovasPagination.setPagination(response);
 
         _this2.ovas = response.data.data;
+        _this2.originalOvas = response.data.data;
 
         _this2.$refs.ovasPagination.getPagesNumber();
       });
@@ -5557,9 +5572,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 
@@ -5571,7 +5583,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      ovaModalActive: false
+      ovaModalActive: false,
+      ovaSearch: ""
     };
   },
   created: function created() {
@@ -5590,6 +5603,19 @@ __webpack_require__.r(__webpack_exports__);
     showMessage: function showMessage() {
       this.ovaModalActive = false;
       this.$refs.ovas.getOvas();
+    }
+  },
+  watch: {
+    ovaSearch: function ovaSearch() {
+      var _this2 = this;
+
+      if (this.ovaSearch.length) {
+        this.$refs.ovas.ovas = this.$refs.ovas.originalOvas.filter(function (ova) {
+          return ova.theme.toLowerCase().indexOf(_this2.ovaSearch.toLowerCase()) > -1 || ova.mandatory_area.name.toLowerCase().indexOf(_this2.ovaSearch.toLowerCase()) > -1;
+        });
+      } else {
+        this.$refs.ovas.ovas = this.$refs.ovas.originalOvas;
+      }
     }
   }
 });
@@ -58380,7 +58406,35 @@ var render = function() {
       "div",
       { staticClass: "level" },
       [
-        _vm._m(0),
+        _c("div", { staticClass: "level-left" }, [
+          _c("div", { staticClass: "level-item" }, [
+            _c("div", { staticClass: "field has-addons" }, [
+              _c("p", { staticClass: "control" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.componentSearch,
+                      expression: "componentSearch"
+                    }
+                  ],
+                  staticClass: "input",
+                  attrs: { type: "text", placeholder: "Buscar componente" },
+                  domProps: { value: _vm.componentSearch },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.componentSearch = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ])
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "level-right" }, [
           _c("p", { staticClass: "level-item" }, [
@@ -58390,7 +58444,7 @@ var render = function() {
                 staticClass: "button is-primary",
                 on: { click: _vm.showModal }
               },
-              [_vm._m(1), _vm._v(" "), _c("span", [_vm._v("Crear componente")])]
+              [_vm._m(0), _vm._v(" "), _c("span", [_vm._v("Crear componente")])]
             )
           ])
         ]),
@@ -58454,27 +58508,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "level-left" }, [
-      _c("div", { staticClass: "level-item" }, [
-        _c("div", { staticClass: "field has-addons" }, [
-          _c("p", { staticClass: "control" }, [
-            _c("input", {
-              staticClass: "input",
-              attrs: { type: "text", placeholder: "Buscar componente" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "control" }, [
-            _c("button", { staticClass: "button" }, [_vm._v("Buscar")])
-          ])
-        ])
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -61237,7 +61270,35 @@ var render = function() {
       "div",
       { staticClass: "level" },
       [
-        _vm._m(0),
+        _c("div", { staticClass: "level-left" }, [
+          _c("div", { staticClass: "level-item" }, [
+            _c("div", { staticClass: "field has-addons" }, [
+              _c("p", { staticClass: "control" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.ovaSearch,
+                      expression: "ovaSearch"
+                    }
+                  ],
+                  staticClass: "input",
+                  attrs: { type: "text", placeholder: "Buscar ova" },
+                  domProps: { value: _vm.ovaSearch },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.ovaSearch = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ])
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "level-right" }, [
           _c("p", { staticClass: "level-item" }, [
@@ -61251,7 +61312,7 @@ var render = function() {
                   }
                 }
               },
-              [_vm._m(1), _vm._v(" "), _c("span", [_vm._v("Crear Ova")])]
+              [_vm._m(0), _vm._v(" "), _c("span", [_vm._v("Crear Ova")])]
             )
           ])
         ]),
@@ -61315,27 +61376,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "level-left" }, [
-      _c("div", { staticClass: "level-item" }, [
-        _c("div", { staticClass: "field has-addons" }, [
-          _c("p", { staticClass: "control" }, [
-            _c("input", {
-              staticClass: "input",
-              attrs: { type: "text", placeholder: "Buscar ova" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "control" }, [
-            _c("button", { staticClass: "button" }, [_vm._v("Buscar")])
-          ])
-        ])
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

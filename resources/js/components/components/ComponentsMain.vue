@@ -5,10 +5,7 @@
         <div class="level-item">
           <div class="field has-addons">
             <p class="control">
-              <input class="input" type="text" placeholder="Buscar componente" />
-            </p>
-            <p class="control">
-              <button class="button">Buscar</button>
+              <input class="input" type="text" v-model="componentSearch" placeholder="Buscar componente" />
             </p>
           </div>
         </div>
@@ -55,6 +52,7 @@ export default {
   data() {
     return {
       componentModalActive: false,
+      componentSearch: ""
     };
   },
   created() {
@@ -76,6 +74,27 @@ export default {
       this.componentModalActive = true
     }
     
+  },
+  
+  watch: {
+    componentSearch() {
+      if (this.componentSearch.length) {
+        this.$refs.components.components = this.$refs.components.originalComponents.filter(
+          component => {
+            return (
+              component.name
+                .toLowerCase()
+                .indexOf(this.componentSearch.toLowerCase()) > -1 ||
+              component.mandatory_area.name
+                .toLowerCase()
+                .indexOf(this.componentSearch.toLowerCase()) > -1  
+            );
+          }
+        );
+      } else {
+        this.$refs.components.components = this.$refs.components.originalComponents;
+      }
+    }
   }
 };
 </script>

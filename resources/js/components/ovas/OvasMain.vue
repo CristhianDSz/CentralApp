@@ -5,10 +5,7 @@
         <div class="level-item">
           <div class="field has-addons">
             <p class="control">
-              <input class="input" type="text" placeholder="Buscar ova" />
-            </p>
-            <p class="control">
-              <button class="button">Buscar</button>
+              <input class="input" type="text" v-model="ovaSearch" placeholder="Buscar ova" />
             </p>
           </div>
         </div>
@@ -55,6 +52,7 @@ export default {
   data() {
     return {
       ovaModalActive: false,
+      ovaSearch: ""
     };
   },
   created() {
@@ -73,6 +71,26 @@ export default {
       this.$refs.ovas.getOvas();
     },
     
+  },
+  watch: {
+    ovaSearch() {
+      if (this.ovaSearch.length) {
+        this.$refs.ovas.ovas = this.$refs.ovas.originalOvas.filter(
+          ova => {
+            return (
+              ova.theme
+                .toLowerCase()
+                .indexOf(this.ovaSearch.toLowerCase()) > -1 ||
+              ova.mandatory_area.name
+                .toLowerCase()
+                .indexOf(this.ovaSearch.toLowerCase()) > -1  
+            );
+          }
+        );
+      } else {
+        this.$refs.ovas.ovas = this.$refs.ovas.originalOvas;
+      }
+    }
   }
 };
 </script>

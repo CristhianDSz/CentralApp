@@ -66,6 +66,7 @@ export default {
   data() {
     return {
       components: [],
+      originalComponents: [],
       competenceModal: false,
       indicatorModal: false,
       currentComponent: "",
@@ -103,6 +104,7 @@ export default {
       axios.get("/components?page=" + page).then(response => {
         this.$refs.componentsPagination.setPagination(response)
         this.components = response.data.data;
+        this.originalComponents = response.data.data
         this.$refs.componentsPagination.getPagesNumber()
       });
     },
