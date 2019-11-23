@@ -44,7 +44,7 @@
       </div>
     </modal>
 
-     <pagination ref="componentsPagination" @page="goToPage"></pagination>
+     <pagination ref="componentsPagination" @page="goToPage" v-show="components.length"></pagination>
   </div>
 </template>
 

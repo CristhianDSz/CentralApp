@@ -5,6 +5,7 @@
       id="datatable"
       role="grid"
       aria-describedby="datatable_info"
+      v-if="classes.length"
     >
       <thead>
         <tr role="row">
@@ -25,7 +26,12 @@
         ></school-class>
       </tbody>
     </table>
-    <pagination ref="classesPagination" @page="goToPage"></pagination>
+     <div class="message is-warning" v-else>
+      <p class="message-body">
+        Actualmente no existen cursos registrados.
+      </p>
+    </div>
+    <pagination ref="classesPagination" @page="goToPage" v-show="classes.length"></pagination>
   </div>
 </template>
 

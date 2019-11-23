@@ -19,7 +19,7 @@ class HomeworksController extends Controller
     {
         $attributes = request()->validate([
             'content' => 'required|min:3',
-            'presentation' => 'required|min:3',
+            'presentation_id' => 'required|numeric',
             'learning_section_id' => 'required|numeric'
         ]);
         $homework = Homework::create($attributes);

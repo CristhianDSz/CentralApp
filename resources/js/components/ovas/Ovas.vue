@@ -11,7 +11,7 @@
       <p class="message-body">Actualmente no existen ovas. Puede agregar una dando clic en el botón de la parte superior</p>
     </div>
 
-    <pagination ref="ovasPagination" @page="goToPage"></pagination>
+    <pagination ref="ovasPagination" @page="goToPage" v-show="ovas.length"></pagination>
     
     <modal
       :modalActive="learningSectionModal"

@@ -111,7 +111,7 @@
                                <template v-if="learningSection.homeworks.length">
                                     <div v-for="homework in learningSection.homeworks" :key="homework.id">
                                     <p><span class="has-text-weight-semibold">Contenido:</span> {{homework.content}}</p>
-                                    <p><span class="has-text-weight-semibold">Entregable:</span> {{homework.presentation}}</p>
+                                    <p><span class="has-text-weight-semibold">Entregable:</span> {{homework.presentation.name}}</p>
                                 </div>
                                </template>
                                <span v-else>Ninguna</span>

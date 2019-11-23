@@ -5,6 +5,7 @@
       id="datatable"
       role="grid"
       aria-describedby="datatable_info"
+      v-if="subjects.length"
     >
       <thead>
         <tr role="row">
@@ -25,7 +26,12 @@
         ></subject>
       </tbody>
     </table>
-    <pagination ref="subjectsPagination" @page="goToPage"></pagination>
+    <div class="message is-warning" v-else>
+      <p class="message-body">
+        Actualmente no existen asignaturas registradas.
+      </p>
+    </div>
+    <pagination ref="subjectsPagination" @page="goToPage" v-show="subjects.length"></pagination>
   </div>
 </template>
 

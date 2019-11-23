@@ -205,6 +205,9 @@ class LearningSection extends Model
     */
     public function updateHomework($homework =[])
     {
+        if (array_key_exists('presentation',$homework)) {
+            unset($homework['presentation']);
+        }
         return $this->homeworks()
         ->where('id',$homework['id'])
         ->update($homework);

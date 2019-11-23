@@ -7,6 +7,7 @@ use App\Grade;
 use App\MandatoryArea;
 use App\Manual;
 use App\Ova;
+use App\Presentation;
 use App\Role;
 use App\School;
 use App\SchoolClass;
@@ -17,6 +18,7 @@ use App\Policies\GradePolicy;
 use App\Policies\MandatoryAreaPolicy;
 use App\Policies\ManualPolicy;
 use App\Policies\OvaPolicy;
+use App\Policies\PresentationPolicy;
 use App\Policies\RolePolicy;
 use App\Policies\SchoolClassPolicy;
 use App\Policies\SchoolPolicy;
@@ -42,7 +44,8 @@ class AuthServiceProvider extends ServiceProvider
         Grade::class => GradePolicy::class,
         SchoolClass::class => SchoolClassPolicy::class,
         Component::class => ComponentPolicy::class,
-        Ova::class => OvaPolicy::class
+        Ova::class => OvaPolicy::class,
+        Presentation::class => PresentationPolicy::class
     ];
 
     /**

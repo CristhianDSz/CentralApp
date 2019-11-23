@@ -17,9 +17,10 @@ class CreateHomeworksTable extends Migration
             $table->bigIncrements('id');
             $table->boolean('link')->default(false);
             $table->string('content')->nullable();
-            $table->string('presentation');
+            $table->unsignedBigInteger('presentation_id');
             $table->unsignedBigInteger('learning_section_id');
             $table->foreign('learning_section_id')->references('id')->on('learning_sections')->onDelete('cascade');
+            $table->foreign('presentation_id')->references('id')->on('presentations')->onDelete('cascade');
             $table->timestamps();
         });
     }

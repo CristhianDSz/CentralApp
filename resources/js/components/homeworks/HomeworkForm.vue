@@ -31,12 +31,12 @@
         <div class="field">
           <div class="control">
             <div class="select is-primary is-small">
-              <select v-model="homework.presentation">
+              <select v-model="homework.presentation_id">
                 <option
-                  v-for="(presentation, index) in presentations"
-                  :key="index"
-                  :value="presentation"
-                >{{presentation}}</option>
+                  v-for="(presentation) in presentations"
+                  :key="presentation.id"
+                  :value="presentation.id"
+                >{{presentation.name}}</option>
               </select>
             </div>
           </div>
@@ -76,7 +76,6 @@
 </template>
 
 <script>
-import { presentations } from "./presentations";
 export default {
   data() {
     return {
@@ -84,31 +83,36 @@ export default {
         id: "",
         link: false,
         content: "",
-        presentation: ""
+        presentation_id: ""
       },
       homeworks: [],
       presentations: []
     };
   },
   created() {
-    this.presentations = presentations;
-    this.homework.presentation = this.presentations[0];
+    this.getPresentations()
   },
   methods: {
+    getPresentations() {
+      axios.get('/app/presentations/all').then(response => {
+        this.presentations = response.data
+        this.homework.presentation_id = response.data[0].id;
+      })
+    },
     addHomework(homework) {
       const content = homework.content;
-      const presentation = homework.presentation;
+      const presentation_id = homework.presentation_id;
       if (this.$parent.learningSection.id) {
         const homework = {
           learning_section_id: this.$parent.learningSection.id,
           content,
-          presentation
+          presentation_id
         };
         axios.post("/homeworks", homework).then(response => {
           this.homeworks.push(response.data.homework);
         });
       } else {
-        this.homeworks.push({ content, presentation });
+        this.homeworks.push({ content, presentation_id });
       }
       this.$emit("homeworks", this.homeworks);
       this.resetForm();
@@ -126,8 +130,8 @@ export default {
     },
     resetForm() {
       for (let property in this.homework) {
-        if (property === "presentation") {
-          this.homework[property] = this.presentations[0];
+        if (property === "presentation_id") {
+          this.homework[property] = this.presentations[0].id;
         } else {
           this.homework[property] = "";
         }
@@ -138,7 +142,7 @@ export default {
     formActionable() {
       return (
         this.homework.content.length < 3 ||
-        this.homework.presentation.length < 3
+        this.homework.presentation_id.length < 3
       );
     }
   }

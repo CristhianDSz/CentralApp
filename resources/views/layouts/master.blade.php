@@ -161,6 +161,15 @@
                     </span>Permisos
                 </a>
             </li>
+
+             <li>
+            <a class="{{ Route::currentRouteName() == 'parameters.render' ? 'is-active' : ''}}" href="{{ route('parameters.render') }}">
+                    <span class="icon">
+                        <i class="fa fa-gear"></i>
+                    </span>Parámetros
+                </a>
+            </li>
+
             <li>
             <a class="{{ Route::currentRouteName() == 'schools.index' ? 'is-active' : ''}}" href="{{route('schools.index') }}">
                     <span class="icon">

@@ -74,5 +74,10 @@ Route::get('users/passwords','UsersController@editPassword')->name('passwords.in
 Route::patch('users/passwords/{user}','UsersController@password')->name('passwords.update');
 //Manuals
 Route::resource('manuals', 'ManualsController')->except(['show','destroy']);
+//Presentations
+Route::get('app/paremeters', 'PresentationsController@render')->name('parameters.render');
+Route::get('app/presentations/all', 'PresentationsController@presentations');
+Route::apiResource('presentations', 'PresentationsController');
+
 
 
