@@ -15,9 +15,11 @@
 Route::get('/', 'HomeController@index');
 //Mandatory areas
 Route::get('app/mandatory-areas','MandatoryAreasController@render')->name('mandatory-areas.render');
+Route::get('app/mandatory-areas/all','MandatoryAreasController@mandatoryAreas');
 Route::apiResource('mandatory-areas', 'MandatoryAreasController');
 //Subjects
 Route::apiResource('subjects','SubjectsController');
+Route::get('app/subjects/all','SubjectsController@subjects');
 //grades
 Route::get('app/grades','GradesController@render')->name('grades.render');
 Route::get('app/grades/all', 'GradesController@grades');

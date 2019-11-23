@@ -13,6 +13,11 @@ class SubjectsController extends Controller
     
     public function index()
     {
+        return Subject::orderBy('name')->with('mandatoryArea')->paginate(6);
+    }
+
+    public function subjects()
+    {
         return Subject::orderBy('name')->with('mandatoryArea')->get();
     }
 

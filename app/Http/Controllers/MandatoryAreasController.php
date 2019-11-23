@@ -28,6 +28,19 @@ class MandatoryAreasController extends Controller
         ->mandatoryAreas()
         ->with('subjects')
         ->orderBy('name')
+        ->paginate(6);
+    }
+    /**
+     * List the mandatory areas of the aunthenticated user
+     *
+     * @return Illuminate\Http\Response
+     */
+    public function mandatoryAreas()
+    {
+        return auth()->user()
+        ->mandatoryAreas()
+        ->with('subjects')
+        ->orderBy('name')
         ->get();
         //return MandatoryArea::orderBy('name')->with('subjects')->get();
     }

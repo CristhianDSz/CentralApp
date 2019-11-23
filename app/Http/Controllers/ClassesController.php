@@ -11,7 +11,7 @@ class ClassesController extends Controller
         $this->middleware('auth');
     }
     /**
-     * Display a listing of the resource.
+     * Display a paginated listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -20,6 +20,11 @@ class ClassesController extends Controller
         return SchoolClass::orderBy('name')->with('grade')->paginate(6);
     }
 
+    /**
+     * Display all list of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function classes()
     {
         return SchoolClass::orderBy('name')->with('grade')->get();

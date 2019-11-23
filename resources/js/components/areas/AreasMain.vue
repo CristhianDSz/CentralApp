@@ -23,23 +23,7 @@
     <div class="card-content">
       <div id="datatable_wrapper" class="dataTables_wrapper dt-bulma no-footer">
         <div class="columns table-wrapper">
-          <div class="column is-12">
-            <table
-              class="table is-hoverable is-bordered is-fullwidth dataTable no-footer"
-              id="datatable"
-              role="grid"
-              aria-describedby="datatable_info"
-            >
-              <thead>
-                <tr role="row">
-                  <th style="width: 105.2px;">No</th>
-                  <th style="width: 529.2px;">Name</th>
-                  <th style="width: 198.2px;">Action</th>
-                </tr>
-              </thead>
-              <areas ref="areas"></areas>
-            </table>
-          </div>
+          <areas ref="areas"></areas>
         </div>
       </div>
     </div>

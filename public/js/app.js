@@ -2020,6 +2020,30 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Area_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Area.vue */ "./resources/js/components/areas/Area.vue");
+/* harmony import */ var _utils_Pagination_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/Pagination.vue */ "./resources/js/components/utils/Pagination.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2027,9 +2051,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    "mandatory-area": _Area_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    "mandatory-area": _Area_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Pagination: _utils_Pagination_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
@@ -2040,12 +2066,26 @@ __webpack_require__.r(__webpack_exports__);
     this.getAreas();
   },
   methods: {
+    goToPage: function goToPage(page) {
+      this.getAreas(page);
+    },
     getAreas: function getAreas() {
       var _this = this;
 
-      axios.get("/mandatory-areas").then(function (response) {
-        _this.areas = response.data;
-        SubjectAreaEmitter.$emit('areas', response.data);
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get("/mandatory-areas?page=" + page).then(function (response) {
+        _this.$refs.areasPagination.setPagination(response);
+
+        _this.areas = response.data.data;
+
+        _this.$refs.areasPagination.getPagesNumber();
+
+        _this.getAllAreas();
+      });
+    },
+    getAllAreas: function getAllAreas() {
+      axios.get("/app/mandatory-areas/all").then(function (areas) {
+        SubjectAreaEmitter.$emit("areas", areas.data);
       });
     }
   }
@@ -2064,22 +2104,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Areas_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Areas.vue */ "./resources/js/components/areas/Areas.vue");
 /* harmony import */ var _AreaForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AreaForm.vue */ "./resources/js/components/areas/AreaForm.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -5706,6 +5730,32 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Subject_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Subject.vue */ "./resources/js/components/subjects/Subject.vue");
+/* harmony import */ var _utils_Pagination_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/Pagination.vue */ "./resources/js/components/utils/Pagination.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5713,9 +5763,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    Subject: _Subject_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Subject: _Subject_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Pagination: _utils_Pagination_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
@@ -5728,16 +5780,24 @@ __webpack_require__.r(__webpack_exports__);
 
     this.getSubjects(); //Listeting when areas are created or updated
 
-    SubjectAreaEmitter.$on('areas', function (areas) {
+    SubjectAreaEmitter.$on("areas", function (areas) {
       _this.areas = areas;
     });
   },
   methods: {
+    goToPage: function goToPage(page) {
+      this.getSubjects(page);
+    },
     getSubjects: function getSubjects() {
       var _this2 = this;
 
-      axios.get("/subjects").then(function (response) {
-        _this2.subjects = response.data;
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get("/subjects?page=" + page).then(function (response) {
+        _this2.$refs.subjectsPagination.setPagination(response);
+
+        _this2.$refs.subjectsPagination.getPagesNumber();
+
+        _this2.subjects = response.data.data;
       });
     }
   }
@@ -5756,23 +5816,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Subjects_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Subjects.vue */ "./resources/js/components/subjects/Subjects.vue");
 /* harmony import */ var _SubjectForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SubjectForm.vue */ "./resources/js/components/subjects/SubjectForm.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -42192,18 +42235,58 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "tbody",
-    _vm._l(_vm.areas, function(area, index) {
-      return _c("mandatory-area", {
-        key: area.id,
-        attrs: { area: area, index: index + 1 },
-        on: { success: _vm.getAreas }
-      })
-    }),
+    "div",
+    { staticClass: "column is-12" },
+    [
+      _c(
+        "table",
+        {
+          staticClass:
+            "table is-hoverable is-bordered is-fullwidth dataTable no-footer",
+          attrs: {
+            id: "datatable",
+            role: "grid",
+            "aria-describedby": "datatable_info"
+          }
+        },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.areas, function(area, index) {
+              return _c("mandatory-area", {
+                key: area.id,
+                attrs: { area: area, index: index + 1 },
+                on: { success: _vm.getAreas }
+              })
+            }),
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("pagination", { ref: "areasPagination", on: { page: _vm.goToPage } })
+    ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { attrs: { role: "row" } }, [
+        _c("th", { staticStyle: { width: "105.2px" } }, [_vm._v("No")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "529.2px" } }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "198.2px" } }, [_vm._v("Action")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -42257,24 +42340,12 @@ var render = function() {
           attrs: { id: "datatable_wrapper" }
         },
         [
-          _c("div", { staticClass: "columns table-wrapper" }, [
-            _c("div", { staticClass: "column is-12" }, [
-              _c(
-                "table",
-                {
-                  staticClass:
-                    "table is-hoverable is-bordered is-fullwidth dataTable no-footer",
-                  attrs: {
-                    id: "datatable",
-                    role: "grid",
-                    "aria-describedby": "datatable_info"
-                  }
-                },
-                [_vm._m(2), _vm._v(" "), _c("areas", { ref: "areas" })],
-                1
-              )
-            ])
-          ])
+          _c(
+            "div",
+            { staticClass: "columns table-wrapper" },
+            [_c("areas", { ref: "areas" })],
+            1
+          )
         ]
       )
     ]),
@@ -42356,20 +42427,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "icon is-small" }, [
       _c("i", { staticClass: "fa fa-plus" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", { attrs: { role: "row" } }, [
-        _c("th", { staticStyle: { width: "105.2px" } }, [_vm._v("No")]),
-        _vm._v(" "),
-        _c("th", { staticStyle: { width: "529.2px" } }, [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", { staticStyle: { width: "198.2px" } }, [_vm._v("Action")])
-      ])
     ])
   }
 ]
@@ -47202,18 +47259,63 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "tbody",
-    _vm._l(_vm.subjects, function(subject, index) {
-      return _c("subject", {
-        key: subject.id,
-        attrs: { subject: subject, index: index + 1, areas: _vm.areas },
-        on: { success: _vm.getSubjects }
+    "div",
+    { staticClass: "column is-12" },
+    [
+      _c(
+        "table",
+        {
+          staticClass:
+            "table is-hoverable is-bordered is-fullwidth dataTable no-footer",
+          attrs: {
+            id: "datatable",
+            role: "grid",
+            "aria-describedby": "datatable_info"
+          }
+        },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.subjects, function(subject, index) {
+              return _c("subject", {
+                key: subject.id,
+                attrs: { subject: subject, index: index + 1, areas: _vm.areas },
+                on: { success: _vm.getSubjects }
+              })
+            }),
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("pagination", {
+        ref: "subjectsPagination",
+        on: { page: _vm.goToPage }
       })
-    }),
+    ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { attrs: { role: "row" } }, [
+        _c("th", { staticStyle: { width: "105.2px" } }, [_vm._v("No")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "529.2px" } }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "529.2px" } }, [_vm._v("Área")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "198.2px" } }, [_vm._v("Action")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -47267,24 +47369,12 @@ var render = function() {
           attrs: { id: "datatable_wrapper" }
         },
         [
-          _c("div", { staticClass: "columns table-wrapper" }, [
-            _c("div", { staticClass: "column is-12" }, [
-              _c(
-                "table",
-                {
-                  staticClass:
-                    "table is-hoverable is-bordered is-fullwidth dataTable no-footer",
-                  attrs: {
-                    id: "datatable",
-                    role: "grid",
-                    "aria-describedby": "datatable_info"
-                  }
-                },
-                [_vm._m(2), _vm._v(" "), _c("subjects", { ref: "subjects" })],
-                1
-              )
-            ])
-          ])
+          _c(
+            "div",
+            { staticClass: "columns table-wrapper" },
+            [_c("subjects", { ref: "subjects" })],
+            1
+          )
         ]
       )
     ]),
@@ -47366,22 +47456,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "icon is-small" }, [
       _c("i", { staticClass: "fa fa-plus" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", { attrs: { role: "row" } }, [
-        _c("th", { staticStyle: { width: "105.2px" } }, [_vm._v("No")]),
-        _vm._v(" "),
-        _c("th", { staticStyle: { width: "529.2px" } }, [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", { staticStyle: { width: "529.2px" } }, [_vm._v("Área")]),
-        _vm._v(" "),
-        _c("th", { staticStyle: { width: "198.2px" } }, [_vm._v("Action")])
-      ])
     ])
   }
 ]

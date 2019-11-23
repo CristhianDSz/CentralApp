@@ -12,7 +12,7 @@ class GradesController extends Controller
         $this->middleware('auth');
     }
     /**
-     * Display a listing of the resource.
+     * Display a paginated listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -21,6 +21,11 @@ class GradesController extends Controller
         return Grade::orderBy('name')->with('classes')->paginate(6);
     }
 
+    /**
+     * Display all list of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function grades()
     {
         return Grade::orderBy('name')->with('classes')->get();
