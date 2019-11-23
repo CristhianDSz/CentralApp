@@ -18,6 +18,11 @@ class GradesController extends Controller
      */
     public function index()
     {
+        return Grade::orderBy('name')->with('classes')->paginate(6);
+    }
+
+    public function grades()
+    {
         return Grade::orderBy('name')->with('classes')->get();
     }
 

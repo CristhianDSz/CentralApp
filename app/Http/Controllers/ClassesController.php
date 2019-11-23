@@ -17,6 +17,11 @@ class ClassesController extends Controller
      */
     public function index()
     {
+        return SchoolClass::orderBy('name')->with('grade')->paginate(6);
+    }
+
+    public function classes()
+    {
         return SchoolClass::orderBy('name')->with('grade')->get();
     }
 

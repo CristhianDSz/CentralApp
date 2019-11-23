@@ -20,9 +20,11 @@ Route::apiResource('mandatory-areas', 'MandatoryAreasController');
 Route::apiResource('subjects','SubjectsController');
 //grades
 Route::get('app/grades','GradesController@render')->name('grades.render');
+Route::get('app/grades/all', 'GradesController@grades');
 Route::apiResource('grades','GradesController');
 //Classes
 Route::apiResource('classes','ClassesController');
+Route::get('app/classes/all','ClassesController@classes');
 //Schools
 Route::resource('schools','SchoolsController')->except(['create','show']);
 //Components
