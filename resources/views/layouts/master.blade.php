@@ -80,7 +80,7 @@
                     </a> --}}
                 @endif
                 <div class="navbar-dropdown is-right">
-                    <a class="navbar-item">
+                <a href="{{route('passwords.index')}}" class="navbar-item">
                         Cambiar contraseña
                     </a>
                     <hr class="navbar-divider">

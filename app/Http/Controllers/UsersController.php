@@ -71,6 +71,23 @@ class UsersController extends Controller
         return redirect()->route('users.index');
     }
 
+
+    public function editPassword()
+    {
+        return view('users.passwords');
+    }
+
+    public function password(User $user)
+    {
+        $attributes = request()->validate([
+            'password' => 'required|confirmed'
+        ]);
+
+        $attributes['password'] = bcrypt($attributes['password']);
+        $user->update($attributes);
+        return redirect('/');
+    }
+
     /**
      * Deleting the incomming resource
      *
