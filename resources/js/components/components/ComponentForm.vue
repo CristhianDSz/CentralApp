@@ -7,7 +7,9 @@
       <div class="field-body">
         <div class="field">
           <div class="control">
-            <multiselect name="area" v-model="selectedArea" v-validate="'required'" data-vv-as="area" :options="areas" track-by="name" label="name" placeholder="Seleccione área"></multiselect>
+            <multiselect selectLabel="Presione enter" selectedLabel="Actual" deselectLabel="Presione enter" name="area" v-model="selectedArea" v-validate="'required'" data-vv-as="area" :options="areas" track-by="name" label="name" placeholder="Seleccione área">
+              <template slot="noResult">Sin resultados</template>
+            </multiselect>
              <small class="help is-danger" v-if="errors.has('area')">{{errors.first('area')}}</small>
           </div>
         </div>
@@ -20,9 +22,12 @@
       <div class="field-body">
         <div class="field">
           <div class="control">
-            <multiselect v-model="selectedGrade" track-by="name" :options="grades" :multiple="true"
+            <multiselect selectedLabel="Actual" selectLabel="Presione enter" deselectLabel="Presione enter" v-model="selectedGrade" track-by="name" :options="grades" :multiple="true"
             :close-on-select="false" :clear-on-select="false" label="name" placeholder="Seleccione grado">
                 <template slot="selection" slot-scope="{ values, search, isOpen }"><span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} grados seleccionados</span></template>
+                
+                <template slot="noResult">Sin resultados</template>
+
             </multiselect>
           </div>
         </div>

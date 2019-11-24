@@ -8,6 +8,9 @@
         <div class="field">
           <div class="control">
             <multiselect
+              selectedLabel="Actual" 
+              selectLabel="Presione enter" 
+              deselectLabel="Presione enter"
               v-model="selectedArea"
               v-validate="'required'"
               data-vv-as="area"
@@ -16,7 +19,9 @@
               name="area"
               @input="getSubjects(selectedArea)"
               placeholder="Seleccione área"
-            ></multiselect>
+            >
+              <template slot="noResult">Sin resultados</template>
+            </multiselect>
              <small class="help is-danger" v-if="errors.has('area')">{{errors.first('area')}}</small>
           </div>
         </div>
@@ -30,6 +35,9 @@
         <div class="field">
           <div class="control">
             <multiselect
+              selectedLabel="Actual" 
+              selectLabel="Presione enter" 
+              deselectLabel="Presione enter"
               v-model="selectedSubject"
               v-validate="'required|min:3'"
               data-vv-as="asignatura"
@@ -38,7 +46,9 @@
               label="name"
               placeholder="Seleccione asignatura"
               name="subject"
-            ></multiselect>
+            >
+              <template slot="noResult">Sin resultados</template>
+            </multiselect>
              <small class="help is-danger" v-if="errors.has('subject')">{{errors.first('subject')}}</small>
           </div>
         </div>
@@ -52,6 +62,9 @@
         <div class="field">
           <div class="control">
             <multiselect
+              selectedLabel="Actual" 
+              selectLabel="Presione enter" 
+              deselectLabel="Presione enter"
               v-model="selectedGrade"
               v-validate="'required|min:3'"
               data-vv-as="grado"
@@ -62,6 +75,7 @@
               @input="getClasses(selectedGrade)"
               placeholder="Seleccione grado"
             >
+            <template slot="noResult">Sin resultados</template>
             </multiselect>
              <small class="help is-danger" v-if="errors.has('grade')">{{errors.first('grade')}}</small>
           </div>
@@ -76,6 +90,9 @@
         <div class="field">
           <div class="control">
             <multiselect
+              selectedLabel="Actual" 
+              selectLabel="Presione enter" 
+              deselectLabel="Presione enter"
               v-model="selectedClass"
               v-validate="'required|min:3'"
               data-vv-as="clase"
@@ -86,6 +103,7 @@
               label="name"
               placeholder="Seleccione clase"
             >
+              <template slot="noResult">Sin resultados</template>
             </multiselect>
              <small class="help is-danger" v-if="errors.has('schoolClass')">{{errors.first('schoolClass')}}</small>
           </div>
