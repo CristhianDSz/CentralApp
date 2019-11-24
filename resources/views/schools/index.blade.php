@@ -171,7 +171,7 @@
             <div class="column">
               <div class="media">
                   <div class="media-center">
-                  <img src="{{$school->logo ? asset('storage/'.$school->logo) : 'https://ui-avatars.com/api/?name=Centrall+App'}}" class="author-image" style="width:200px;border-radius:50%" alt="Placeholder image">
+                  <img src="{{$school->logo ? Storage::disk('s3')->url($school->logo) : 'https://ui-avatars.com/api/?name=Centrall+App'}}" class="author-image" style="width:200px;border-radius:50%" alt="Placeholder image">
                   </div>
               </div>
             </div>
@@ -184,19 +184,21 @@
 @section('scripts')
     <script>
         let inputFile = document.getElementById('file')
-        inputFile.addEventListener('change', (e) => {
-            let reader = new FileReader()
-
-            reader.addEventListener('load', () => {
-                let preview = document.getElementById('preview')
-                let image = document.createElement('img')
-                image.src = reader.result
-
-                preview.innerHTML = ''
-                preview.appendChild(image)
-            })
-            
-            reader.readAsDataURL(e.target.files[0])
-        })
+        if (inputFile) {
+          inputFile.addEventListener('change', (e) => {
+              let reader = new FileReader()
+  
+              reader.addEventListener('load', () => {
+                  let preview = document.getElementById('preview')
+                  let image = document.createElement('img')
+                  image.src = reader.result
+  
+                  preview.innerHTML = ''
+                  preview.appendChild(image)
+              })
+              
+              reader.readAsDataURL(e.target.files[0])
+          })
+        }
     </script>
 @endsection

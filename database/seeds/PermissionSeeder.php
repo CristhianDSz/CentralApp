@@ -121,6 +121,10 @@ class PermissionSeeder extends Seeder
             'description' => 'Actualizar manuales'
         ]);
         Permission::create([
+            'name' => 'delete manuals',
+            'description' => 'Eliminar manuales'
+        ]);
+        Permission::create([
             'name' => 'create presentations',
             'description' => 'Crear entregables'
         ]);

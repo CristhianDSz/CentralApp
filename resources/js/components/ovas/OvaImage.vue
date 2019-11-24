@@ -6,6 +6,9 @@
         class="has-text-centered help"
       >Puede agregar o modificar una imagen de portada para el objeto de aprendizaje para fines de presentación.</p>
       <p class="help has-text-danger has-text-centered" v-if="showError">{{defaultError}}</p>
+      <div class="row">
+        <div id="preview"></div>
+      </div>
       <form @submit.prevent="uploadImage" class="is-size-7">
         <div class="field">
           <div class="file">
@@ -76,8 +79,24 @@ export default {
       })
 
     },
-    onChangeImageUpload() {
+    onChangeImageUpload(event) {
       this.file = this.$refs.file.files[0];
+      this.setPreview(event)
+    },
+    setPreview(event) {
+        if (this.file) {
+          let reader = new FileReader()
+          reader.addEventListener('load', (event) => {
+            let preview = document.getElementById('preview')
+            let image = document.createElement('img')
+            image.src = reader.result
+            preview.innerHTML = ''
+            preview.appendChild(image)
+          })
+              
+          reader.readAsDataURL(event.target.files[0])
+         
+        }
     }
   }
 };
@@ -85,5 +104,9 @@ export default {
 <style scoped>
 .file {
   justify-content: center;
+}
+#preview {
+  width: 96px;
+  margin: 0 auto;
 }
 </style>

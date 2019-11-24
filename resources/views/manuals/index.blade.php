@@ -10,49 +10,28 @@
 
 @section('content')
 
-@if (!$manual)
+@if (!count($manuals) > 0)
     <div class="notification is-warning">
-        Actualmente no ha subido ningún Manual. Puede realizar esta acción completando el registro en la parte inferior.
+        Actualmente no ha subido ningún Manual. Puede realizar esta acción dando clic al botón en la parte inferior.
     </div>
-
-   <div class="row">
-       <div class="columns">
-           <div class="column is-8 is-offset-2">
-                @include('partials.errors')
-                <form action="{{route('manuals.store')}}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="field">
-                    <div class="control">
-                        <input class="input is-primary" type="text" name="name" placeholder="Nombre del manual">
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="file">
-                        <label class="file-label">
-                            <input class="file-input" type="file" name="file" accept="application/pdf">
-                            <span class="file-cta">
-                            <span class="file-icon">
-                                <i class="fa fa-upload"></i>
-                            </span>
-                            <span class="file-label">
-                            Seleccione el archivo…
-                            </span>
-                            </span>
-                        </label>
-                    </div>
-                </div>
-                <div class="field has-text-centered">
-                    <input type="submit" class="button is-primary" value="Subir">
-                </div>
-            </form>
-           </div>
-       </div>
-   </div>
-
+    @can('create', App\Manual::class)
+        <div class="row has-text-centered">
+            <a href="{{route('manuals.create')}}" class="button is-primary">Crear Manual</a>
+        </div>
+    @else
+        <p class="help">No cuenta con permisos para la creación de manuales. Contacte a su administrador.</p>
+    @endcan
 @else
    <div class="row">
        <div class="columns">
-           <div class="column is-8 is-offset-2">
+           <div class="column is-10 is-offset-1">
+               <div class="has-text-centered">
+                <a href="{{route('manuals.create')}}" class="button is-primary">Crear nuevo</a>
+                </div>
+           </div>
+       </div>
+       <div class="columns">
+           <div class="column is-10 is-offset-1">
                <table class="table is-fullwidth">
                     <thead>
                         <tr>
@@ -61,15 +40,28 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($manuals as $manual)
                         <tr>
                             <td>
                                 {{$manual->name}}
                             </td>
                             <td class="has-text-centered">
-                            <a href="{{route('manuals.edit',$manual->id)}}" class="button is-primary is-small">Editar</a>
-                            <a href="{{asset('storage/'.$manual->file)}}" target="_blank" class="button is-info is-small">Visualizar</a>
+                                @can('update', $manual)
+                                    <a href="{{route('manuals.edit',$manual->id)}}" class="button is-primary is-small">Editar</a>
+                                @endcan
+
+                                 <a href="{{Storage::disk('s3')->url($manual->file)}}" target="_blank" class="button is-info is-small">Visualizar</a>
+                                 
+                                @can('delete', $manual)
+                                    <form action="{{route('manuals.destroy',$manual->id)}}" method="POST" style="display:inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="button is-danger is-small" onclick="return confirm('¿Está seguro(a)? Este proceso es irreversible!')">Eliminar</button>
+                                    </form>
+                                @endcan
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
            </div>

@@ -73,7 +73,7 @@ Route::resource('users','UsersController')->except(['show','create']);
 Route::get('users/passwords','UsersController@editPassword')->name('passwords.index');
 Route::patch('users/passwords/{user}','UsersController@password')->name('passwords.update');
 //Manuals
-Route::resource('manuals', 'ManualsController')->except(['show','destroy']);
+Route::resource('manuals', 'ManualsController')->except(['show']);
 //Presentations
 Route::get('app/paremeters', 'PresentationsController@render')->name('parameters.render');
 Route::get('app/presentations/all', 'PresentationsController@presentations');

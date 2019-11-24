@@ -5,7 +5,7 @@
             <div class="row" v-if="currentOva.image">
                 <div class="image has-text-centered">
                     <figure class="image is-96x96">
-                    <img class="is-rounded" :src="`/storage/${currentOva.image}`">
+                    <img class="is-rounded" :src="`${urlBucket}/${currentOva.image}`">
                 </figure>
                 </div>
             </div>
@@ -131,7 +131,8 @@ export default {
   data() {
     return {
         modalActive: false,
-        currentOva: ''
+        currentOva: '',
+        urlBucket: 'http://centralapp-uploads.s3.amazonaws.com'
     };
   },
   created() {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\School;
+use Illuminate\Support\Facades\Storage;
 
 class SchoolsController extends Controller
 {
@@ -80,8 +81,9 @@ class SchoolsController extends Controller
     private function storeLogo($school, $logo)
     {
         if (request()->has($logo)) {
+            Storage::disk('s3')->delete($school->logo);
             $school->update([
-                $logo => request()->$logo->store('uploads', 'public')
+                $logo => request()->$logo->store('uploads', 's3')
             ]);
         }
     }

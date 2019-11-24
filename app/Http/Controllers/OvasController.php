@@ -172,9 +172,9 @@ class OvasController extends Controller
         ]);
 
         if (request()->has('file')) {
-            Storage::disk('public')->delete($ova->image);
+            Storage::disk('s3')->delete($ova->image);
             $ova->update([
-                'image' => request()->file->store('ovas', 'public')
+                'image' => request()->file->store('ovas', 's3')
             ]);
         }
        
