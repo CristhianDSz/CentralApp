@@ -237,7 +237,7 @@
       <div>{{$school->phone}}</div>
       <div>
           @if ($school->website)
-            <a href="{{$school->website}}">{{$school->website}}</a>
+            <a target="_blank" href="{{$school->website}}">{{$school->website}}</a>
           @else
             <p>Sin sitio web</p>
           @endif
@@ -256,7 +256,7 @@
         <div id="invoice">
         <h1>{{$ova->theme}}</h1>
         @if ($ova->image)
-        <img class="ova-image" src="{{public_path('storage/'.$ova->image)}}" width="64" height="64" alt="Imagen">
+        <img class="ova-image" src="{{Storage::disk('s3')->url($ova->image)}}" width="64" height="64" alt="Imagen">
         @endif
         <div class="date">Grado: {{$ova->grade->name}}</div>
         <div class="date">Clase: {{$ova->class->name}}</div>
@@ -362,7 +362,7 @@
                                 @foreach ($learningSection->homeworks as $homework)
                                     <li>
                                     <p>{{$homework->content}}</p>
-                                    <p>Se debe presentar en: {{$homework->presentation}}</p>
+                                    <p>Se debe presentar en: {{$homework->presentation->name}}</p>
                                     </li>
                                 @endforeach
                             </ul>
