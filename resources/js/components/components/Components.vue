@@ -54,6 +54,7 @@ import Component from "./Component.vue";
 import CompetenceForm from "../competences/CompetenceForm.vue";
 import IndicatorForm from "../indicators/IndicatorForm.vue";
 import Pagination from '../utils/Pagination.vue'
+import {Toast} from '../../mixins/ToastMixin'
 
 export default {
   components: {
@@ -108,12 +109,20 @@ export default {
         this.$refs.componentsPagination.getPagesNumber()
       });
     },
-    showCompetenceMessage() {
+    showCompetenceMessage(message) {
       this.competenceModal = false;
+      Toast(this.$swal).fire({
+        icon: 'success',
+        title: message
+      })
       this.getComponents();
     },
-    showIndicatorMessage() {
+    showIndicatorMessage(message) {
       this.indicatorModal = false;
+       Toast(this.$swal).fire({
+        icon: 'success',
+        title: message
+      })
       this.getComponents();
     },
     /** Trigger method when child emit to creating a competence */

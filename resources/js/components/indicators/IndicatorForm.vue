@@ -43,14 +43,14 @@ export default {
     postIndicator() {
       this.indicator.competence_id = this.competence.id
       axios.post('/indicators',this.$data.indicator).then(response => {
-        this.$emit('success')
+        this.$emit('success', response.data.message)
         this.resetForm()
       })
     },
     putIndicator() {
       axios.put(`/indicators/${this.indicator.id}`, this.indicator).then(response => {
-        console.log(response.data.messagae)
-        this.$emit('success')
+        console.log(response.data.message)
+        this.$emit('success', response.data.message)
         this.resetForm()
       })
     },

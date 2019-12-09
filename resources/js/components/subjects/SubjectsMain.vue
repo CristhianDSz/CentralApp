@@ -48,6 +48,7 @@
 <script>
 import Subjects from "./Subjects.vue";
 import SubjectForm from "./SubjectForm.vue";
+import {Toast} from '../../mixins/ToastMixin'
 export default {
   components: { Subjects, SubjectForm },
   data() {
@@ -57,8 +58,13 @@ export default {
     };
   },
   methods: {
-    showMessage() {
+    showMessage(message) {
       this.modalActive = false;
+      Toast(this.$swal).fire({
+        icon: 'success',
+        title: message
+      })
+
       this.$refs.subjects.getSubjects();
       //Mostrar modal sweetalert
     }

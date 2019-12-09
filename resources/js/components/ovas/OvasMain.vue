@@ -47,6 +47,7 @@
 import Modal from "../utils/Modal.vue";
 import OvaForm from "./OvaForm.vue";
 import Ovas from "./Ovas.vue";
+import {Toast} from '../../mixins/ToastMixin'
 export default {
   components: { OvaForm, Ovas, Modal },
   data() {
@@ -66,8 +67,13 @@ export default {
     })
   },
   methods: {
-    showMessage() {
+    showMessage(message) {
       this.ovaModalActive = false;
+      Toast(this.$swal).fire({
+        icon: 'success',
+        title: message
+      })
+
       this.$refs.ovas.getOvas();
     },
     

@@ -48,6 +48,7 @@
 <script>
 import Grades from "./Grades.vue";
 import GradeForm from './GradeForm.vue'
+import {Toast} from '../../mixins/ToastMixin'
 export default {
   components: { Grades, GradeForm },
   data() {
@@ -58,10 +59,14 @@ export default {
     }
   },
   methods: {
-    showMessage() {
+    showMessage(message) {
       this.modalActive = false
+      Toast(this.$swal).fire({
+        icon: 'success',
+        title: message
+      })
+
       this.$refs.grades.getGrades()
-      //Mostrar modal sweetalert
     }
   },
   watch:{

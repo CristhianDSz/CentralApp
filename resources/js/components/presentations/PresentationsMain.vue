@@ -48,6 +48,7 @@
 <script>
 import Presentations from "./Presentations.vue";
 import PresentationForm from './PresentationForm.vue'
+import {Toast} from '../../mixins/ToastMixin'
 export default {
   components: { Presentations, PresentationForm },
   data() {
@@ -58,8 +59,13 @@ export default {
     }
   },
   methods: {
-    showMessage() {
+    showMessage(message) {
       this.modalActive = false
+      Toast(this.$swal).fire({
+        icon: 'success',
+        title: message
+      })
+
       this.$refs.presentations.getPresentations()
       //Mostrar modal sweetalert
     }

@@ -48,6 +48,7 @@
 <script>
 import Areas from "./Areas.vue";
 import AreaForm from './AreaForm.vue'
+import {Toast} from '../../mixins/ToastMixin'
 export default {
   components: { Areas, AreaForm },
   data() {
@@ -57,10 +58,14 @@ export default {
     }
   },
   methods: {
-    showMessage() {
+    showMessage(message) {
       this.modalActive = false
+      Toast(this.$swal).fire({
+        icon: 'success',
+        title: message
+      })
+
       this.$refs.areas.getAreas()
-      //Mostrar modal sweetalert
     }
   },
   watch:{

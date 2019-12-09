@@ -207,7 +207,7 @@ export default {
       axios.post("/ovas", this.ova).then(response => {
         console.log(response.data.message);
         this.resetForm();
-        this.$emit("success");
+        this.$emit("success", response.data.message);
       });
     },
     putOva() {
@@ -215,7 +215,7 @@ export default {
       axios.put(`/ovas/${this.ova.id}`, this.ova).then(response => {
         console.log(response.data.message)
         this.resetForm()
-        this.$emit('success')
+        this.$emit('success', response.data.message)
       })
     },
     assignBeforeSend() {

@@ -221,7 +221,7 @@ export default {
       axios.post("/learning-sections", this.learningSection).then(response => {
         console.log(response.data.message);
         this.resetForm();
-        this.$emit("success");
+        this.$emit("success", response.data.message);
       });
     },
     putLearningSection() {
@@ -230,7 +230,7 @@ export default {
         this.learningSection).then(response => {
           console.log(response.data.message)
           this.resetForm()
-          this.$emit('success')
+          this.$emit('success', response.data.message)
         })
     },
     /** Assign extra data before send request */

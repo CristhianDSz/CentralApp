@@ -48,6 +48,7 @@
 <script>
 import Classes from "./Classes.vue";
 import ClassForm from './ClassForm.vue'
+import {Toast} from '../../mixins/ToastMixin'
 export default {
   components: { Classes, ClassForm },
   data() {
@@ -57,10 +58,13 @@ export default {
     }
   },
   methods: {
-    showMessage() {
+    showMessage(message) {
       this.modalActive = false
+      Toast(this.$swal).fire({
+        icon: 'success',
+        title: message
+      })
       this.$refs.classes.getClasses()
-      //Mostrar modal sweetalert
     }
   },
   watch: {

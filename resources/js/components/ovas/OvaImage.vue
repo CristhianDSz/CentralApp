@@ -72,7 +72,7 @@ export default {
           this.defaultError = ""
           this.showError = false
           this.file = ""
-          this.$emit('success')
+          this.$emit('success', response.data.message)
       }).catch(error => {
           this.defaultError = 'Ha ocurrido un error, asegúrese de que esté subiendo un archivo válido.'
           this.showError = true

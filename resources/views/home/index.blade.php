@@ -105,7 +105,7 @@
                                     <p>
                                     <span class="has-text-weight-semibold">
                                         {{$ova->user->name}}
-                                    </span> hace {{$ova->created_at->diffForHumans()}} &nbsp;
+                                    </span> {{$ova->created_at->diffForHumans()}} &nbsp;
                                     <span class="tag is-primary">{{$ova->mandatoryArea->name}}</span>
                                     <span class="tag is-info">{{$ova->subject->name}}</span>
                                     <span class="tag is-light">{{$ova->grade->name}}</span>

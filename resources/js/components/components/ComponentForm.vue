@@ -107,7 +107,7 @@ export default {
       axios.post('/components', this.component).then(response => {
         console.log(response.data.message)
         this.resetForm()
-        this.$emit('success')
+        this.$emit('success', response.data.message)
       })
     },
     putComponent() {
@@ -115,7 +115,7 @@ export default {
       axios.put(`/components/${this.component.id}`,this.component).then(response => {
         console.log(response.data.message)
         this.resetForm()
-        this.$emit('success')
+        this.$emit('success', response.data.message)
       })
     },
     assignBeforeSend() {

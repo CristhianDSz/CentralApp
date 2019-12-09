@@ -43,7 +43,7 @@ class ClassesController extends Controller
             'grade_id' => 'required|numeric'
         ]);
         SchoolClass::create($attributes);
-        return response()->json(['message' => 'Grado creado correctamente'], 201);
+        return response()->json(['message' => 'Clase (curso) creado correctamente'], 201);
     }
 
 
@@ -62,7 +62,7 @@ class ClassesController extends Controller
         ]);
         $schoolClass = SchoolClass::findOrFail($id);
         $schoolClass->update($attributes);
-        return response()->json(['message' => 'Grado actualizado correctamente']);
+        return response()->json(['message' => 'Clase (curso) actualizado correctamente']);
     }
 
     /**
@@ -75,6 +75,6 @@ class ClassesController extends Controller
     {
         $schoolClass = SchoolClass::findOrFail($id);
         $schoolClass->delete();
-        return response()->json(['message' => 'Grado eliminado correctamente']);
+        return response()->json(['message' => 'Clase (curso) eliminado correctamente']);
     }
 }

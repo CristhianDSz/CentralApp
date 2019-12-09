@@ -47,6 +47,7 @@
 import Modal from "../utils/Modal.vue";
 import ComponentForm from "./ComponentForm.vue";
 import Components from "./Components.vue";
+import {Toast} from '../../mixins/ToastMixin'
 export default {
   components: { ComponentForm, Components, Modal },
   data() {
@@ -65,8 +66,14 @@ export default {
     })
   },
   methods: {
-    showMessage() {
+    showMessage(message) {
       this.componentModalActive = false;
+      this.modalActive = false
+      Toast(this.$swal).fire({
+        icon: 'success',
+        title: message
+      })
+
       this.$refs.components.getComponents();
     },
     showModal() {

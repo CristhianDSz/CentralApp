@@ -33,7 +33,7 @@
       </div>
     </modal>
     <ova-detail></ova-detail>
-    <ova-image @success="getOvas"></ova-image>
+    <ova-image @success="showLearningSectionMessage"></ova-image>
   </div>
 </template>
 
@@ -44,6 +44,7 @@ import OvaDetail from './OvaDetail.vue'
 import OvaImage from './OvaImage.vue'
 import LearningSectionForm from '../learning-sections/LearningSectionForm.vue'
 import Pagination from '../utils/Pagination.vue'
+import {Toast} from '../../mixins/ToastMixin'
 
 export default {
   components: { Ova, Modal, LearningSectionForm, OvaDetail, OvaImage, Pagination},
@@ -103,8 +104,13 @@ export default {
         this.$refs.ovasPagination.getPagesNumber()
       });
     },
-    showLearningSectionMessage() {
+    showLearningSectionMessage(message) {
       this.learningSectionModal = false;
+      Toast(this.$swal).fire({
+        icon: 'success',
+        title: message
+      })
+
       this.getOvas();
     },
     passToLearningSectionForm(ova) {

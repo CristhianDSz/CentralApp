@@ -43,14 +43,14 @@ export default {
     postCompetence() {
       this.competence.component_id = this.component.id
       axios.post('/competences',this.$data.competence).then(response => {
-        this.$emit('success')
+        this.$emit('success', response.data.message)
         this.resetForm()
       })
     },
     putCompetence() {
       axios.put(`/competences/${this.competence.id}`, this.competence).then(response => {
         console.log(response.data.message)
-        this.$emit('success')
+        this.$emit('success', response.data.message)
         this.resetForm()
       })
     },
